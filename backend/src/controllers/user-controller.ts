@@ -2,7 +2,6 @@ import {Request, response, Response} from 'express';
 import User from '../models/user';
 import { hash, compare } from 'bcrypt'
 import { validationResult } from 'express-validator';
-import Dummy from "../models/dummy";
 
 const saltRounds = 10 //for when a user signs up
 
