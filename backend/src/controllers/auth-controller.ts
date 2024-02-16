@@ -20,8 +20,8 @@ export const createUser = async (req: Request, res: Response) => {
         const email = req.body.email as string;
         const password = req.body.password as string;
 
-        let passwordHash: Promise<string>;
-        passwordHash = hash(password, saltRounds);
+        let passwordHash: string;
+        passwordHash = await hash(password, saltRounds);
 
         const user = new User({
             name: name,
@@ -51,9 +51,8 @@ export const loginUser = async (req: Request, res: Response) => {
         const password = req.body.password as string;
         User.findOne({email: email})
             .then(user => {
-                // @ts-ignore
-                compare(req.body.password, user.passwordHash/*forgot how to fix possibly null*/).then(result => {
-                    console.log(result) // for now
+                compare(password, user!.passwordHash/*forgot how to fix possibly null*/).then(result => {
+                    res.status(200).json({ message: 'Success', isPasswordCorrect: result });
                 }).catch (error => {
                     res.status(500).json({ message: 'Server error', error: error.message });
                 })
