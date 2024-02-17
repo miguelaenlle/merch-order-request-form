@@ -15,6 +15,7 @@ const orderSchema = new mongoose.Schema({
     customerEmail: { type: String, required: true },
     customerType: { type: String, required: true },
     school: { type: String },
+    status: { type: String, required: true, default: 'pending' }, // pending, denied, accepted, completed, stale
     notes: { type: String }
 });
 
