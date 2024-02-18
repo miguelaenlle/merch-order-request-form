@@ -6,7 +6,7 @@ import app from "./app";
 dotenv.config();
 
 const mongoURI = process.env.MONGO_URI as string;
-const port = 5000;
+const port = 3000;
 
 mongoose.connect(mongoURI)
     .then(() => {
