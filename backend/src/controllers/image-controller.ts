@@ -21,33 +21,32 @@ export const createImage = async (req: Request, res: Response) => {
         const order = req.body.order as number
 
         const findItem = await Item.find({ _id: itemId }).catch(err => { return res.status(400).json(`Bad Request: ${err}`) })
-        const findImage = await Image.find() 
-
-        if (isPrimary) { 
-            if (findImage.length > 0) { 
-                await Image.updateMany({ isPrimary: true }, { isPrimary: false }, {
-                    new: true,
-                    upsert: true,
-                }).catch(err => { return res.status(400).json(`Bad Request: ${err}`) })
-            }
-        }
-
-        
+        Image.find().then(data => {
+            if (isPrimary) { 
+                if (data.length > 0) { 
+                    Image.updateMany({ isPrimary: true }, { isPrimary: false }, {
+                        new: true,
+                        upsert: true,
+                    }).catch(err => { return res.status(400).json(`Bad Request: ${err}`) })
+                }
+            } 
+        }).catch(err => {
+            return res.status(400).json(`Bad Request: ${err}`)
+        }) 
+        console.log(findItem)
         if (!findItem) {
             res.status(404).json("Item Not Found")
-        }
+        } 
 
-       
+        // const image = new Image({
+        //     itemId: itemId,
+        //     imageUrl: imageUrl,
+        //     isPrimary: isPrimary,
+        //     order: order
+        // });
 
-        const image = new Image({
-            itemId: itemId,
-            imageUrl: imageUrl,
-            isPrimary: isPrimary,
-            order: order
-        });
-
-        await image.save();
-        res.status(201).json({ image });
+        // await image.save();
+        // res.status(201).json({ image });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -55,8 +54,17 @@ export const createImage = async (req: Request, res: Response) => {
 
 export const getImages = async (req: Request, res: Response) => {
     try {
-        const dummies = await Image.find();
-        res.status(200).json(dummies);
+        const itemId = req.params.itemId
+
+        const checkImage = await Image.find({ itemId }).catch(err => {
+            return res.status(400).json(`Bad Request: ${err}`)
+        });
+
+        if (!checkImage) {
+            return res.status(404).json("Image Not Found")
+        }
+
+        res.status(200).json(checkImage);
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -72,15 +80,34 @@ export const putImage = async (req: Request, res: Response) => {
     }
  
     try {
-        const name = req.body.name as string;
-        const email = req.body.email as string;
+        const imageId = req.params.imageId as string;
+        const imageUrl = req.body.imageUrl as string;
+        const isPrimary = req.body.isPrimary as boolean;
+        const order = req.body.order as number;
 
-        const dummy = new Image({
-            name: name,
-            email: email
-        });
-        await dummy.save();
-        res.status(201).json({dummy});
+        const checkImage = await Image.find({_id: imageId}).catch(err => {
+            return res.status(400).json(`Bad Request: ${err}`)
+        })
+
+        if (!checkImage) {
+            return res.status(404).json("Image Not Found") 
+        } 
+
+        const updateImageDetails = {
+            imageUrl: imageUrl,
+            isPrimary: isPrimary,
+            order: order
+        }
+
+        const updateImage = Image.findOneAndUpdate({_id: imageId}, updateImageDetails, {
+            new: true,
+            upsert: true,
+            includeResultMetadata: true
+        }).catch(err => {
+            return res.status(400).json(`Bad Request: ${err}`)
+        })
+
+        res.status(201).json({ updateImage });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
