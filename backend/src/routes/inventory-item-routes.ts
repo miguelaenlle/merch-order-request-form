@@ -7,7 +7,7 @@ const router = Router({ mergeParams: true });
 router.post('/', createInventoryItem); 
 router.get('/', getInventoryItems);
 router.get('/:inventoryItemId', getIndividualInventoryItem);
-router.patch('/', patchInventoryItem);
+router.patch('/:inventoryItemId', patchInventoryItem);
 
 export default router;
 

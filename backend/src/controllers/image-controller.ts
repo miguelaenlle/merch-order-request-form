@@ -12,7 +12,14 @@ export const createImage = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
     }
  
+    function isEmpty(arg: any){
+        return (arg === undefined || arg == null || arg.length <= 0) ? (
+            res.status(500).json({ message: "Invalid Credentials" }) 
+        ) : false;
+    }
+
     try {
+
         const itemId = req.params.itemId as string
         const imageUrl = req.body.imageUrl as string
         const isPrimary = req.body.isPrimary as boolean
@@ -20,8 +27,13 @@ export const createImage = async (req: Request, res: Response) => {
 
         const isIdValid = mongoose.Types.ObjectId.isValid(itemId)
 
+        const list = [imageUrl, isPrimary, order]
+        for (let i = 0; i < list.length; i++) {
+            isEmpty(list[i])
+        }
+
         if (!isIdValid) {
-            return res.status(500).json({ message: "Invalid Image Id" }) 
+            return res.status(500).json({ message: "Invalid Credentials" }) 
         }
 
         const findItem = await Item.findOne({ _id: itemId }).catch(err => { 
@@ -65,7 +77,7 @@ export const getImages = async (req: Request, res: Response) => {
         const isIdValid = mongoose.Types.ObjectId.isValid(itemId)
 
         if (!isIdValid) {
-            return res.status(500).json({ message: "Invalid Item Id" }) 
+            return res.status(500).json({ message: "Invalid Credentials" }) 
         }
 
         const checkImage = await Image.find({ itemId }).catch(err => {
@@ -90,6 +102,12 @@ export const putImage = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
     }
  
+    function isEmpty(arg: any){
+        return (arg === undefined || arg == null || arg.length <= 0) ? (
+            res.status(500).json({ message: "Invalid Credentials" }) 
+        ) : false;
+    }
+
     try {
         const imageId = req.params.imageId as string;
         const imageUrl = req.body.imageUrl as string;
@@ -97,9 +115,11 @@ export const putImage = async (req: Request, res: Response) => {
         const order = req.body.order as number;
         const isIdValid = mongoose.Types.ObjectId.isValid(imageId)
 
-        if (!isIdValid) {
-            return res.status(500).json({ message: "Invalid Image Id" }) 
+        const list = [imageUrl, isPrimary, order]
+        for (let i = 0; i < list.length; i++) {
+            isEmpty(list[i])
         }
+
         const checkImage = await Image.find({_id: imageId}).catch(err => {
             return res.status(500).json({ message: "Server Error", error: err.message }) 
         })
