@@ -2,7 +2,7 @@ import * as React from "react"
 const Dashboard: React.FC<{}> = (props) => {
     return (
         <div>
-            <h1>Dashboard</h1>
+
         </div>
     );
 }
