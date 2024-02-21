@@ -1,10 +1,50 @@
-import './App.css'
+import { ChakraProvider } from '@chakra-ui/react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Dashboard from './pages/Buyer/Dashboard';
+import OrderManagement from './pages/Buyer/OrderManagement';
+import Search from './pages/Buyer/Search';
+import Login from './pages/Seller/Auth/Login';
+import CreateAccount from './pages/Seller/Auth/CreateAccount';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Dashboard />,
+  },
+  {
+    path: "/my-orders",
+    element: <OrderManagement />
+  },
+  {
+    path: "/search",
+    element: <Search />
+  },
+  {
+    path: "/my-account",
+    element: <div>WIP</div>
+  },
+  {
+    path: "/seller-login",
+    element: <Login />
+  },
+  {
+    path: "/seller-register",
+    element: <CreateAccount />
+  },
+  {
+    path: "/seller-dashboard",
+    element: <Dashboard />
+  }
+]);
 
 function App() {
   return (
-    <div>
-      <h1>Merch Order Request Form</h1>
-    </div>
+    <ChakraProvider>
+      <RouterProvider router={router} />
+    </ChakraProvider>
   )
 }
 
