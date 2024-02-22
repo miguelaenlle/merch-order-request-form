@@ -2,8 +2,15 @@ import {Request, response, Response} from 'express';
 import User from '../models/user';
 import { hash, compare } from 'bcrypt'
 import { validationResult } from 'express-validator';
+// import { createTransport } from "nodemailer" //unimplemented for now cause difficultires
 
 const saltRounds = 10 //for when a user signs up
+
+/*const transporter = createTransport(sendgridTransport({
+    auth: {
+        api_key: process.env.SENDGRID_TOKEN
+    }
+}))*/
 
 export const createUser = async (req: Request, res: Response) => {
     // Check for validation errors
@@ -27,7 +34,6 @@ export const createUser = async (req: Request, res: Response) => {
             name: name,
             email: email,
             passwordHash: passwordHash,
-            emailConfirmed: true,
             emailConfirmationCode: "22222"
         });
         await user.save();
