@@ -10,13 +10,7 @@ export const createImage = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
         console.log("errors", errors);
         return res.status(400).json({ errors: errors.array() });
-    }
- 
-    function isEmpty(arg: any){
-        return (arg === undefined || arg == null || arg.length <= 0) ? (
-            res.status(500).json({ message: "Invalid Credentials" }) 
-        ) : false;
-    }
+    } 
 
     try {
 
@@ -25,24 +19,15 @@ export const createImage = async (req: Request, res: Response) => {
         const isPrimary = req.body.isPrimary as boolean
         const order = req.body.order as number
 
-        const isIdValid = mongoose.Types.ObjectId.isValid(itemId)
-
-        const list = [imageUrl, isPrimary, order]
-        for (let i = 0; i < list.length; i++) {
-            isEmpty(list[i])
-        }
+        const isIdValid = mongoose.Types.ObjectId.isValid(itemId) 
 
         if (!isIdValid) {
             return res.status(500).json({ message: "Invalid Credentials" }) 
         }
 
-        const findItem = await Item.findOne({ _id: itemId }).catch(err => { 
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        }) 
+        const findItem = await Item.findOne({ _id: itemId }) 
 
-        const findImage = await Image.findOne({ isPrimary: true }).catch(err => { 
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        }) 
+        const findImage = await Image.findOne({ isPrimary: true }) 
 
         if (isPrimary && findImage) {
             Image.findOneAndUpdate({ itemId: itemId, isPrimary: true }, { isPrimary: false }, {
@@ -64,8 +49,8 @@ export const createImage = async (req: Request, res: Response) => {
             order: order
         });
 
-        image.save();
-        return res.status(201).json(image);
+        await image.save();
+        return res.status(201).json({ image });
     } catch (error: any) {
         return res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -80,15 +65,13 @@ export const getImages = async (req: Request, res: Response) => {
             return res.status(500).json({ message: "Invalid Credentials" }) 
         }
 
-        const checkImage = await Image.find({ itemId }).catch(err => {
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        });
+        const images = await Image.find({ itemId }) 
 
-        if (!checkImage) {
+        if (!images) {
             return res.status(404).json({ message: "Image Not Found" }) 
         }
 
-        return res.status(200).json(checkImage);
+        return res.status(200).json({ images });
     } catch (error: any) {
         return res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -100,31 +83,22 @@ export const putImage = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
         console.log("errors", errors);
         return res.status(400).json({ errors: errors.array() });
-    }
- 
-    function isEmpty(arg: any){
-        return (arg === undefined || arg == null || arg.length <= 0) ? (
-            res.status(500).json({ message: "Invalid Credentials" }) 
-        ) : false;
-    }
+    } 
 
     try {
         const imageId = req.params.imageId as string;
         const imageUrl = req.body.imageUrl as string;
         const isPrimary = req.body.isPrimary as boolean;
         const order = req.body.order as number;
-        const isIdValid = mongoose.Types.ObjectId.isValid(imageId)
+        const isIdValid = mongoose.Types.ObjectId.isValid(imageId) 
 
-        const list = [imageUrl, isPrimary, order]
-        for (let i = 0; i < list.length; i++) {
-            isEmpty(list[i])
+        if (!isIdValid) {
+            return res.status(500).json({ message: "Invalid Credentials" })  
         }
 
-        const checkImage = await Image.find({_id: imageId}).catch(err => {
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        })
+        const image = await Image.find({_id: imageId}) 
 
-        if (!checkImage) {
+        if (!image) {
             return res.status(404).json({ message: "Image Not Found" }) 
         } 
 
@@ -138,10 +112,7 @@ export const putImage = async (req: Request, res: Response) => {
             new: true,
             upsert: true,
             includeResultMetadata: true
-        }).catch(err => {
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        })
-
+        }) 
         
         Image.findOne({ _id: imageId }).then(data => {
             if (!data) {
@@ -182,24 +153,22 @@ export const deleteImage = async (req: Request, res: Response) => {
             return res.status(500).json({ message: "Invalid Image Id" }) 
         }  
   
-        Image.findOneAndDelete({_id: imageId}).then(data => {
-            if (!data) {
-                return res.status(404).json({ message: "Image Not Found" }) 
-            }
-            Image.findOne({ itemId: data.itemId }).then(newData => {
-                if (newData) { 
-                    Image.findOneAndUpdate({ _id: newData?._id }, { isPrimary: true }, {
-                        new: true,
-                        upsert: true
-                    }).catch(err => { 
-                        return res.status(500).json({ message: "Server Error", error: err.message }) 
-                    })
-                }
+        const deleteImage = await Image.findOneAndDelete({_id: imageId})  
+        
+        if (!deleteImage) {
+            return res.status(404).json({ message: "Image Not Found" }) 
+        }
+
+        const image = await Image.findOne({ itemId: deleteImage.itemId }) 
+
+        if (image) { 
+            Image.findOneAndUpdate({ _id: image?._id }, { isPrimary: true }, {
+                new: true,
+                upsert: true
             }) 
-            return res.status(201).json(data);
-        }).catch(err => { 
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        })   
+        }
+
+        return res.status(201).json({ deleteImage });
     } catch (error: any) {
         return res.status(500).json({ message: 'Server error', error: error.message });
     }

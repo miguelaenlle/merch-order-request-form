@@ -10,35 +10,22 @@ export const createInventoryItem = async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    function isEmpty(arg: any){
-        return (arg === undefined || arg == null || arg.length <= 0) ? (
-            res.status(500).json({ message: "Invalid Credentials" }) 
-        ) : false;
-    }
+        return res.status(422).json({ errors: errors.array() });
+    } 
 
     try {
         const itemId = req.body.itemId as string;
         const size = req.body.size as string;
         const amount = req.body.amount as number;
-        const price = req.body.price as number;
-
-        const list = [size, amount, price]
-        for (let i = 0; i < list.length; i++) {
-            isEmpty(list[i])
-        }
+        const price = req.body.price as number;  
         
         const isIdValid = mongoose.Types.ObjectId.isValid(itemId)
 
-        if (!isIdValid || size == null || size == "" || amount == null || price == null) {
+        if (!isIdValid) {
             return res.status(500).json({ message: "Invalid Credentials" }) 
         }
 
-        const findItem = await Item.findOne({ _id: itemId }).catch(err => { 
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        })  
+        const findItem = await Item.findOne({ _id: itemId }) 
 
         if (!findItem) {
             return res.status(404).json({ message: "Item Not Found" })
@@ -52,7 +39,7 @@ export const createInventoryItem = async (req: Request, res: Response) => {
         });
 
         inventoryItem.save();
-        return res.status(201).json(inventoryItem);
+        return res.status(201).json({ inventoryItem });
     } catch (error: any) {
         return res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -62,13 +49,11 @@ export const getInventoryItems = async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(422).json({ errors: errors.array() });
     }
 
     try {
-        const inventoryItems = await InventoryItem.find().catch(err => { 
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        });
+        const inventoryItems = await InventoryItem.find() 
         res.status(200).json(inventoryItems);
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -79,7 +64,7 @@ export const getIndividualInventoryItem = async (req: Request, res: Response) =>
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(422).json({ errors: errors.array() });
     }
 
     try {
@@ -94,7 +79,7 @@ export const getIndividualInventoryItem = async (req: Request, res: Response) =>
         const inventoryItems = await InventoryItem.findOne({ _id: inventoryItemId });
 
         if (!inventoryItems) {
-            return res.status(500).json({ message: "Item Not Found" }) 
+            return res.status(404).json({ message: "Item Not Found" }) 
         }
 
         res.status(200).json(inventoryItems);
@@ -103,45 +88,61 @@ export const getIndividualInventoryItem = async (req: Request, res: Response) =>
     }
 }
 
+interface ListItem {
+    inventoryItemId: string;
+    changeInInventory: number;
+    newPrice: number;
+}
+
 export const patchInventoryItem = async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    function isEmpty(arg: any){
-        return (arg === undefined || arg == null || arg.length <= 0) ? (
-            res.status(500).json({ message: "Invalid Credentials" }) 
-        ) : false;
-    }
+        return res.status(422).json({ errors: errors.array() });
+    } 
 
     try {
-        const inventoryItemId = req.params.inventoryItemId as string;
-        const updatedInventoryItems = req.body.updatedInventoryItems;
+        const itemId = req.query.itemId as string;
+        const updatedInventoryItems = req.body.updatedInventoryItems as ListItem[];
 
-        const isIdValid = mongoose.Types.ObjectId.isValid(inventoryItemId)
-
-        const list = [updatedInventoryItems.size, updatedInventoryItems.amount, updatedInventoryItems.price]
-        for (let i = 0; i < list.length; i++) {
-            isEmpty(list[i])
-        }
+        const isIdValid = mongoose.Types.ObjectId.isValid(itemId)   
 
         if (!isIdValid || updatedInventoryItems == null) {
             return res.status(500).json({ message: "Invalid Credentials" }) 
+        } 
+
+        const items = await Item.findById({ _id: itemId })
+        const inventoryItems = await InventoryItem.find({ itemId: itemId })
+
+        if (!items || !inventoryItems) {
+            return res.status(404).json({ message: "Item Not Found" })
         }
 
-        const newItems = {
-            size: updatedInventoryItems.size,
-            amount: updatedInventoryItems.amount,
-            price: updatedInventoryItems.price
+        for (const item of updatedInventoryItems) {
+            const isInventoryItemIdValid = mongoose.Types.ObjectId.isValid(item.inventoryItemId)  
+            if (!isInventoryItemIdValid) {
+                return res.status(500).json({ message: "Invalid Credentials" }) 
+            } 
+            const newItem = {
+                amount: item.changeInInventory,
+                price: item.newPrice
+            }
+            const findAndUpdateInventoryItems = await InventoryItem.findByIdAndUpdate(item.inventoryItemId, newItem, {
+                new: true,
+                upsert: true
+            })
+            if (!findAndUpdateInventoryItems) {
+                return res.status(404).json({ message: "Inventory Item Not Found" }) 
+            } 
+            
         }
 
-        const findInventoryItem = await InventoryItem.findOneAndUpdate({ _id: inventoryItemId }, newItems).catch(err => { 
-            return res.status(500).json({ message: "Server Error", error: err.message }) 
-        })  
+        const updatedDetails = {
+            itemId,
+            updatedInventoryItems
+        }
 
-        res.status(200).json(findInventoryItem);
+        res.status(200).json({ message: updatedDetails });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
