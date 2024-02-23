@@ -47,7 +47,7 @@ export const createUser = async (req: Request, res: Response) => {
         });
         await user.save();
         const userToken = generateAccessToken(user._id, email, "1 day")
-        res.status(201).json({token:userToken, user:user});
+        res.status(200).json({token:userToken, user: { email: email, name: name} });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
