@@ -83,17 +83,16 @@ export const loginUser = async (req: Request, res: Response) => {
                     res.status(404).json({ message: "User does not exist." });
                     return
                 }
-                if (user.emailConfirmed == false) {
-                    res.status(400).json({ message: "User is not verified." });
-                    return
-                }
                 compare(password, user.passwordHash/*forgot how to fix possibly null*/).then(result => {
                     if (result) {
+                        if (user.emailConfirmed == false) {
+                            res.status(400).json({ message: "User is not verified." });
+                            return
+                        }
                         const userToken = generateAccessToken(user._id, email, "1 day")
                         res.status(200).json({ token: userToken, user: { email: email, name: user.name } });
                     } else {
                         res.status(401).json({ message: "Invalid credentials" });
-                        return
                     }
                 }).catch (error => {
                     res.status(500).json({ message: 'Server error', error: error.message });
