@@ -17,6 +17,7 @@
     "express-validator": "^7.0.1",
     "mongoose": "^8.1.2",
     "nodemailer": "^6.9.9",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {

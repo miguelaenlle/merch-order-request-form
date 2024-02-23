@@ -3,19 +3,22 @@ import User from '../models/user';
 import { hash, compare } from 'bcrypt'
 import { validationResult } from 'express-validator';
 import * as jwt from "jsonwebtoken"
+import {createTransport} from 'nodemailer'
 
 import dotenv from "dotenv";
 dotenv.config();
+
+const sendgridTransport = require('nodemailer-sendgrid-transport')
 
 // import { createTransport } from "nodemailer" //unimplemented for now cause difficultires
 const tokenSECRET = process.env.TOKEN_SECRET as string;
 const saltRounds = 10 //for when a user signs up
 
-/*const transporter = createTransport(sendgridTransport({
+const transporter = createTransport(sendgridTransport({
     auth: {
         api_key: process.env.SENDGRID_TOKEN
     }
-}))*/
+}))
 
 const generateAccessToken = (userId: string, email: string, time: string) => { // this is like this incase its used for extra things
     return jwt.sign({email: email}, tokenSECRET, {expiresIn: time})
@@ -38,14 +41,23 @@ export const createUser = async (req: Request, res: Response) => {
 
         let passwordHash: string;
         passwordHash = await hash(password, saltRounds);
+        const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
 
         const user = new User({
             name: name,
             email: email,
             passwordHash: passwordHash,
-            emailConfirmationCode: "22222"
+            emailConfirmationCode: emailConfirmationCode
         });
         await user.save();
+        /* unused for now
+        await transporter.sendMail({
+            to: email,
+            from: '',
+            subject: 'Your email verification code',
+            html: '<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmationCode}</h1>'
+        })
+        */
         const userToken = generateAccessToken(user._id, email, "1 day")
         res.status(200).json({token:userToken, user: { email: email, name: name} });
     } catch (error: any) {
