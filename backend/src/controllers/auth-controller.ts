@@ -16,7 +16,7 @@ const saltRounds = 10 //for when a user signs up
 
 const transporter = createTransport(sendgridTransport({
     auth: {
-        api_key: process.env.SENDGRID_TOKEN
+        api_key: process.env.SENDGRID_TOKEN_PERSONAL
     }
 }))
 
@@ -50,14 +50,14 @@ export const createUser = async (req: Request, res: Response) => {
             emailConfirmationCode: emailConfirmationCode
         });
         await user.save();
-        /* unused for now
+
         await transporter.sendMail({
             to: email,
-            from: '',
+            from: process.env.SENDGRID_EMAIL_PERSONAL,
             subject: 'Your email verification code',
-            html: '<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmationCode}</h1>'
+            html: `<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmationCode}</h1>`
         })
-        */
+
         const userToken = generateAccessToken(user._id, email, "1 day")
         res.status(200).json({token:userToken, user: { email: email, name: name} });
     } catch (error: any) {
