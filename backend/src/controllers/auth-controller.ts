@@ -46,7 +46,8 @@ export const createUser = async (req: Request, res: Response) => {
             emailConfirmationCode: "22222"
         });
         await user.save();
-        res.status(201).json({user});
+        const userToken = generateAccessToken(user._id, email, "1 day")
+        res.status(201).json({token:userToken, user:user});
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -67,11 +68,21 @@ export const loginUser = async (req: Request, res: Response) => {
         User.findOne({email: email})
             .then(user => {
                 if (!user) {
+                    res.status(404).json({ message: "User does not exist." });
+                    return
+                }
+                if (user.emailConfirmed == false) {
+                    res.status(400).json({ message: "User is not verified." });
                     return
                 }
                 compare(password, user.passwordHash/*forgot how to fix possibly null*/).then(result => {
-                    const userToken = generateAccessToken(user._id, email, "1 day")
-                    res.status(200).json({ token: userToken });
+                    if (result) {
+                        const userToken = generateAccessToken(user._id, email, "1 day")
+                        res.status(200).json({ token: userToken, user: { email: email, name: user.name } });
+                    } else {
+                        res.status(401).json({ message: "Invalid credentials" });
+                        return
+                    }
                 }).catch (error => {
                     res.status(500).json({ message: 'Server error', error: error.message });
                 })
