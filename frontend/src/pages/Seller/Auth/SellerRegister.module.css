@@ -1,0 +1,12 @@
+.content {
+    font-size: 40px;
+    font-weight: bold;
+    margin-left: 100px;
+}
+.link{
+    font-size: 40px;
+}
+.gradient {
+    flex: 1;
+    background: linear-gradient(180deg, #FFA500, #FFD700);
+}
