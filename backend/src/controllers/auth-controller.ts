@@ -1,4 +1,4 @@
-import {Request, response, Response} from 'express';
+import {Request, Response, toString} from 'express';
 import User from '../models/user';
 import { hash, compare } from 'bcrypt'
 import { validationResult } from 'express-validator';
@@ -23,6 +23,14 @@ const transporter = createTransport(sendgridTransport({
 const generateAccessToken = (userId: string, email: string, time: string) => { // this is like this incase its used for extra things
     return jwt.sign({email: email}, tokenSECRET, {expiresIn: time})
 }
+const generateEmailConfirmation = () => {
+    const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
+    const emailConfirmationCodeDate: string = toString(new Date())
+    return {
+        Code: emailConfirmationCode,
+        Date: emailConfirmationCodeDate
+    }
+}
 
 export const createUser = async (req: Request, res: Response) => {
     // Check for validation errors
@@ -39,10 +47,6 @@ export const createUser = async (req: Request, res: Response) => {
         const email = req.body.email as string;
         const password = req.body.password as string;
 
-        let passwordHash: string;
-        passwordHash = await hash(password, saltRounds);
-        const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
-
         //duplicate email checking
         try {
             const userCheck = await User.findOne({email: email})
@@ -54,17 +58,22 @@ export const createUser = async (req: Request, res: Response) => {
             res.status(500).json({ message: 'Server error', error: error.message });
         }
 
+        let passwordHash: string;
+        passwordHash = await hash(password, saltRounds);
+        const emailConfirmation = generateEmailConfirmation()
+
         const user = new User({
             name: name,
             email: email,
             passwordHash: passwordHash,
-            emailConfirmationCode: emailConfirmationCode
+            emailConfirmationCode: emailConfirmation.Code,
+            emailConfirmationCodeDate: emailConfirmation.Date
         });
 
         try {
             await user.save();
         } catch (error: any) {
-            res.status(400).json({ message: "User object creation error" });
+            res.status(500).json({ message: "User object creation error" });
         }
 
         try {
@@ -72,10 +81,10 @@ export const createUser = async (req: Request, res: Response) => {
                 to: email,
                 from: process.env.SENDGRID_EMAIL_PERSONAL,
                 subject: 'Your email verification code',
-                html: `<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmationCode}</h1>`
+                html: `<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmation.Code}</h1>`
             })
         } catch (error: any) {
-            res.status(400).json({ message: "Email code send fail" });
+            res.status(500).json({ message: "Email code send fail" });
         }
 
         const userToken = generateAccessToken(user._id, email, "1 day")
