@@ -20,10 +20,10 @@ const transporter = createTransport(sendgridTransport({
     }
 }))
 
-const generateAccessToken = (userId: string, email: string, time: string) => { // this is like this incase its used for extra things
-    return jwt.sign({email: email}, tokenSECRET, {expiresIn: time})
+const generateAccessToken = async (userId: string, email: string, time: string) => { // this is like this incase its used for extra things
+    return jwt.sign({userId: userId, email: email}, tokenSECRET, {expiresIn: time})
 }
-const generateEmailConfirmation = () => {
+const generateEmailConfirmation = async () => {
     const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
     const emailConfirmationCodeDate: string = Date.toString()
     return {
@@ -31,8 +31,7 @@ const generateEmailConfirmation = () => {
         Date: emailConfirmationCodeDate
     }
 }
-
-const checkEmailConfirmationDateValidity = (dateString: string) => {
+const checkEmailConfirmationDateValidity = async (dateString: string) => {
     const codeDate = new Date(dateString).getTime()
     const currentDate = new Date().getTime()
 
@@ -70,7 +69,7 @@ export const createUser = async (req: Request, res: Response) => {
 
         let passwordHash: string;
         passwordHash = await hash(password, saltRounds);
-        const emailConfirmation = generateEmailConfirmation()
+        const emailConfirmation = await generateEmailConfirmation()
 
         const user = new User({
             name: name,
@@ -97,7 +96,7 @@ export const createUser = async (req: Request, res: Response) => {
             res.status(500).json({ message: "Email code send fail" });
         }
 
-        const userToken = generateAccessToken(user._id, email, "1 day")
+        const userToken = await generateAccessToken(user._id, email, "1 day")
         res.status(200).json({token:userToken, user: { email: email, name: name} });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -151,6 +150,28 @@ export const loginUser = async (req: Request, res: Response) => {
             }).catch (error => {
             res.status(500).json({ message: 'Server error', error: error.message });
         })
+    } catch (error: any) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+export const confirmEmail = async (req: Request, res: Response) => {
+    const email = req.body.email as string
+    const confirmationCode = req.body.confirmationCode as string
+
+    try {
+        const user = await User.findOne({email: email})
+        if (!user) {
+            res.status(404).json({message: "User does not exist."});
+            return
+        }
+        if (user.emailConfirmed == true) {
+            res.status(400).json({message: "User already verified."});
+            return
+        }
+
+        //const codeValidity = await checkEmailConfirmationDateValidity(user.)
+
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
