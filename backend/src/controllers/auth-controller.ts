@@ -43,20 +43,40 @@ export const createUser = async (req: Request, res: Response) => {
         passwordHash = await hash(password, saltRounds);
         const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
 
+        //duplicate email checking
+        try {
+            const userCheck = await User.findOne({email: email})
+            if (userCheck) {
+                res.status(409).json({ message: "Duplicate email" });
+                return
+            }
+        } catch (error: any) {
+            res.status(500).json({ message: 'Server error', error: error.message });
+        }
+
         const user = new User({
             name: name,
             email: email,
             passwordHash: passwordHash,
             emailConfirmationCode: emailConfirmationCode
         });
-        await user.save();
 
-        await transporter.sendMail({
-            to: email,
-            from: process.env.SENDGRID_EMAIL_PERSONAL,
-            subject: 'Your email verification code',
-            html: `<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmationCode}</h1>`
-        })
+        try {
+            await user.save();
+        } catch (error: any) {
+            res.status(400).json({ message: "User object creation error" });
+        }
+
+        try {
+            await transporter.sendMail({
+                to: email,
+                from: process.env.SENDGRID_EMAIL_PERSONAL,
+                subject: 'Your email verification code',
+                html: `<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmationCode}</h1>`
+            })
+        } catch (error: any) {
+            res.status(400).json({ message: "Email code send fail" });
+        }
 
         const userToken = generateAccessToken(user._id, email, "1 day")
         res.status(200).json({token:userToken, user: { email: email, name: name} });
