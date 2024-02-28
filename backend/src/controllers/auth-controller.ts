@@ -1,4 +1,4 @@
-import {Request, Response, toString} from 'express';
+import {Request, Response} from 'express';
 import User from '../models/user';
 import { hash, compare } from 'bcrypt'
 import { validationResult } from 'express-validator';
@@ -25,11 +25,21 @@ const generateAccessToken = (userId: string, email: string, time: string) => { /
 }
 const generateEmailConfirmation = () => {
     const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
-    const emailConfirmationCodeDate: string = toString(new Date())
+    const emailConfirmationCodeDate: string = Date.toString()
     return {
         Code: emailConfirmationCode,
         Date: emailConfirmationCodeDate
     }
+}
+
+const checkEmailConfirmationDateValidity = (dateString: string) => {
+    const codeDate = new Date(dateString).getTime()
+    const currentDate = new Date().getTime()
+
+    const difference = currentDate - codeDate
+    const totalMsInMin = 1000 * 60
+
+    return Math.floor(difference / totalMsInMin) <= 30;
 }
 
 export const createUser = async (req: Request, res: Response) => {
