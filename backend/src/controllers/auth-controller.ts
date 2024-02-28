@@ -77,26 +77,38 @@ export const loginUser = async (req: Request, res: Response) => {
     try {
         const email = req.body.email as string;
         const password = req.body.password as string;
+        try {
+            const user = await User.findOne({email: email})
+            if (!user) {
+                res.status(404).json({ message: "User does not exist." });
+                return
+            }
+            const result = await compare(password, user.passwordHash)
+            try {
+                if (result) {
+                    if (user.emailConfirmed == false) {
+                        res.status(400).json({ message: "User is not verified." });
+                        return
+                    }
+                    const userToken = generateAccessToken(user._id, email, "1 day")
+                    res.status(200).json({ token: userToken, user: { email: email, name: user.name } });
+                } else {
+                    res.status(401).json({ message: "Invalid credentials" });
+                }
+            } catch (error:any) {
+                res.status(500).json({ message: 'Server error', error: error.message });
+            }
+        } catch (error: any) {
+            res.status(500).json({ message: 'Server error', error: error.message });
+        }
+
         User.findOne({email: email})
             .then(user => {
                 if (!user) {
                     res.status(404).json({ message: "User does not exist." });
                     return
                 }
-                compare(password, user.passwordHash/*forgot how to fix possibly null*/).then(result => {
-                    if (result) {
-                        if (user.emailConfirmed == false) {
-                            res.status(400).json({ message: "User is not verified." });
-                            return
-                        }
-                        const userToken = generateAccessToken(user._id, email, "1 day")
-                        res.status(200).json({ token: userToken, user: { email: email, name: user.name } });
-                    } else {
-                        res.status(401).json({ message: "Invalid credentials" });
-                    }
-                }).catch (error => {
-                    res.status(500).json({ message: 'Server error', error: error.message });
-                })
+
             }).catch (error => {
             res.status(500).json({ message: 'Server error', error: error.message });
         })
