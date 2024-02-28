@@ -6,6 +6,7 @@ export interface IUser extends Document {
     passwordHash: string;
     emailConfirmed: boolean;
     emailConfirmationCode: string;
+    emailConfirmationCodeDate: string;
 }
 
 const userSchema = new mongoose.Schema({
