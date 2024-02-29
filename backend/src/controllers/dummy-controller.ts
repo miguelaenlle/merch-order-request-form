@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Dummy from '../models/dummy';
 import { validationResult } from 'express-validator';
+//import {CustomRequest} from "../middleware/auth";
 
 export const createDummy = async (req: Request, res: Response) => {
     // Check for validation errors

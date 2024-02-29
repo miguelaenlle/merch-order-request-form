@@ -96,8 +96,8 @@ export const createUser = async (req: Request, res: Response) => {
             res.status(500).json({ message: "Email code send fail" });
         }
 
-        const userToken = await generateAccessToken(user._id, email, "1 day")
-        res.status(200).json({token:userToken, user: { email: email, name: name} });
+        //const userToken = await generateAccessToken(user._id, email, "1 day") //shouldnt be included
+        res.status(200).json({message: "Account created and confirmation email sent.", user: { email: email, name: name} });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }

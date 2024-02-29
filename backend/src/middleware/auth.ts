@@ -2,12 +2,13 @@ import {NextFunction, Request, Response} from 'express';
 import * as jwt from "jsonwebtoken"
 
 import dotenv from "dotenv";
+import {JwtPayload} from "jsonwebtoken";
 
 dotenv.config();
 
 const tokenSECRET = process.env.TOKEN_SECRET as string;
 export interface CustomRequest extends Request {
-    token: string | jwt.JwtPayload;
+    token: any;
 }
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,7 +19,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
             throw new Error()
         }
 
-        (req as CustomRequest).token = jwt.verify(token, tokenSECRET);
+        const decoded = jwt.verify(token, tokenSECRET) as string;
+        (req as CustomRequest).token = JSON.parse(decoded)
 
         next();
     } catch (error: any) {

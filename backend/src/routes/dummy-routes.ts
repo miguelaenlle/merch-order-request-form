@@ -1,6 +1,8 @@
-import { Router } from 'express';
+import {Request, Router} from 'express';
 import { createDummy, getDummies } from '../controllers/dummy-controller';
 import { body } from 'express-validator';
+import { auth } from '../middleware/auth'
+import {CustomRequest} from "../middleware/auth";
 
 const router = Router();
 
