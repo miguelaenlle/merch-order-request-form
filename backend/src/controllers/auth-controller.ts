@@ -57,14 +57,10 @@ export const createUser = async (req: Request, res: Response) => {
         const password = req.body.password as string;
 
         //duplicate email checking
-        try {
-            const userCheck = await User.findOne({email: email})
-            if (userCheck) {
-                res.status(409).json({ message: "Duplicate email" });
-                return
-            }
-        } catch (error: any) {
-            res.status(500).json({ message: 'Server error', error: error.message });
+        const userCheck = await User.findOne({email: email})
+        if (userCheck) {
+            res.status(409).json({ message: "Duplicate email" });
+            return
         }
 
         let passwordHash: string;
@@ -79,22 +75,13 @@ export const createUser = async (req: Request, res: Response) => {
             emailConfirmationCodeDate: emailConfirmation.Date
         });
 
-        try {
-            await user.save();
-        } catch (error: any) {
-            res.status(500).json({ message: "User object creation error" });
-        }
-
-        try {
-            await transporter.sendMail({
-                to: email,
-                from: process.env.SENDGRID_EMAIL_PERSONAL,
-                subject: 'Your email verification code',
-                html: `<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmation.Code}</h1>`
-            })
-        } catch (error: any) {
-            res.status(500).json({ message: "Email code send fail" });
-        }
+        await user.save();
+        await transporter.sendMail({
+            to: email,
+            from: process.env.SENDGRID_EMAIL_PERSONAL,
+            subject: 'Your email verification code',
+            html: `<h1>Thank you for signing up!<br>Your verification code is ${emailConfirmation.Code}</h1>`
+        })
 
         //const userToken = await generateAccessToken(user._id, email, "1 day") //shouldnt be included
         res.status(200).json({message: "Account created and confirmation email sent.", user: { email: email, name: name} });
@@ -191,16 +178,12 @@ export const resendConfirmationEmail = async (req: Request, res: Response) => {
 
         await user.save()
 
-        try {
-            await transporter.sendMail({
-                to: email,
-                from: process.env.SENDGRID_EMAIL_PERSONAL,
-                subject: 'Your email verification code',
-                html: `<h1>Your verification code is ${emailConfirmation.Code}</h1>`
-            })
-        } catch (error: any) {
-            res.status(500).json({ message: "Email code send fail" });
-        }
+        await transporter.sendMail({
+            to: email,
+            from: process.env.SENDGRID_EMAIL_PERSONAL,
+            subject: 'Your email verification code',
+            html: `<h1>Your verification code is ${emailConfirmation.Code}</h1>`
+        })
 
         res.status(200).json({message: "Confirmation code sent."});
     } catch (error: any) {
