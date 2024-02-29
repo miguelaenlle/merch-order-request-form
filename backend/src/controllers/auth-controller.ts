@@ -180,8 +180,48 @@ export const confirmEmail = async (req: Request, res: Response) => {
             user.emailConfirmed = true
             await user.save()
             res.status(200).json({message: "Email confirmed."});
+        } else {
+            res.status(401).json({message: "Invalid code."});
         }
 
+    } catch (error: any) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+export const resendConfirmationEmail = async (req: Request, res: Response) => {
+    const email = req.body.email as string
+
+    try {
+        const user = await User.findOne({email: email})
+        if (!user) {
+            res.status(404).json({message: "User does not exist."});
+            return
+        }
+        if (user.emailConfirmed == true) {
+            res.status(400).json({message: "User already verified."});
+            return
+        }
+
+        const emailConfirmation = await generateEmailConfirmation()
+
+        user.emailConfirmationCode = emailConfirmation.Code.toString()
+        user.emailConfirmationCodeDate = emailConfirmation.Date
+
+        await user.save()
+
+        try {
+            await transporter.sendMail({
+                to: email,
+                from: process.env.SENDGRID_EMAIL_PERSONAL,
+                subject: 'Your email verification code',
+                html: `<h1>Your verification code is ${emailConfirmation.Code}</h1>`
+            })
+        } catch (error: any) {
+            res.status(500).json({ message: "Email code send fail" });
+        }
+
+        res.status(200).json({message: "Confirmation code sent."});
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
