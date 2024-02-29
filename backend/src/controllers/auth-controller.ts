@@ -25,14 +25,14 @@ const generateAccessToken = async (userId: string, email: string, time: string) 
 }
 const generateEmailConfirmation = async () => {
     const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
-    const emailConfirmationCodeDate: string = Date.toString()
+    const emailConfirmationCodeDate: string = new Date().getTime().toString()
     return {
         Code: emailConfirmationCode,
         Date: emailConfirmationCodeDate
     }
 }
 const checkEmailConfirmationDateValidity = async (dateString: string) => {
-    const codeDate = new Date(dateString).getTime()
+    const codeDate = Number(dateString)
     const currentDate = new Date().getTime()
 
     const difference = currentDate - codeDate
@@ -128,7 +128,7 @@ export const loginUser = async (req: Request, res: Response) => {
                         res.status(400).json({ message: "User is not verified." });
                         return
                     }
-                    const userToken = generateAccessToken(user._id, email, "1 day")
+                    const userToken = await generateAccessToken(user._id, email, "1 day")
                     res.status(200).json({ token: userToken, user: { email: email, name: user.name } });
                 } else {
                     res.status(401).json({ message: "Invalid credentials" });
@@ -170,7 +170,17 @@ export const confirmEmail = async (req: Request, res: Response) => {
             return
         }
 
-        //const codeValidity = await checkEmailConfirmationDateValidity(user.)
+        const codeValidity = await checkEmailConfirmationDateValidity(user.emailConfirmationCodeDate)
+        if (!codeValidity) {
+            res.status(401).json({message: "Confirmation expired."});
+            return
+        }
+
+        if (confirmationCode == user.emailConfirmationCode) {
+            user.emailConfirmed = true
+            await user.save()
+            res.status(200).json({message: "Email confirmed."});
+        }
 
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
