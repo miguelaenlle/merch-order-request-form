@@ -2,11 +2,22 @@
     font-size: 40px;
     font-weight: bold;
     margin-left: 100px;
+    margin-top: 100px;
 }
 .link{
-    font-size: 40px;
+    font-size: 15px;
 }
-.gradient {
-    flex: 1;
-    background: linear-gradient(180deg, #FFA500, #FFD700);
+
+.container {
+    display: flex;
+    height: 100vh;
+    margin-top: -690px;
+}
+
+.image {
+    width: 52%;
+    height: 149%;
+    object-fit: cover;
+    margin-left: auto;
+    margin-top: 100px;
 }
