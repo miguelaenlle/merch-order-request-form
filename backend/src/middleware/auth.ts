@@ -8,7 +8,7 @@ dotenv.config();
 
 const tokenSECRET = process.env.TOKEN_SECRET as string;
 export interface CustomRequest extends Request {
-    token: any;
+    token?: JwtPayload;
 }
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -19,8 +19,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
             throw new Error()
         }
 
-        const decoded = jwt.verify(token, tokenSECRET) as string;
-        (req as CustomRequest).token = JSON.parse(decoded)
+        const decoded: JwtPayload = jwt.verify(token, tokenSECRET) as JwtPayload;
+        (req as CustomRequest).token = decoded
 
         next();
     } catch (error: any) {
