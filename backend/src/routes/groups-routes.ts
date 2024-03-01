@@ -4,13 +4,13 @@ import {body} from "express-validator";
 
 const router = express.Router();
 
-router.post('/groups', [
+router.post('/', [
     body('name').isString().withMessage('Name must be a string').notEmpty().withMessage('Name is required').isLength({ min: 3, max: 25 })], createGroup);
-router.get('/groups', retrieveGroups);
-router.get('/groups/{id}',[
+router.get('/', retrieveGroups);
+router.get('/',[
     body('name').isString().withMessage('Name must be a string').notEmpty().withMessage('Name is required')], getSpecificGroup);
-router.put('/groups/{id}', [
+router.put('/', [
     body('name').isString().withMessage('Name must be a string').notEmpty().withMessage('Name is required').isLength({ min: 3, max: 25 })], updateName);
-router.delete('/groups/{id}', deleteGroup);
+router.delete('/', deleteGroup);
 
 export default router;

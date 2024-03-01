@@ -37,12 +37,12 @@ export const createGroup = async (req: Request, res: Response) => {
 }
 
 //Returns the existing groups
-export const retrieveGroups = async (res: Response) => {
+export const retrieveGroups = async (req: Request, res: Response) => {
     try {
         const groups = await Group.find();
-        res.status(200).json(groups);
+        return res.status(200).json(groups);
     } catch (error: any) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
 
