@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import Dummy from '../models/dummy';
 import { validationResult } from 'express-validator';
+import { CustomRequest } from "../middleware/auth";
+import { JwtPayload } from "jsonwebtoken";
 
 export const createDummy = async (req: Request, res: Response) => {
     // Check for validation errors
@@ -26,6 +28,19 @@ export const createDummy = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+export const dummyTokenTest = async (req: CustomRequest, res: Response) => {
+    if (!req.token) {
+        res.status(400).json({ message: 'Token missing'});
+        return
+    }
+    try {
+        console.log("req.token", req.token)
+        res.status(200).json({message: req.token});
+    } catch (error: any) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
 
 export const getDummies = async (req: Request, res: Response) => {
     try {
