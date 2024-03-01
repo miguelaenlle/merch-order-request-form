@@ -1,41 +1,55 @@
 import { Request, Response } from 'express';
-import { v4 as uuid } from 'uuid';
+import Group from '../models/group';
+import { validationResult } from 'express-validator';
+import group from "../models/group";
+import { ObjectId } from "mongodb";
 
-interface Group {
-    name:string;
-    _id:string;
-}
 
-let groups: Group[] = []; //Array of groups
+
+
 
 //Creates a group with the desired name and gives a unique ID
 export const createGroup = async (req: Request, res: Response) => {
-    const { name }: { name: string } = req.body;
-
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log("errors", errors);
+        return res.status(400).json({ errors: errors.array() });
+    }
     //Checks if there's a similar group
-    if (groups.find((group) => group.name === name)) {
-        return res.status(409).json({ error: "The group name was already taken"});
+    const dupeGroup = group.findOne({ name: req.body })
+    if (!dupeGroup) {
+        return res.status(409).json({ error: "A group with the same name already exists."  });
     }
-    //Validates the provided name
-    if (typeof name !== 'string' || name.length > 30 ){
-        return res.status(400).json({ error: "The group name must not exceed 30 characters"});
-    }
-    //Creates a new group with name and id
-    const newGroup : Group = { name, _id: uuid()};
-    groups.push(newGroup);
+    else{
+        //Creates a new group with name and id
+        try {
+            const name = req.body.name as string;
 
-    return res.status(201).json(newGroup);
+            const group = new Group({
+                name: name,
+            });
+            await group.save();
+            return res.status(201).json({group});
+        } catch (error: any) {
+            res.status(500).json({ message: 'Server error', error: error.message });
+        }
+    }
 }
 
 //Returns the existing groups
 export const retrieveGroups = async (res: Response) => {
-    return res.status(200).json(groups);
+    try {
+        const groups = await Group.find();
+        res.status(200).json(groups);
+    } catch (error: any) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
 }
 
 //Find specific group by ID
 export const getSpecificGroup = async (req: Request, res:Response) => {
-    const groupID: string = req.body;
-    const desiredGroup = groups.find((desiredGroup) => desiredGroup._id === groupID);
+    const groupID: string = req.params._id;
+    const desiredGroup = Group.findOne({ _id: groupID })
 
     if (desiredGroup){
         return res.status(200).json(desiredGroup);
@@ -47,40 +61,46 @@ export const getSpecificGroup = async (req: Request, res:Response) => {
 
 //Updates the name of an existing group
 export const updateName = async (req: Request, res: Response) =>{
-    const newName: string = req.body;
+    const { newName }: { newName: string }= req.body;
     const groupID: string = req.params._id;
-    const index = groups.findIndex((index) => index._id === groupID);
 
     //Validation error
-    if (typeof newName !== 'string' || newName.length > 30 ){
-        return res.status(400).json({ error: "The group name must not exceed 30 characters"});
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log("errors", errors);
+        return res.status(400).json({ errors: errors.array() });
     }
     //Group existence error
-    if(groups.find((dupe) => dupe.name === newName)){
+    const existingGroup = await Group.findOne({name: newName})
+    if(existingGroup){
         return res.status(409).json({ error: "This group name is already taken"});
     }
-    //Checks group ID
-    if(index !== 0){
-        return res.status(404).json({ error: "The desired group was not found"});
+    //Updates group
+    try {
+        const result = await Group.updateOne({_id: new ObjectId(groupID)}, {$set: { name: newName }});
+        if(result.matchedCount === 0){
+            return res.status(404).json({ error: 'The desired group was not found'});
+        }
+        const updatedGroup = await Group.findOne({ _id: new ObjectId(groupID)});
+        return res.status(200).json(updatedGroup);
     }
-    //Adds the new name based on the ID
-    else{
-        groups[index].name = newName;
-        return res.status(200).json(groups[index]);
+    catch (error: any) {
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
+
 }
 
 //Deletes group by ID
 export const deleteGroup = async (req: Request, res: Response) => {
     const groupID: string = req.params._id;
-    const index = groups.findIndex((index) => index._id === groupID);
-    //Checks group ID
-    if(index !== 0){
-        return res.status(404).json({ error: "The desired group was not found"});
+    try {
+        const result = await Group.deleteOne({_id: new ObjectId(groupID)});
+        if(result.deletedCount === 0){
+            return res.status(404).json({ error: 'The desired group was not found'});
+        }
+        return res.status(200).json({ error: 'The group was successfully deleted'})
     }
-    //Deletes the group by ID
-     else if(index > -1){
-        groups.splice(index, 1);
-        return res.status(200).json("The desired group was deleted successfully");
-     }
+    catch (error: any) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
 }
