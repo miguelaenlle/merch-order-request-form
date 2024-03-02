@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import Group from '../models/group';
 import { validationResult } from 'express-validator';
-import group from "../models/group";
 import { ObjectId } from "mongodb";
 
 
@@ -16,7 +15,7 @@ export const createGroup = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
     }
     //Checks if there's a similar group
-    const dupeGroup = group.findOne({ name: req.body })
+    const dupeGroup = Group.findOne({ name: req.body })
     if (!dupeGroup) {
         return res.status(409).json({ error: "A group with the same name already exists."  });
     }
@@ -47,16 +46,19 @@ export const retrieveGroups = async (req: Request, res: Response) => {
 }
 
 //Find specific group by ID
-export const getSpecificGroup = async (req: Request, res:Response) => {
-    const groupID: string = req.params._id;
-    const desiredGroup = Group.findOne({ _id: groupID })
-
-    if (desiredGroup){
-        return res.status(200).json(desiredGroup);
-    }
-    else{
-        return res.status(404).json({ error: "No group with the provided ID exists"});
-    }
+export const getSpecificGroup = async (req: Request, res: Response) => {
+   try {
+       const groupID: string = req.params._id;
+       const desiredGroup = await Group.findOne({ _id: groupID });
+       if (desiredGroup){
+           return res.status(200).json(desiredGroup);
+       }
+       else{
+           return res.status(404).json({ error: "No group with the provided ID exists"});
+       }
+   } catch (error: any){
+       return res.status(500).json({ message: 'Server error', error: error.message });
+   }
 }
 
 //Updates the name of an existing group
@@ -98,7 +100,7 @@ export const deleteGroup = async (req: Request, res: Response) => {
         if(result.deletedCount === 0){
             return res.status(404).json({ error: 'The desired group was not found'});
         }
-        return res.status(200).json({ error: 'The group was successfully deleted'})
+        return res.status(200).json({ message: 'The group was successfully deleted'})
     }
     catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
