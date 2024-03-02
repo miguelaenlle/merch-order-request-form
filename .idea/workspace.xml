@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Created all of the group routes and the logic behind it">
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Fixed bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/routes/groups-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/groups-routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,7 +127,8 @@
       <workItem from="1709168831407" duration="4335000" />
       <workItem from="1709252702891" duration="5384000" />
       <workItem from="1709261537281" duration="1784000" />
-      <workItem from="1709341387436" duration="1180000" />
+      <workItem from="1709341387436" duration="1217000" />
+      <workItem from="1709345815102" duration="103000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -154,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709263888411</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed bugs">
+      <option name="closed" value="true" />
+      <created>1709342617893</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1709342617893</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +170,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created all of the group routes and the logic behind it" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created all of the group routes and the logic behind it" />
+    <MESSAGE value="Fixed bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs" />
   </component>
 </project>
