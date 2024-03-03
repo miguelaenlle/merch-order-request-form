@@ -123,7 +123,7 @@ export const getPassword = async (req: Request, res: Response) => {
             // Do something with the user data if needed
             res.status(200).json({ message: 'Token is valid' });
         } else {
-            res.status(404).json({ error: 'Invalid or expired reset token' });
+            res.status(404).json({ error: 'Invalid reset token' });
         }
     } catch (err) {
         console.log(err);
