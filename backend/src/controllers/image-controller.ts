@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import Image from '../models/image';
 import Item from '../models/item'; 
 import mongoose from 'mongoose';
+import admin from 'firebase-admin'  
 
 export const createImage = async (req: Request, res: Response) => {
     // Check for validation errors 
@@ -12,8 +13,7 @@ export const createImage = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
     } 
 
-    try {
-
+    try { 
         const itemId = req.params.itemId as string
         const imageUrl = req.body.imageUrl as string
         const isPrimary = req.body.isPrimary as boolean
@@ -47,8 +47,9 @@ export const createImage = async (req: Request, res: Response) => {
             imageUrl: imageUrl,
             isPrimary: isPrimary,
             order: order
-        });
-
+        });  
+        const bucket = admin.storage().bucket();
+        await bucket.file(imageUrl).save(imageUrl, { contentType: 'image/jpeg' }); 
         await image.save();
         return res.status(201).json({ image });
     } catch (error: any) {
