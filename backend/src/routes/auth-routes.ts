@@ -19,8 +19,6 @@ router.post('/reset', [
     body('email').isEmail().withMessage('Email must be valid').notEmpty().withMessage('Email is required')
 ], postReset);
 
-router.get('/reset/:token', getPassword);
-
 router.post('/new-password', postNewPassword);
 
 export default router;

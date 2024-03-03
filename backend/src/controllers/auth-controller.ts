@@ -1,14 +1,18 @@
 import {Request, Response} from 'express';
-import User from '../models/user';
+import User, {IUser} from '../models/user';
 import bcrypt, {compare, hash} from 'bcrypt';
-import { validationResult } from 'express-validator';
+import {validationResult} from 'express-validator';
 import crypto from 'crypto';
 import nodemailer from "nodemailer";
 import nodemailerSendgrid from "nodemailer-sendgrid";
 
+import dotenv from "dotenv";
+dotenv.config();
+
+const apiKey = process.env.SENDGRID_TOKEN_PERSONAL as string;
 const saltRounds = 10 //for when a user signs up
 const transporter = nodemailer.createTransport(nodemailerSendgrid({
-    apiKey: "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"
+    apiKey: apiKey
 }));
 export const createUser = async (req: Request, res: Response) => {
     // Check for validation errors
@@ -75,30 +79,34 @@ export const postReset = async (req: Request, res: Response) => {
                console.log(err);
            }
            const token = buf.toString('hex');
-           // @ts-ignore
-            User.findOne({email: req.body.email}).then(user => {
-               if(!user){
-                   console.log(err + ": No account with that email found");
-                   return res.redirect('/api/auth/');
-               }
-               user.resetToken = token;
-               // @ts-ignore
-               user.resetTokenExpiration = Date.now() + 3600000;
-               return user.save();
-           }).then(() => {
-               res.redirect('api/auth/login')
-               transporter.sendMail({
-                  to: req.body.email,
-                  from: 'arslankamcybekov7@gmail.com',
-                   subject: 'Password Reset Details',
-                   html: `
-                     <p>You requested a password reset</p>
-                     <p>Click this link <a> href="http://localhost:3000/reset/${token}">link</a> to set a new password</p>
-                   `
-               });
-           }).catch(err => {
-               console.log(err);
-           });
+            const resetPassword = async ({req, res}: { req: any, res: any }) => {
+                try {
+                    const user = await User.findOne({ email: req.body.email });
+                    if (!user) {
+                        console.log("No account with that email found");
+                        return res.status(404).json({ error: "No account with that email found" });
+                    }
+                    user.resetToken = token;
+                    // @ts-ignore
+                    user.resetTokenExpiration = Date.now() + 3600000;
+
+                    await user.save();
+
+                    res.status(200).json({ user: user, message: "Authentication successful" });
+
+                    await transporter.sendMail({
+                        to: req.body.email,
+                        from: process.env.SENDGRID_EMAIL_PERSONAL,
+                        subject: 'Password Reset Details',
+                        html: `
+                <p>You requested a password reset</p>
+                <p>Click this link<a href="http://localhost:3000/reset/${token}"></a> to set a new password</p>`
+                    });
+                } catch (err) {
+                    return res.status(401).json({ error: "Authentication failed. Invalid credentials." });
+                }
+            };
+
         });
         res.status(200).json({ message: 'Forgot password request received. Check your email for further instructions.' });
     } catch (error: any) {
@@ -106,40 +114,47 @@ export const postReset = async (req: Request, res: Response) => {
     }
 };
 export const getPassword = async (req: Request, res: Response) => {
-    const token  = req.params.token;
-    User.findOne({resetToken: token, resetTokenExpiration: {$gt: Date.now()}}).then(user =>{
-        res.render('auth/new-password',
-            {
-                path: '/new-password',
-                pageTitle: 'New Password',
-                userId: user?._id.toString(),
-                passwordToken: token
-            });
-    }).catch( err => {
+    const token = req.params.token;
+
+    try {
+        const user = await User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } });
+
+        if (user) {
+            // Do something with the user data if needed
+            res.status(200).json({ message: 'Token is valid' });
+        } else {
+            res.status(404).json({ error: 'Invalid or expired reset token' });
+        }
+    } catch (err) {
         console.log(err);
-    });
+        res.status(500).json({ error: 'Server error' });
+    }
 };
 
+
 export const postNewPassword = async (req: Request, res: Response) => {
-    const newPassword = req.body.password;
-    const userId = req.body.userId;
-    const passwordToken = req.body.passwordToken;
-    let resetUser;
-    User.findOne({resetToken: passwordToken, resetTokenExpiration: {$gt: Date.now()}, _id: userId})
-        .then(user => {
-        resetUser = user;
-        return bcrypt.hash(newPassword, 12);
-    })
-        .then(hashedPassword => {
-        resetUser.password = hashedPassword;
-        resetUser.token = undefined;
-        resetUser.resetTokenExpiration = undefined;
-        return resetUser.save();
-    })
-        .then(() => {
+    try {
+        const newPassword = req.body.password;
+        const userId = req.body.userId;
+        const passwordToken = req.body.passwordToken;
+
+        const resetUser = await User.findOne({
+            resetToken: passwordToken,
+            resetTokenExpiration: { $gt: Date.now() },
+            _id: userId
+        }) as IUser;
+
+        if (!resetUser) {
+            console.log("Invalid or expired reset token");
+            return res.redirect('/api/auth/');
+        }
+        resetUser.passwordHash = await bcrypt.hash(newPassword, 12);
+        await resetUser.save();
+
         res.redirect('/api/auth/login');
-    })
-        .catch(err => {
-        console.log(err);
-    });
+    } catch (err) {
+        console.error("Error in postNewPassword:", err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
 };
+

@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/auth-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/auth-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/models/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/routes/auth-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/auth-routes.ts" afterDir="false" />
-    </list>
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Added reset, reset/:token, new-password routes; Added controllers for password reset" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,6 +17,26 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "ArslanKamchybekov"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="miguelaenlle" />
+        <option name="repository" value="merch-order-request-form" />
+      </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="9a8cc3f6-5ff1-4e50-bf3b-0ea30176da1c" />
+        <option name="url" value="https://github.com/miguelaenlle/merch-order-request-form.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -74,11 +85,24 @@
       <workItem from="1708293781262" duration="1229000" />
       <workItem from="1708295309581" duration="579000" />
       <workItem from="1708295900966" duration="12891000" />
-      <workItem from="1708830140117" duration="3083000" />
+      <workItem from="1708830140117" duration="3753000" />
     </task>
+    <task id="LOCAL-00001" summary="Added reset, reset/:token, new-password routes; Added controllers for password reset">
+      <option name="closed" value="true" />
+      <created>1708833818482</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1708833818482</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added reset, reset/:token, new-password routes; Added controllers for password reset" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added reset, reset/:token, new-password routes; Added controllers for password reset" />
   </component>
 </project>
