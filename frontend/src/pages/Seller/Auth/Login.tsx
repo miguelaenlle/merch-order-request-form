@@ -11,21 +11,21 @@ const Login: React.FC<LoginProps> = () => {
     const [password, setPassword] = React.useState<string>('');
 
     const handleLogin = () => {
-        // Implement your login logic here
+
         console.log('Logging in with:', { username, password });
     };
 
     return (
         <Flex className="content">
-            {/* Left side */}
+
             <Box className="gradient-bg" />
 
-            {/* Right side */}
+
             <Box className="login-container">
                 <h1 className="login-header">Seller Login</h1>
                 <p className="login-text">Continue to Hersey Spirit wear Dashboard</p>
 
-                {/* Username Input */}
+
                 <Input
                     placeholder="Username"
                     value={username}
@@ -33,7 +33,7 @@ const Login: React.FC<LoginProps> = () => {
                     mb={4}
                 />
 
-                {/* Password Input */}
+
                 <Input
                     type="password"
                     placeholder="Password"
@@ -42,7 +42,7 @@ const Login: React.FC<LoginProps> = () => {
                     mb={6}
                 />
 
-                {/* Login Button with icon */}
+
                 <Button
                     colorScheme="blue"
                     onClick={handleLogin}
@@ -51,7 +51,7 @@ const Login: React.FC<LoginProps> = () => {
                     Log In
                 </Button>
 
-                {/* Forgot Password Button */}
+
                 <Button
                     variant="link"
                     onClick={() => {

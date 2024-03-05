@@ -1,4 +1,4 @@
-// ForgotPassword.tsx
+
 
 import * as React from "react";
 import { Input, Button, Box, Flex } from '@chakra-ui/react';
@@ -11,20 +11,20 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     const [confirmNewPassword, setConfirmNewPassword] = React.useState<string>('');
 
     const handleResetPassword = () => {
-        // Implement your reset password logic here
+
         console.log('Resetting password with:', { newPassword, confirmNewPassword });
     };
 
     return (
         <Flex className="content">
-            {/* Left side */}
+
             <Box className="gradient-bg" />
 
-            {/* Right side */}
+
             <Box className="login-container">
                 <h1 className="login-header">Forgot Password</h1>
 
-                {/* New Password Input */}
+
                 <Input
                     placeholder="New Password"
                     type="password"
@@ -33,7 +33,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                     mb={4}
                 />
 
-                {/* Confirm New Password Input */}
+
                 <Input
                     placeholder="Confirm New Password"
                     type="password"
@@ -42,7 +42,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                     mb={6}
                 />
 
-                {/* Reset Password Button */}
+
                 <Button
                     colorScheme="blue"
                     onClick={handleResetPassword}
@@ -52,11 +52,10 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                     Reset Password
                 </Button>
 
-                {/* Back to Login Button */}
+
                 <Button
                     variant="link"
                     onClick={() => {
-                        // Navigate back to the login page or handle navigation as needed
                         console.log('Navigate back to login');
                     }}
                     w="100%"
