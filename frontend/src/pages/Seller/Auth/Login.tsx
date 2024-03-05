@@ -1,46 +1,69 @@
+// Login.tsx
+
 import * as React from "react";
-import { Input, Button } from '@chakra-ui/react';
-import styles from './Login.module.css';
+import { Input, Button, Box, Flex } from '@chakra-ui/react';
+import './Login.css'; // Import the new CSS file
 
-interface LoginPageProps {}
+interface LoginProps {}
 
-const Login: React.FC<LoginPageProps> = () => {
+const Login: React.FC<LoginProps> = () => {
     const [username, setUsername] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
 
     const handleLogin = () => {
-        // Implement login logic here
+        // Implement your login logic here
         console.log('Logging in with:', { username, password });
     };
 
     return (
-        <div className={styles.content}>
-            <h1>Seller Login</h1>
-            <p>Continue to Hersey Spirit wear Dashboard</p>
+        <Flex className="content">
+            {/* Left side */}
+            <Box className="gradient-bg" />
 
+            {/* Right side */}
+            <Box className="login-container">
+                <h1 className="login-header">Seller Login</h1>
+                <p className="login-text">Continue to Hersey Spirit wear Dashboard</p>
 
-            <Input
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
+                {/* Username Input */}
+                <Input
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    mb={4}
+                />
 
+                {/* Password Input */}
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    mb={6}
+                />
 
-            <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                {/* Login Button with icon */}
+                <Button
+                    colorScheme="blue"
+                    onClick={handleLogin}
+                    w="100%"
+                >
+                    Log In
+                </Button>
 
-
-            <Button
-                colorScheme="blue"
-                onClick={handleLogin}
-            >
-                Login
-            </Button>
-        </div>
+                {/* Forgot Password Button */}
+                <Button
+                    variant="link"
+                    onClick={() => {
+                        // Navigate to the Forgot Password page or handle navigation as needed
+                        console.log('Navigate to Forgot Password');
+                    }}
+                    mt={2}
+                >
+                    Forgot Password
+                </Button>
+            </Box>
+        </Flex>
     );
 };
 

@@ -1,5 +1,8 @@
+// ForgotPassword.tsx
+
 import * as React from "react";
-import { Input, Button, Heading, Box } from '@chakra-ui/react';
+import { Input, Button, Box, Flex } from '@chakra-ui/react';
+import './Login.css'; // Import the shared CSS file
 
 interface ForgotPasswordProps {}
 
@@ -8,53 +11,60 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     const [confirmNewPassword, setConfirmNewPassword] = React.useState<string>('');
 
     const handleResetPassword = () => {
+        // Implement your reset password logic here
         console.log('Resetting password with:', { newPassword, confirmNewPassword });
     };
 
     return (
-        <Box p={4} maxW="md" mx="auto">
-            <Heading as="h2" size="xl" textAlign="center" mb={6}>
-                Forgot Password
-            </Heading>
+        <Flex className="content">
+            {/* Left side */}
+            <Box className="gradient-bg" />
 
+            {/* Right side */}
+            <Box className="login-container">
+                <h1 className="login-header">Forgot Password</h1>
 
-            <Input
-                placeholder="New Password"
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                mb={4}
-            />
+                {/* New Password Input */}
+                <Input
+                    placeholder="New Password"
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    mb={4}
+                />
 
+                {/* Confirm New Password Input */}
+                <Input
+                    placeholder="Confirm New Password"
+                    type="password"
+                    value={confirmNewPassword}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    mb={6}
+                />
 
-            <Input
-                placeholder="Confirm New Password"
-                type="password"
-                value={confirmNewPassword}
-                onChange={(e) => setConfirmNewPassword(e.target.value)}
-                mb={6}
-            />
+                {/* Reset Password Button */}
+                <Button
+                    colorScheme="blue"
+                    onClick={handleResetPassword}
+                    mb={4}
+                    w="100%"
+                >
+                    Reset Password
+                </Button>
 
-
-            <Button
-                colorScheme="blue"
-                onClick={handleResetPassword}
-                mb={4}
-                w="100%"
-            >
-                Reset Password
-            </Button>
-
-
-            <Button
-                onClick={() => {
-                    console.log('Navigate back to login');
-                }}
-                w="100%"
-            >
-                Back to Login
-            </Button>
-        </Box>
+                {/* Back to Login Button */}
+                <Button
+                    variant="link"
+                    onClick={() => {
+                        // Navigate back to the login page or handle navigation as needed
+                        console.log('Navigate back to login');
+                    }}
+                    w="100%"
+                >
+                    Back to Login
+                </Button>
+            </Box>
+        </Flex>
     );
 };
 
