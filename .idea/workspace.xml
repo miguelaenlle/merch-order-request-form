@@ -4,11 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Added reset, reset/:token, new-password routes; Added controllers for password reset" />
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Fixed bugs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/routes/groups-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/groups-routes.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -18,12 +28,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ArslanKamchybekov"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dhruvtp05&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="recentNewPullRequestHead">
       <RepoCoordinatesHolder>
@@ -33,13 +43,16 @@
     </option>
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="9a8cc3f6-5ff1-4e50-bf3b-0ea30176da1c" />
+        <option name="accountId" value="009f2f8d-716f-4be2-9a77-70e155755b99" />
         <option name="url" value="https://github.com/miguelaenlle/merch-order-request-form.git" />
       </UrlAndAccount>
     </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -49,28 +62,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;forgot__password__routes&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/arslankamchybekov/WebstormProjects/merch-order-request-form/backend/src/controllers&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/arslankamchybekov/WebstormProjects/merch-order-request-form/backend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging forgot__password__routes",
+    "last_opened_file_path": "C:/Users/maenlle/WebstormProjects",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "inlay.hints",
+    "ts.external.directory.path": "N:\\gitcloned\\merch-order-request-form\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/backend/src/controllers" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/backend" />
+      <recent name="C:\Users\Dhruv\WebstormProjects\merch-order-request-form\backend" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -81,28 +110,67 @@
       <option name="presentableId" value="Default" />
       <updated>1707956904649</updated>
       <workItem from="1707956905767" duration="20000" />
-      <workItem from="1708293207914" duration="569000" />
-      <workItem from="1708293781262" duration="1229000" />
-      <workItem from="1708295309581" duration="579000" />
-      <workItem from="1708295900966" duration="12891000" />
-      <workItem from="1708830140117" duration="3753000" />
+      <workItem from="1708284914711" duration="1020000" />
+      <workItem from="1708373447780" duration="693000" />
+      <workItem from="1708386864024" duration="917000" />
+      <workItem from="1708394675500" duration="1003000" />
+      <workItem from="1708478395989" duration="4930000" />
+      <workItem from="1708483358257" duration="7000" />
+      <workItem from="1708565824782" duration="3945000" />
+      <workItem from="1708652433126" duration="2462000" />
+      <workItem from="1708654921703" duration="752000" />
+      <workItem from="1708910455056" duration="111000" />
+      <workItem from="1708915472309" duration="2156000" />
+      <workItem from="1709000715703" duration="1249000" />
+      <workItem from="1709085592192" duration="1548000" />
+      <workItem from="1709091722416" duration="1123000" />
+      <workItem from="1709168831407" duration="4335000" />
+      <workItem from="1709252702891" duration="5384000" />
+      <workItem from="1709261537281" duration="1784000" />
+      <workItem from="1709341387436" duration="1217000" />
+      <workItem from="1709345815102" duration="103000" />
     </task>
-    <task id="LOCAL-00001" summary="Added reset, reset/:token, new-password routes; Added controllers for password reset">
+    <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
-      <created>1708833818482</created>
+      <created>1708655092376</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1708833818482</updated>
+      <updated>1708655092376</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Created all of the group routes and the logic behind it">
+      <option name="closed" value="true" />
+      <created>1709257189275</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709257189275</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Created all of the group routes and the logic behind it">
+      <option name="closed" value="true" />
+      <created>1709263888411</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1709263888411</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fixed bugs">
+      <option name="closed" value="true" />
+      <created>1709342617893</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1709342617893</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added reset, reset/:token, new-password routes; Added controllers for password reset" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added reset, reset/:token, new-password routes; Added controllers for password reset" />
+    <MESSAGE value="Created all of the group routes and the logic behind it" />
+    <MESSAGE value="Fixed bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs" />
   </component>
 </project>
