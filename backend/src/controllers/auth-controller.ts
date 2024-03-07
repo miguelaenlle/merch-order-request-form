@@ -20,8 +20,8 @@ const transporter = createTransport(sendgridTransport({
     }
 }))
 
-const generateAccessToken = async (userId: string, email: string, time: string) => { // this is like this incase its used for extra things
-    return jwt.sign({userId: userId, email: email}, tokenSECRET, {expiresIn: time})
+const generateAccessToken = async (type: string, userId: string, email: string, time: string) => { // this is like this incase its used for extra things
+    return jwt.sign({type: type, userId: userId, email: email}, tokenSECRET, {expiresIn: time})
 }
 const generateEmailConfirmation = async () => {
     const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
@@ -113,7 +113,7 @@ export const loginUser = async (req: Request, res: Response) => {
                 res.status(400).json({ message: "User is not verified." });
                 return
             }
-            const userToken = await generateAccessToken(user._id, email, "1 day")
+            const userToken = await generateAccessToken("login", user._id, email, "1 day")
             res.status(200).json({ token: userToken, user: { email: email, name: user.name } });
         } else {
             res.status(401).json({ message: "Invalid credentials" });
