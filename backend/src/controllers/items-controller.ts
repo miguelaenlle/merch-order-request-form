@@ -2,9 +2,8 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import Item from '../models/item';
 import User from '../models/user'
-import inventoryItem from "../models/inventory-item";
+import InventoryItem from "../models/inventory-item";
 import mongoose from 'mongoose';
-import Group from "../models/group";
 import {ObjectId} from "mongodb";
 
 //Creates an item
@@ -13,56 +12,58 @@ export const createItem = async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({errors: errors.array()});
     }
     //Duplicated item check
-    const dupeItem = Item.findOne({ name: req.body })
-    if(!dupeItem) {
-        return res.status(409).json({ error: "An item with the same name already exists."  });
-    } else{
-        try {
-            const name = req.body.name as string;
-            const description = req.body.description as string;
-            const pickupLocation = req.body.pickupLocation as string;
-            const pickupTime = req.body.pickupTime as string;
-            const itemOwnerId = User.findOne({_id: "65e4ccd5c569994b0d2b661e"});
-            //Interface for a new item
-            const item = new Item({
-                name: name,
-                description: description,
-                pickupLocation: pickupLocation,
-                pickupTime: pickupTime,
-                itemOwnerId: itemOwnerId
-            });
-            //Creates a transaction to create inventory-items
-            //Checks if there's missing sizes
-            const transaction = await mongoose.startSession();
-            transaction.startTransaction();
-            try{
-                const savedItem = await item.save();
-                const sizeList = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
-                for (const size of sizeList) {
-                    const invItem = new inventoryItem({
-                        size: size,
-                        item: savedItem._id
-                    });
-                    await invItem.save();
-                }
-                await transaction.commitTransaction();
-                await transaction.endSession();
-                return res.status(201).json({item});
-            }
-            catch (error: any) {
-                await transaction.abortTransaction();
-                await transaction.endSession();
-                throw error;
-            }
+    const dupeItem = Item.findOne({name: req.body.name})
+    if (!dupeItem) {
+        return res.status(409).json({error: "An item with the same name already exists."});
+    }
+    //Checks if the ID matches the owner of the item
+    const itemOwnerId = req.params._id;
+    const itemOwnerExistence = User.findOne({_id: itemOwnerId});
+    if (!itemOwnerExistence) {
+        return res.status(404).json({error: "This id does not match the owner of the item."});
+    }
+    const name = req.body.name as string;
+    const description = req.body.description as string;
+    const pickupLocation = req.body.pickupLocation as string;
+    const pickupTime = req.body.pickupTime as string;
 
-        } catch (error: any) {
-            res.status(500).json({ message: 'Server error', error: error.message });
+
+
+    //Interface for a new item
+    const item = new Item({
+        name: name,
+        description: description,
+        pickupLocation: pickupLocation,
+        pickupTime: pickupTime,
+        itemOwnerId: itemOwnerId
+    });
+    //Creates a transaction to create inventory-items
+    //Checks if there's missing sizes
+    const transaction = await mongoose.startSession();
+    transaction.startTransaction();
+    try {
+        const savedItem = await item.save();
+        const sizeList = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
+        for (const size of sizeList) {
+            const invItem = new InventoryItem({
+                size: size,
+                item: savedItem._id
+            });
+            await invItem.save({session: transaction});
         }
+        await transaction.commitTransaction();
+        await transaction.endSession();
+        return res.status(201).json({item});
+    } catch (error: any) {
+        await transaction.abortTransaction();
+        await transaction.endSession();
+        return res.status(500).json({message: 'Server error', error: error.message});
     }
 }
+
 
 //Retrieves a list of all items
 export const retrieveItems = async (req: Request, res: Response) => {

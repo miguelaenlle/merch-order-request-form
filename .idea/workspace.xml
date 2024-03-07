@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Fixed bugs">
-      <change afterPath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/routes/items-routes.ts" afterDir="false" />
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Created the items route">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +133,10 @@
       <workItem from="1709437101936" duration="3508000" />
       <workItem from="1709487019750" duration="7995000" />
       <workItem from="1709512881778" duration="6171000" />
-      <workItem from="1709523295858" duration="739000" />
+      <workItem from="1709523295858" duration="997000" />
+      <workItem from="1709596139391" duration="1750000" />
+      <workItem from="1709608521155" duration="1949000" />
+      <workItem from="1709775435217" duration="1133000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -176,7 +178,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709345937898</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Created the items route">
+      <option name="closed" value="true" />
+      <created>1709524098835</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1709524098835</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,6 +195,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created all of the group routes and the logic behind it" />
     <MESSAGE value="Fixed bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs" />
+    <MESSAGE value="Created the items route" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created the items route" />
   </component>
 </project>
