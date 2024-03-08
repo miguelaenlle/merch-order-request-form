@@ -2,7 +2,9 @@
 
 import * as React from "react";
 import { Input, Button, Box, Flex } from '@chakra-ui/react';
-import './Login.module.css'; // Import the new CSS file
+import { HiMiniQuestionMarkCircle } from "react-icons/hi2";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import './Login.module.css';
 
 interface LoginProps {}
 
@@ -11,7 +13,7 @@ const Login: React.FC<LoginProps> = () => {
     const [password, setPassword] = React.useState<string>('');
 
     const handleLogin = () => {
-
+        // Implement your login logic here
         console.log('Logging in with:', { username, password });
     };
 
@@ -46,6 +48,7 @@ const Login: React.FC<LoginProps> = () => {
                 <Button
                     colorScheme="blue"
                     onClick={handleLogin}
+                    leftIcon={<RiLogoutBoxRLine />}
                     w="100%"
                 >
                     Log In
@@ -58,6 +61,8 @@ const Login: React.FC<LoginProps> = () => {
                         // Navigate to the Forgot Password page or handle navigation as needed
                         console.log('Navigate to Forgot Password');
                     }}
+                    w="100%"
+                    leftIcon={<HiMiniQuestionMarkCircle />}
                     mt={2}
                 >
                     Forgot Password
