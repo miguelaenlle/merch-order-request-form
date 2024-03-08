@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Input, Button, Box, Flex } from '@chakra-ui/react';
-import './Login.css'; // Import the new CSS file
+import './Login.module.css'; // Import the new CSS file
 
 interface LoginProps {}
 

@@ -1,0 +1,31 @@
+/* Login.module.css */
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.gradient-bg {
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, white, orange);
+}
+
+.login-container {
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+}
+
+.login-header {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.login-text {
+    margin-bottom: 20px;
+}
+
+
