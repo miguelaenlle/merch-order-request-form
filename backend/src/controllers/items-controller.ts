@@ -20,7 +20,7 @@ export const createItem = async (req: Request, res: Response) => {
         return res.status(409).json({error: "An item with the same name already exists."});
     }
     //Checks if the ID matches the owner of the item
-    const itemOwnerId = req.body._id;
+    const itemOwnerId = req.body.itemOwnerId;
     const itemOwnerExistence = await User.findOne({_id: itemOwnerId});
     if (!itemOwnerExistence) {
         return res.status(404).json({error: "This id does not match the owner of the item."});
@@ -47,10 +47,14 @@ export const createItem = async (req: Request, res: Response) => {
     try {
         const savedItem = await item.save();
         const sizeList = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
+        const price = req.body.price as number;
         for (const size of sizeList) {
             const invItem = new InventoryItem({
                 size: size,
-                item: savedItem._id
+                itemId: savedItem._id,
+                amount: 0,
+                price: price
+
             });
             await invItem.save({session: transaction});
         }
@@ -108,7 +112,7 @@ export const updateItem = async (req: Request, res: Response) => {
     //Updates item
     try {
         const result = await Item.updateOne({_id: new ObjectId(itemID)},
-            {$set: { name: newName, description: newDescription, pickupLocation: newPickupLocation, pickupTime: newPickupTime}});
+            { name: newName, description: newDescription, pickupLocation: newPickupLocation, pickupTime: newPickupTime });
         if(result.matchedCount === 0){
             return res.status(404).json({ error: 'The desired item was not found'});
         }
