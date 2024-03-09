@@ -20,8 +20,8 @@ export const createItem = async (req: Request, res: Response) => {
         return res.status(409).json({error: "An item with the same name already exists."});
     }
     //Checks if the ID matches the owner of the item
-    const itemOwnerId = req.params._id;
-    const itemOwnerExistence = User.findOne({_id: itemOwnerId});
+    const itemOwnerId = req.body._id;
+    const itemOwnerExistence = await User.findOne({_id: itemOwnerId});
     if (!itemOwnerExistence) {
         return res.status(404).json({error: "This id does not match the owner of the item."});
     }
@@ -38,7 +38,7 @@ export const createItem = async (req: Request, res: Response) => {
         description: description,
         pickupLocation: pickupLocation,
         pickupTime: pickupTime,
-        itemOwnerId: itemOwnerId
+        itemOwnerId: itemOwnerExistence._id
     });
     //Creates a transaction to create inventory-items
     //Checks if there's missing sizes
@@ -69,7 +69,7 @@ export const createItem = async (req: Request, res: Response) => {
 export const retrieveItems = async (req: Request, res: Response) => {
     try {
         const items = await Item.find();
-        return res.status(200).json(items);
+        return res.status(200).json({items});
     } catch (error: any) {
         return res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -81,7 +81,7 @@ export const getSpecificItem = async (req: Request, res: Response) => {
         const itemID: string = req.params._id;
         const desiredItem = await Item.findOne({ _id: itemID });
         if (desiredItem){
-            return res.status(200).json(desiredItem);
+            return res.status(200).json({item: desiredItem});
         }
         else{
             return res.status(404).json({ error: "No item with the provided ID exists"});
@@ -113,7 +113,7 @@ export const updateItem = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'The desired item was not found'});
         }
         const updatedItem = await Item.findOne({ _id: new ObjectId(itemID)});
-        return res.status(200).json(updatedItem);
+        return res.status(200).json({updatedItem});
     }
     catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
