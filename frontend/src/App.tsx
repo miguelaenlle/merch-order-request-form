@@ -8,11 +8,14 @@ import OrderManagement from './pages/Buyer/OrderManagement';
 import Search from './pages/Buyer/Search';
 import Login from './pages/Seller/Auth/Login';
 import CreateAccount from './pages/Seller/Auth/CreateAccount';
+import HomePage from './pages/Buyer/HomePage';
+import "./App.css";
+import SampleComponentsPage from './pages/SampleComponents/SampleComponentsPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: <HomePage />,
   },
   {
     path: "/my-orders",
@@ -37,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/seller-dashboard",
     element: <Dashboard />
+  },
+  {
+    path: "/sample-components",
+    element: <SampleComponentsPage />
   }
 ]);
 

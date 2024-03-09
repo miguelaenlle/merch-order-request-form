@@ -2,16 +2,7 @@ import {Request, Response} from 'express';
 import User from '../models/user';
 import { hash, compare } from 'bcrypt'
 import { validationResult } from 'express-validator';
-import * as jwt from "jsonwebtoken"
-import {createTransport} from 'nodemailer'
 
-import dotenv from "dotenv";
-dotenv.config();
-
-const sendgridTransport = require('nodemailer-sendgrid-transport')
-
-// import { createTransport } from "nodemailer" //unimplemented for now cause difficultires
-const tokenSECRET = process.env.TOKEN_SECRET as string;
 const saltRounds = 10 //for when a user signs up
 
 const transporter = createTransport(sendgridTransport({
