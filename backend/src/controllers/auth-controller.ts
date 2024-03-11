@@ -1,8 +1,17 @@
-import {Request, Response} from 'express';
+import { Request, response, Response } from 'express';
 import User from '../models/user';
 import { hash, compare } from 'bcrypt'
 import { validationResult } from 'express-validator';
+import * as jwt from "jsonwebtoken"
+import { createTransport } from 'nodemailer'
 
+import dotenv from "dotenv";
+dotenv.config();
+
+const sendgridTransport = require('nodemailer-sendgrid-transport')
+
+// import { createTransport } from "nodemailer" //unimplemented for now cause difficultires
+const tokenSECRET = process.env.TOKEN_SECRET as string;
 const saltRounds = 10 //for when a user signs up
 
 const transporter = createTransport(sendgridTransport({
@@ -12,7 +21,7 @@ const transporter = createTransport(sendgridTransport({
 }))
 
 const generateAccessToken = async (type: string, userId: string, email: string, time: string) => { // this is like this incase its used for extra things
-    return jwt.sign({type: type, userId: userId, email: email}, tokenSECRET, {expiresIn: time})
+    return jwt.sign({ type: type, userId: userId, email: email }, tokenSECRET, { expiresIn: time })
 }
 const generateEmailConfirmation = async () => {
     const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000)
@@ -48,7 +57,7 @@ export const createUser = async (req: Request, res: Response) => {
         const password = req.body.password as string;
 
         //duplicate email checking
-        const userCheck = await User.findOne({email: email})
+        const userCheck = await User.findOne({ email: email })
         if (userCheck) {
             res.status(409).json({ message: "Duplicate email" });
             return
@@ -75,7 +84,7 @@ export const createUser = async (req: Request, res: Response) => {
         })
 
         //const userToken = await generateAccessToken(user._id, email, "1 day") //shouldnt be included
-        res.status(200).json({message: "Account created and confirmation email sent.", user: { email: email, name: name} });
+        res.status(200).json({ message: "Account created and confirmation email sent.", user: { email: email, name: name } });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -93,7 +102,7 @@ export const loginUser = async (req: Request, res: Response) => {
     try {
         const email = req.body.email as string;
         const password = req.body.password as string;
-        const user = await User.findOne({email: email})
+        const user = await User.findOne({ email: email })
         if (!user) {
             res.status(404).json({ message: "User does not exist." });
             return
@@ -119,28 +128,28 @@ export const confirmEmail = async (req: Request, res: Response) => {
     const confirmationCode = req.body.confirmationCode as string
 
     try {
-        const user = await User.findOne({email: email})
+        const user = await User.findOne({ email: email })
         if (!user) {
-            res.status(404).json({message: "User does not exist."});
+            res.status(404).json({ message: "User does not exist." });
             return
         }
         if (user.emailConfirmed == true) {
-            res.status(400).json({message: "User already verified."});
+            res.status(400).json({ message: "User already verified." });
             return
         }
 
         const codeValidity = await checkEmailConfirmationDateValidity(user.emailConfirmationCodeDate)
         if (!codeValidity) {
-            res.status(401).json({message: "Confirmation expired."});
+            res.status(401).json({ message: "Confirmation expired." });
             return
         }
 
         if (confirmationCode == user.emailConfirmationCode) {
             user.emailConfirmed = true
             await user.save()
-            res.status(200).json({message: "Email confirmed."});
+            res.status(200).json({ message: "Email confirmed." });
         } else {
-            res.status(401).json({message: "Invalid code."});
+            res.status(401).json({ message: "Invalid code." });
         }
 
     } catch (error: any) {
@@ -152,13 +161,13 @@ export const resendConfirmationEmail = async (req: Request, res: Response) => {
     const email = req.body.email as string
 
     try {
-        const user = await User.findOne({email: email})
+        const user = await User.findOne({ email: email })
         if (!user) {
-            res.status(404).json({message: "User does not exist."});
+            res.status(404).json({ message: "User does not exist." });
             return
         }
         if (user.emailConfirmed == true) {
-            res.status(400).json({message: "User already verified."});
+            res.status(400).json({ message: "User already verified." });
             return
         }
 
@@ -176,7 +185,7 @@ export const resendConfirmationEmail = async (req: Request, res: Response) => {
             html: `<h1>Your verification code is ${emailConfirmation.Code}</h1>`
         })
 
-        res.status(200).json({message: "Confirmation code sent."});
+        res.status(200).json({ message: "Confirmation code sent." });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
