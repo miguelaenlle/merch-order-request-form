@@ -3,7 +3,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Dashboard from './pages/Buyer/Dashboard';
+import Dashboard from './pages/Seller/Dashboard/Dashboard';
 import OrderManagement from './pages/Buyer/OrderManagement';
 import Search from './pages/Buyer/Search';
 import Login from './pages/Seller/Auth/Login';
