@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import Dummy from '../models/dummy';
 import { validationResult } from 'express-validator';
 import mongoose from 'mongoose';
 import Item from '../models/item';
