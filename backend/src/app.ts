@@ -18,7 +18,7 @@ app.use(express.json());
 app.use('/api/dummies', dummyRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
-// app.use('/api/images', imageRoutes);
+app.use('/api/images', imageRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/inventory-items', inventoryItem)
 // ============================

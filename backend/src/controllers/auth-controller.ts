@@ -1,4 +1,4 @@
-import { Request, response, Response } from 'express';
+import { Request, Response } from 'express';
 import User from '../models/user';
 import { hash, compare } from 'bcrypt'
 import { validationResult } from 'express-validator';
