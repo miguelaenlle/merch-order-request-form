@@ -8,6 +8,7 @@ import OrderManagement from './pages/Buyer/OrderManagement';
 import Search from './pages/Buyer/Search';
 import Login from './pages/Seller/Auth/Login';
 import CreateAccount from './pages/Seller/Auth/CreateAccount';
+import ForgotPassword from "./pages/Seller/Auth/ForgotPassword.tsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/seller-dashboard",
     element: <Dashboard />
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />
   }
 ]);
 

@@ -1,4 +1,4 @@
-// Login.tsx
+
 
 import * as React from "react";
 import { Input, Button, Box, Flex } from '@chakra-ui/react';
@@ -13,17 +13,14 @@ const Login: React.FC<LoginProps> = () => {
     const [password, setPassword] = React.useState<string>('');
 
     const handleLogin = () => {
-        // Implement your login logic here
+
         console.log('Logging in with:', { username, password });
     };
 
     return (
         <Flex className="content">
 
-            <Box className="gradient-bg" />
-
-
-            <Box className="login-container">
+            <Box p={10} className="login-container">
                 <h1 className="login-header">Seller Login</h1>
                 <p className="login-text">Continue to Hersey Spirit wear Dashboard</p>
 
@@ -58,7 +55,6 @@ const Login: React.FC<LoginProps> = () => {
                 <Button
                     variant="link"
                     onClick={() => {
-                        // Navigate to the Forgot Password page or handle navigation as needed
                         console.log('Navigate to Forgot Password');
                     }}
                     w="100%"
@@ -68,6 +64,7 @@ const Login: React.FC<LoginProps> = () => {
                     Forgot Password
                 </Button>
             </Box>
+            <Box className="gradient-bg" />
         </Flex>
     );
 };
