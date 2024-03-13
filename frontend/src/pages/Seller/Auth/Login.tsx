@@ -6,7 +6,7 @@ import { HiMiniQuestionMarkCircle } from "react-icons/hi2";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import './Login.module.css';
 
-interface LoginProps {}
+interface LoginProps { }
 
 const Login: React.FC<LoginProps> = () => {
     const [username, setUsername] = React.useState<string>('');
@@ -18,7 +18,7 @@ const Login: React.FC<LoginProps> = () => {
     };
 
     return (
-        <Flex className="content">
+        <Flex>
 
             <Box p={10} className="login-container">
                 <h1 className="login-header">Seller Login</h1>

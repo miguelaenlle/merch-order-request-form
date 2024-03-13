@@ -6,7 +6,7 @@ import { SlActionUndo } from 'react-icons/sl';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import './ForgotPassword.css';
 
-interface ForgotPasswordProps {}
+interface ForgotPasswordProps { }
 
 const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     const [newPassword, setNewPassword] = React.useState<string>('');
@@ -17,7 +17,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     };
 
     return (
-        <Flex className="content">
+        <Flex>
 
             <Box p={10} className="login-container">
 
@@ -60,7 +60,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                         console.log('Navigate back to login');
                     }}
                     w="100%"
-                    leftIcon = {<SlActionUndo />}
+                    leftIcon={<SlActionUndo />}
                 >
                     Back to Login
                 </Button>

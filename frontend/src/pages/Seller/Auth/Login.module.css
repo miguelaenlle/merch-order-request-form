@@ -52,19 +52,18 @@
 
 .gradient-bg {
     width: 50vw;
-    height: 100vw;
     background-image: linear-gradient(to bottom, #FFB482, #F97C2A);
 }
 
 .loginContainer {
     width: 50vw;
     padding: 20px;
-
 }
 
 .login-header {
     font-weight:bold;
     font-size: 30px;
     margin-bottom: 10px;
-.content {
-    margin-top: 5px;
+}
+
+
