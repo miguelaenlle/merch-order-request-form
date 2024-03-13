@@ -6,6 +6,7 @@ export interface IUser extends Document {
     passwordHash: string;
     emailConfirmed: boolean;
     emailConfirmationCode: string;
+    emailConfirmationCodeDate: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -13,7 +14,8 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     passwordHash: { type: String, required: true },
     emailConfirmed: { type: Boolean, required: true, default: false },
-    emailConfirmationCode: { type: String, required: true }
+    emailConfirmationCode: { type: String, required: true },
+    emailConfirmationCodeDate: { type: String, required: true }
 });
 
 const User = mongoose.model<IUser>('users', userSchema);

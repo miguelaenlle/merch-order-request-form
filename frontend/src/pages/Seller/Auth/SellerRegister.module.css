@@ -1,0 +1,22 @@
+.content {
+    font-size: 40px;
+    font-weight: bold;
+    margin-left: 50px;
+    height: 100vh;
+}
+
+.link {
+    font-size: 15px;
+}
+
+.container {
+    padding-top: 100px;
+}
+
+.image {
+    width: 52%;
+    height: 149%;
+    object-fit: cover;
+    margin-left: auto;
+    margin-top: 100px;
+}

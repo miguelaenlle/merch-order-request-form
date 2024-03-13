@@ -23,4 +23,3 @@ router.delete('/images/:imageId', [
 ], deleteImage); 
 
 export default router;
-

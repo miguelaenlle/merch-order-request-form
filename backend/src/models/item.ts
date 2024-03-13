@@ -5,7 +5,7 @@ export interface IItem extends Document {
     description: string;
     pickupLocation: string;
     pickupTime: string;
-    itemOwner: mongoose.Types.ObjectId;
+    itemOwnerId: mongoose.Types.ObjectId;
 }
 
 const itemSchema = new mongoose.Schema({
@@ -13,7 +13,7 @@ const itemSchema = new mongoose.Schema({
     description: { type: String, required: true },
     pickupLocation: { type: String, required: true },
     pickupTime: { type: String, required: true },
-    itemOwner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'users' }
+    itemOwnerId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'users' }
 });
 
 const Item = mongoose.model<IItem>('items', itemSchema);

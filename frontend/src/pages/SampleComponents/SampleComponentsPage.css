@@ -1,0 +1,51 @@
+.large {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.medium {
+    font-size: 16px;
+}
+
+.small {
+    font-size: 12px;
+}
+
+.green {
+    color: #0b6d0b;
+}
+
+.red {
+    color: #FF0000;
+}
+
+.blue {
+    color: #0000FF;
+}
+
+.flexbox {
+    display: flex;
+}
+
+.logo {
+    width: 40px;
+}
+
+.mediumImage {
+    height: 400px;
+    background-color: #ccc;
+    border-radius: 10px;
+    padding: 10px 30px;
+    object-fit: contain;
+    width: fit-content;
+}
+
+.images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.borderBottom {
+    border-bottom: 1px solid #ccc;
+}
