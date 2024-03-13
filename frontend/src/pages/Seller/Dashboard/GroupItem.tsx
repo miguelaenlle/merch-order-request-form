@@ -10,6 +10,7 @@ const GroupItem: React.FC<{
     return (
         <div>
             <p>{props.group.name}</p>
+            <p>3 products</p>
         </div>
     );
 }
