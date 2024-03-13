@@ -207,6 +207,7 @@ export const resendConfirmationEmail = async (req: Request, res: Response) => {
 }
 
 export const upgradeToSeller = async (req: CustomRequest, res: Response) => {
+    // dante devil may cry
     if (!req.token) {
         res.status(400).json({ message: 'Token missing'});
         return
