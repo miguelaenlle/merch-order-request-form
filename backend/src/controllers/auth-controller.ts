@@ -225,7 +225,7 @@ export const upgradeToSeller = async (req: CustomRequest, res: Response) => {
             return
         }
         if (user.group == "seller") {
-            res.status(400).json({ message: "User is already a buyer" });
+            res.status(400).json({ message: "User is already a seller" });
             return
         }
 
