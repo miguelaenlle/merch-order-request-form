@@ -5,6 +5,8 @@ import User from '../models/user'
 import InventoryItem from "../models/inventory-item";
 import mongoose from 'mongoose';
 import {ObjectId} from "mongodb";
+import { CustomRequest } from "../middleware/auth";
+
 
 //Creates an item
 export const createItem = async (req: Request, res: Response) => {
@@ -38,7 +40,7 @@ export const createItem = async (req: Request, res: Response) => {
         description: description,
         pickupLocation: pickupLocation,
         pickupTime: pickupTime,
-        itemOwnerId: itemOwnerExistence._id
+        itemOwnerId: itemOwnerId
     });
     //Creates a transaction to create inventory-items
     //Checks if there's missing sizes
@@ -96,13 +98,22 @@ export const getSpecificItem = async (req: Request, res: Response) => {
 }
 
 //Updates a specific item
-export const updateItem = async (req: Request, res: Response) => {
+export const updateItem = async (req: CustomRequest, res: Response) => {
     const { newName }: { newName: string }= req.body;
     const { newDescription }: { newDescription: string }= req.body;
     const { newPickupLocation }: { newPickupLocation: string }= req.body;
     const { newPickupTime }: { newPickupTime: string }= req.body;
     const itemID: string = req.params._id;
-
+    const ownerId = req.body.itemOwnerId;
+    const findItemOwnerById = Item.find({ itemOwnerId: ownerId });
+    //Makes sure user is owner of the item
+    if (!findItemOwnerById){
+        return res.status(404).json({ error: 'The user id does not match.'});
+    }
+    //Token check
+    if (!req.token) {
+        return res.status(400).json({ message: 'Token missing' })
+    }
     //Validation error
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -125,8 +136,18 @@ export const updateItem = async (req: Request, res: Response) => {
 }
 
 //Deletes a specific item
-export const deleteItem = async (req: Request, res: Response) => {
+export const deleteItem = async (req: CustomRequest, res: Response) => {
     const itemID: string = req.params._id;
+    const ownerId = req.body.itemOwnerId;
+    const findItemOwnerById = Item.find({ itemOwnerId: ownerId });
+    //Makes sure user is owner of the item
+    if (!findItemOwnerById){
+        return res.status(404).json({ error: 'The user id does not match.'});
+    }
+    //Token check
+    if (!req.token) {
+        return res.status(400).json({ message: 'Token missing' })
+    }
     try {
         const result = await Item.deleteOne({_id: new ObjectId(itemID)});
         if(result.deletedCount === 0){
