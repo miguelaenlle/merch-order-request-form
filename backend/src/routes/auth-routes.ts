@@ -28,6 +28,10 @@ router.post('/reset', [
     body('email').isEmail().withMessage('Email must be valid').notEmpty().withMessage('Email is required')
 ], postReset);
 
-router.post('/new-password', postNewPassword);
+router.post('/new-password', [
+    body('email').isEmail().withMessage('Email must be valid').notEmpty().withMessage('Email is required'),
+    body('password').isString().withMessage('Password must be valid').notEmpty().withMessage('Password is required'),
+    body('passwordToken').isString().withMessage('Password token must be valid').notEmpty().withMessage('Password token is required')
+], postNewPassword);
 
 export default router;

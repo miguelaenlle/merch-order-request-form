@@ -193,41 +193,31 @@ export const resendConfirmationEmail = async (req: Request, res: Response) => {
 
 export const postReset = async (req: Request, res: Response) => {
     try {
-        crypto.randomBytes(32, (err, buf) => {
+        crypto.randomBytes(32, async (err, buf) => {
            if (err){
                console.log(err);
            }
            const token = buf.toString('hex');
-            const resetPassword = async ({req, res}: { req: any, res: any }) => {
-                try {
-                    const user = await User.findOne({ email: req.body.email });
-                    if (!user) {
-                        console.log("No account with that email found");
-                        return res.status(404).json({ error: "No account with that email found" });
-                    }
-                    user.resetToken = token;
-                    // @ts-ignore
-                    user.resetTokenExpiration = Date.now() + 3600000;
+            const user = await User.findOne({ email: req.body.email });
+            if (!user) {
+                console.log("No account with that email found");
+                return res.status(404).json({ error: "No account with that email found" });
+            }
+            user.resetToken = token;
 
-                    await user.save();
+            user.resetTokenExpiration = new Date(new Date().getTime() + 3600000);
 
-                    res.status(200).json({ user: user, message: "Authentication successful" });
-
-                    await transporter.sendMail({
-                        to: req.body.email,
-                        from: process.env.SENDGRID_EMAIL_PERSONAL,
-                        subject: 'Password Reset Details',
-                        html: `
-                <p>You requested a password reset</p>
-                <p>Click this link<a href="http://localhost:3000/reset/${token}"></a> to set a new password</p>`
-                    });
-                } catch (err) {
-                    return res.status(401).json({ error: "Authentication failed. Invalid credentials." });
-                }
-            };
-
+            await user.save();
+            await transporter.sendMail({
+                to: req.body.email,
+                from: process.env.SENDGRID_EMAIL_PERSONAL,
+                subject: 'Password Reset Details',
+                html: `
+        <p>You requested a password reset</p>
+        <p>Click this<a href="http://localhost:3000/reset/${token}"> link</a> to set a new password</p>`
+            });
+            res.status(200).json({ message: 'Forgot password request received. Check your email for further instructions.' });
         });
-        res.status(200).json({ message: 'Forgot password request received. Check your email for further instructions.' });
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -254,23 +244,23 @@ export const getPassword = async (req: Request, res: Response) => {
 export const postNewPassword = async (req: Request, res: Response) => {
     try {
         const newPassword = req.body.password;
-        const userId = req.body.userId;
+        const userEmail = req.body.email;
         const passwordToken = req.body.passwordToken;
 
         const resetUser = await User.findOne({
             resetToken: passwordToken,
             resetTokenExpiration: { $gt: Date.now() },
-            _id: userId
+            email: userEmail
         }) as IUser;
 
         if (!resetUser) {
             console.log("Invalid or expired reset token");
-            return res.redirect('/api/auth/');
+            return res.status(404).json({ error: "User does not have a valid reset token" });
         }
         resetUser.passwordHash = await bcrypt.hash(newPassword, 12);
         await resetUser.save();
 
-        res.redirect('/api/auth/login');
+        res.status(200).json({ message: 'User password reset succeeded' });
     } catch (err) {
         console.error("Error in postNewPassword:", err);
         return res.status(500).json({ error: "Internal server error" });
