@@ -6,8 +6,10 @@ export interface IUser extends Document {
     passwordHash: string;
     emailConfirmed: boolean;
     emailConfirmationCode: string;
-    resetToken: String;
-    resetTokenExpiration: Date;
+    emailConfirmationCodeDate: string;
+    group: string;
+    resetToken?: String;
+    resetTokenExpiration?: Date;
 }
 
 const userSchema = new mongoose.Schema({
@@ -16,8 +18,10 @@ const userSchema = new mongoose.Schema({
     passwordHash: { type: String, required: true },
     emailConfirmed: { type: Boolean, required: true, default: false },
     emailConfirmationCode: { type: String, required: true },
-    resetToken: { type: String, required: true },
-    resetTokenExpiration: { type: Date, required: true }
+    emailConfirmationCodeDate: { type: String, required: true },
+    group: { type: String, required: true, default: "buyer" },
+    resetToken: { type: String },
+    resetTokenExpiration: { type: Date }
 });
 
 const User = mongoose.model<IUser>('users', userSchema);
