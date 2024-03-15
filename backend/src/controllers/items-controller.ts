@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import Item from '../models/item';
-import User from '../models/user'
 import InventoryItem from "../models/inventory-item";
 import mongoose from 'mongoose';
 import {ObjectId} from "mongodb";
 import { CustomRequest } from "../middleware/auth";
 
 
+
 //Creates an item
-export const createItem = async (req: Request, res: Response) => {
+export const createItem = async (req: CustomRequest, res: Response) => {
     //Validation check
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -21,26 +21,21 @@ export const createItem = async (req: Request, res: Response) => {
     if (!dupeItem) {
         return res.status(409).json({error: "An item with the same name already exists."});
     }
-    //Checks if the ID matches the owner of the item
-    const itemOwnerId = req.body.itemOwnerId;
-    const itemOwnerExistence = await User.findOne({_id: itemOwnerId});
-    if (!itemOwnerExistence) {
-        return res.status(404).json({error: "This id does not match the owner of the item."});
-    }
     const name = req.body.name as string;
     const description = req.body.description as string;
     const pickupLocation = req.body.pickupLocation as string;
     const pickupTime = req.body.pickupTime as string;
-
-
-
+    //Checks if UserId exists
+    if(!req.token?.userid){
+        return res.status(422).json({error: "UserId does not exist"});
+    }
     //Interface for a new item
     const item = new Item({
         name: name,
         description: description,
         pickupLocation: pickupLocation,
         pickupTime: pickupTime,
-        itemOwnerId: itemOwnerId
+        itemOwnerId: req.token.userId
     });
     //Creates a transaction to create inventory-items
     //Checks if there's missing sizes
@@ -104,11 +99,15 @@ export const updateItem = async (req: CustomRequest, res: Response) => {
     const { newPickupLocation }: { newPickupLocation: string }= req.body;
     const { newPickupTime }: { newPickupTime: string }= req.body;
     const itemID: string = req.params._id;
-    const ownerId = req.body.itemOwnerId;
-    const findItemOwnerById = Item.find({ itemOwnerId: ownerId });
+    //Checks if UserId exists
+    if(!req.token?.userid){
+        return res.status(422).json({error: "UserId does not exist"});
+    }
+    const itemOwner = req.body.itemOwnerId;
+    const findItemOwnerById = Item.find({ itemOwnerId: itemOwner });
     //Makes sure user is owner of the item
     if (!findItemOwnerById){
-        return res.status(404).json({ error: 'The user id does not match.'});
+        return res.status(403).json({ error: 'The user id does not match.'});
     }
     //Token check
     if (!req.token) {
@@ -138,11 +137,15 @@ export const updateItem = async (req: CustomRequest, res: Response) => {
 //Deletes a specific item
 export const deleteItem = async (req: CustomRequest, res: Response) => {
     const itemID: string = req.params._id;
-    const ownerId = req.body.itemOwnerId;
-    const findItemOwnerById = Item.find({ itemOwnerId: ownerId });
+    //Checks if UserId exists
+    if(!req.token?.userid){
+        return res.status(422).json({error: "UserId does not exist"});
+    }
+    const itemOwner = req.body.itemOwnerId;
+    const findItemOwnerById = Item.find({ itemOwnerId: itemOwner });
     //Makes sure user is owner of the item
     if (!findItemOwnerById){
-        return res.status(404).json({ error: 'The user id does not match.'});
+        return res.status(403).json({ error: 'The user id does not match.'});
     }
     //Token check
     if (!req.token) {

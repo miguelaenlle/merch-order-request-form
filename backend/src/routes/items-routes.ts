@@ -11,7 +11,6 @@ router.post('/', [
     body('description').isString().withMessage('Description must be a string').notEmpty().withMessage('Description is required'),
     body('pickupLocation').isString().withMessage('Pick up location must be a string').notEmpty().withMessage('Pick up location is required'),
     body('pickupTime').isString().withMessage('Pick up time must be a string').notEmpty().withMessage('Pick up time is required'),
-    body('itemOwnerId').isString().withMessage('Item owner ID must be a string').notEmpty().withMessage('Item owner Id is required'),
     body('price').isNumeric().withMessage('Must list a numerical value').notEmpty().withMessage('Price is required')], auth, createItem);
 router.get('/', auth, retrieveItems);
 router.get('/:_id', auth, getSpecificItem);
