@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Created the auth for items">
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/routes/items-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/items-routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +147,7 @@
       <workItem from="1710210445015" duration="544000" />
       <workItem from="1710295040961" duration="2822000" />
       <workItem from="1710379430519" duration="3528000" />
-      <workItem from="1710463344203" duration="3443000" />
+      <workItem from="1710463344203" duration="3721000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -231,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710384368930</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Revised">
+      <option name="closed" value="true" />
+      <created>1710468276591</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1710468276591</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,9 +247,9 @@
     <MESSAGE value="Created all of the group routes and the logic behind it" />
     <MESSAGE value="Fixed bugs" />
     <MESSAGE value="Created the items route" />
-    <MESSAGE value="Revised" />
     <MESSAGE value="final changes" />
     <MESSAGE value="Created the auth for items" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created the auth for items" />
+    <MESSAGE value="Revised" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revised" />
   </component>
 </project>

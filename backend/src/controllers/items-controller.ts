@@ -26,7 +26,7 @@ export const createItem = async (req: CustomRequest, res: Response) => {
     const pickupLocation = req.body.pickupLocation as string;
     const pickupTime = req.body.pickupTime as string;
     //Checks if UserId exists
-    if(!req.token?.userid){
+    if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
     }
     //Interface for a new item
@@ -100,7 +100,7 @@ export const updateItem = async (req: CustomRequest, res: Response) => {
     const { newPickupTime }: { newPickupTime: string }= req.body;
     const itemID: string = req.params._id;
     //Checks if UserId exists
-    if(!req.token?.userid){
+    if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
     }
     const itemOwner = req.body.itemOwnerId;
@@ -138,7 +138,7 @@ export const updateItem = async (req: CustomRequest, res: Response) => {
 export const deleteItem = async (req: CustomRequest, res: Response) => {
     const itemID: string = req.params._id;
     //Checks if UserId exists
-    if(!req.token?.userid){
+    if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
     }
     const itemOwner = req.body.itemOwnerId;
