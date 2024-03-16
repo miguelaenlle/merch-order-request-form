@@ -212,7 +212,31 @@
       <option name="project" value="LOCAL" />
       <updated>1709955143535</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="final changes">
+      <option name="closed" value="true" />
+      <created>1710012762160</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1710012762160</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Created the auth for items">
+      <option name="closed" value="true" />
+      <created>1710384368930</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1710384368930</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Revised">
+      <option name="closed" value="true" />
+      <created>1710468276591</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1710468276591</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +246,8 @@
     <MESSAGE value="Created all of the group routes and the logic behind it" />
     <MESSAGE value="Fixed bugs" />
     <MESSAGE value="Created the items route" />
+    <MESSAGE value="final changes" />
+    <MESSAGE value="Created the auth for items" />
     <MESSAGE value="Revised" />
     <option name="LAST_COMMIT_MESSAGE" value="Revised" />
   </component>
