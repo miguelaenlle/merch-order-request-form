@@ -7,6 +7,7 @@ import inventoryItem from "./routes/inventory-item-routes";
 import itemRoutes from "./routes/items-routes";
 
 const app: Application = express();
+const port = 5000;
 
 app.use(express.json());
 // app.use(cors());

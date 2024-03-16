@@ -10,6 +10,7 @@ router.get('/', retrieveGroups);
 router.get('/:_id', getSpecificGroup);
 router.put('/:_id', [
     body('newName').isString().withMessage('Name must be a string').notEmpty().withMessage('Name is required').isLength({ min: 3, max: 25 })], updateName);
+
 router.delete('/:_id', deleteGroup);
 
 export default router;
