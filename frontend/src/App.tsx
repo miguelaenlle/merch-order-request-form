@@ -1,10 +1,9 @@
 import './App.css'
+import { HomePageSearch } from './Pages/Buyer/HomePageSearch'
 
 function App() {
-  return (
-    <div>
-      <h1>Merch Order Request Form</h1>
-    </div>
+  return ( 
+      <HomePageSearch /> 
   )
 }
 

@@ -1,3 +1,8 @@
+* {
+  padding: 0;
+  margin: 0
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -22,10 +27,7 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
+body {  
   min-width: 320px;
   min-height: 100vh;
 }
@@ -54,6 +56,61 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.searchMain {
+  width: 100%; 
+  display: flex; 
+  justify-content: center;
+  padding: 5% 0px 5% 0px;
+  background-image: linear-gradient(rgb(255, 184, 103), rgb(255, 111, 0));
+  color: white; 
+}
+
+.searchMain > div {
+  width: 70%;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchOptions { 
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  color: black;
+  border: 1px solid transparent;
+  padding: 0.2em 1em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: lightgray;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.2em 1em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: rgb(180, 82, 12);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 15px 10px 15px;
+  border-radius: 5px;
+  border: 1px solid lightgray
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -66,3 +123,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
