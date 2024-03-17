@@ -47,12 +47,11 @@ export const HomePageSearch = () => {
     useEffect(() => {
         const updateItemsToShow = () => {
             const width = window.innerWidth;
-            // Calculate the number of items to show based on the width
-            const calculatedItemsToShow = Math.floor(width / 405); // Adjust the divisor as per your design
+            const calculatedItemsToShow = Math.floor(width / 405); 
             setItemsToShow(calculatedItemsToShow);
         };
 
-        updateItemsToShow(); // Initial call to set the initial number of items based on the width
+        updateItemsToShow(); 
         window.addEventListener('resize', updateItemsToShow);
 
         return () => {
