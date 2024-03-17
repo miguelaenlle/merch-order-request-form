@@ -5,8 +5,10 @@ import groupRoutes from "./routes/groups-routes";
 import imageRoutes from "./routes/image-routes"
 import inventoryItem from "./routes/inventory-item-routes";
 import orderRoutes from "./routes/order-routes";
+import itemRoutes from "./routes/items-routes";
 
 const app: Application = express();
+const port = 5000;
 
 app.use(express.json());
 // app.use(cors());
@@ -17,7 +19,8 @@ app.use(express.json());
 app.use('/api/dummies', dummyRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
-app.use('/api/items', imageRoutes)
+app.use('/api/images', imageRoutes);
+app.use('/api/items', itemRoutes);
 app.use('/api/inventory-items', inventoryItem)
 app.use('/api/orders', orderRoutes)
 // ============================

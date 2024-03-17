@@ -1,0 +1,13 @@
+.navbar {
+    display: flex;
+    background-color: rgba(247, 247, 247, 0.9);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px 12px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+}
+
+.spacer {
+    flex: 1;
+}

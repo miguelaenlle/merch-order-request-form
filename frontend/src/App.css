@@ -1,0 +1,34 @@
+.header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.subcontent {
+    margin-bottom: 30px;
+}
+
+.clickableText:hover {
+    cursor: pointer;
+}
+
+.orangeGradient {
+    background-color: #FFB482;
+    /* fallback for older browsers */
+    background-image: linear-gradient(to bottom, #FFB482, #F97C2A);
+}
+
+.content {
+    max-width: 800px;
+    padding: 10px 12px;
+    margin: 0 auto;
+}
+
+.flexbox {
+    display: flex;
+}
+
+.flexItem {
+    flex: 1;
+}
