@@ -1,14 +1,16 @@
 import { Request, Response } from 'express';
-import Group from '../models/group';
 import { validationResult } from 'express-validator';
 import { ObjectId } from "mongodb";
+import { CustomRequest } from "../middleware/auth";
+import Group from "../models/group";
+
 
 
 
 
 
 //Creates a group with the desired name and gives a unique ID
-export const createGroup = async (req: Request, res: Response) => {
+export const createGroup = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
@@ -19,6 +21,10 @@ export const createGroup = async (req: Request, res: Response) => {
     if (!dupeGroup) {
         return res.status(409).json({ error: "A group with the same name already exists."  });
     }
+    //Checks if UserId exists
+    if(!req.token?.userId){
+        return res.status(422).json({error: "UserId does not exist"});
+    }
     else{
         //Creates a new group with name and id
         try {
@@ -26,6 +32,7 @@ export const createGroup = async (req: Request, res: Response) => {
 
             const group = new Group({
                 name: name,
+                userId: req.token.userId
             });
             await group.save();
             return res.status(201).json({group});
@@ -62,7 +69,7 @@ export const getSpecificGroup = async (req: Request, res: Response) => {
 }
 
 //Updates the name of an existing group
-export const updateName = async (req: Request, res: Response) =>{
+export const updateName = async (req: CustomRequest, res: Response) =>{
     const { newName }: { newName: string }= req.body;
     const groupID: string = req.params._id;
 
@@ -76,6 +83,21 @@ export const updateName = async (req: Request, res: Response) =>{
     const existingGroup = await Group.findOne({name: newName})
     if(existingGroup){
         return res.status(409).json({ error: "This group name is already taken"});
+    }
+    //Checks if UserId exists
+    if(!req.token?.userId){
+        return res.status(422).json({error: "UserId does not exist"});
+    }
+
+    const groupOwner = req.body.userId;
+    const findGroupOwnerById = Group.find({ userId: groupOwner });
+    //Makes sure user is owner of the item
+    if (!findGroupOwnerById){
+        return res.status(403).json({ error: 'The user id does not match.'});
+    }
+    //Token check
+    if (!req.token) {
+        return res.status(400).json({ message: 'Token missing' })
     }
     //Updates group
     try {
@@ -93,8 +115,22 @@ export const updateName = async (req: Request, res: Response) =>{
 }
 
 //Deletes group by ID
-export const deleteGroup = async (req: Request, res: Response) => {
+export const deleteGroup = async (req: CustomRequest, res: Response) => {
     const groupID: string = req.params._id;
+    //Checks if UserId exists
+    if(!req.token?.userId){
+        return res.status(422).json({error: "UserId does not exist"});
+    }
+    const groupOwner = req.body.userId;
+    const findGroupOwnerById = Group.find({ userId: groupOwner });
+    //Makes sure user is owner of the item
+    if (!findGroupOwnerById){
+        return res.status(403).json({ error: 'The user id does not match.'});
+    }
+    //Token check
+    if (!req.token) {
+        return res.status(400).json({ message: 'Token missing' })
+    }
     try {
         const result = await Group.deleteOne({_id: new ObjectId(groupID)});
         if(result.deletedCount === 0){

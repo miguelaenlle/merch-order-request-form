@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised">
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/orangeGradient.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/SellerRegister.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/CreateAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/CreateAccount.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/models/group.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/models/group.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/routes/groups-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/groups-routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +60,9 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2cNfLz9nkqeoNs0WtqXmIwmSuC1" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -67,7 +71,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "seller-create-account",
+    "git-widget-placeholder": "groups-auth",
     "last_opened_file_path": "C:/Users/maenlle/WebstormProjects",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -77,7 +81,7 @@
     "npm.dev.executor": "Run",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "inlay.hints",
-    "ts.external.directory.path": "/Users/wsschroed/WebstormProjects/merch-order-request-form/backend/node_modules/typescript/lib",
+    "ts.external.directory.path": "C:\\Users\\Dhruv\\WebstormProjects\\merch-order-request-form\\frontend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -147,6 +151,7 @@
       <workItem from="1709954794919" duration="411000" />
       <workItem from="1710010435141" duration="2272000" />
       <workItem from="1710287396564" duration="1504000" />
+      <workItem from="1710641186039" duration="3242000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
