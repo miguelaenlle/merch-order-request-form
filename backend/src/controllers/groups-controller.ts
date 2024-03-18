@@ -88,9 +88,7 @@ export const updateName = async (req: CustomRequest, res: Response) =>{
     if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
     }
-
-    const groupOwner = req.body.userId;
-    const findGroupOwnerById = Group.find({ userId: groupOwner });
+    const findGroupOwnerById = Group.findOne({ userId: req.token.userId, _id: groupID });
     //Makes sure user is owner of the item
     if (!findGroupOwnerById){
         return res.status(403).json({ error: 'The user id does not match.'});
@@ -111,7 +109,6 @@ export const updateName = async (req: CustomRequest, res: Response) =>{
     catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
-
 }
 
 //Deletes group by ID
@@ -121,8 +118,7 @@ export const deleteGroup = async (req: CustomRequest, res: Response) => {
     if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
     }
-    const groupOwner = req.body.userId;
-    const findGroupOwnerById = Group.find({ userId: groupOwner });
+    const findGroupOwnerById = Group.findOne({ userId: req.token.userId, _id: groupID });
     //Makes sure user is owner of the item
     if (!findGroupOwnerById){
         return res.status(403).json({ error: 'The user id does not match.'});

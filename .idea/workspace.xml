@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised">
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Created the auth for groups route">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/models/group.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/models/group.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/routes/groups-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/groups-routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,24 +65,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "groups-auth",
-    "last_opened_file_path": "C:/Users/maenlle/WebstormProjects",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.dev.executor": "Run",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "inlay.hints",
-    "ts.external.directory.path": "C:\\Users\\Dhruv\\WebstormProjects\\merch-order-request-form\\frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;groups-auth&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/maenlle/WebstormProjects&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Dhruv\\WebstormProjects\\merch-order-request-form\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src/assets" />
@@ -151,7 +149,8 @@
       <workItem from="1709954794919" duration="411000" />
       <workItem from="1710010435141" duration="2272000" />
       <workItem from="1710287396564" duration="1504000" />
-      <workItem from="1710641186039" duration="3242000" />
+      <workItem from="1710641186039" duration="3544000" />
+      <workItem from="1710721096623" duration="652000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -241,7 +240,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710468276591</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Created the auth for groups route">
+      <option name="closed" value="true" />
+      <created>1710648628942</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710648628943</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,6 +261,7 @@
     <MESSAGE value="final changes" />
     <MESSAGE value="Created the auth for items" />
     <MESSAGE value="Revised" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revised" />
+    <MESSAGE value="Created the auth for groups route" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created the auth for groups route" />
   </component>
 </project>
