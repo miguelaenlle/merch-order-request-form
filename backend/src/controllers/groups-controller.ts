@@ -17,7 +17,7 @@ export const createGroup = async (req: CustomRequest, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
     }
     //Checks if there's a similar group
-    const dupeGroup = Group.findOne({ name: req.body })
+    const dupeGroup = await Group.findOne({ name: req.body.name })
     if (!dupeGroup) {
         return res.status(409).json({ error: "A group with the same name already exists."  });
     }
@@ -88,7 +88,7 @@ export const updateName = async (req: CustomRequest, res: Response) =>{
     if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
     }
-    const findGroupOwnerById = Group.findOne({ userId: req.token.userId, _id: groupID });
+    const findGroupOwnerById = await Group.findOne({ userId: req.token.userId, _id: groupID });
     //Makes sure user is owner of the item
     if (!findGroupOwnerById){
         return res.status(403).json({ error: 'The user id does not match.'});
@@ -118,7 +118,7 @@ export const deleteGroup = async (req: CustomRequest, res: Response) => {
     if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
     }
-    const findGroupOwnerById = Group.findOne({ userId: req.token.userId, _id: groupID });
+    const findGroupOwnerById = await Group.findOne({ userId: req.token.userId, _id: groupID });
     //Makes sure user is owner of the item
     if (!findGroupOwnerById){
         return res.status(403).json({ error: 'The user id does not match.'});
