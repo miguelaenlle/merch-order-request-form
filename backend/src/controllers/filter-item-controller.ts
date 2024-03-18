@@ -12,6 +12,12 @@ interface ItemInterface {
     pickupTime: string
 }
 
+interface FilterInterface {
+    _id?: any;
+    itemOwner?: string; 
+    name?: any
+}
+
 export const getFilteredInventoryItems = async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -24,110 +30,53 @@ export const getFilteredInventoryItems = async (req: Request, res: Response) => 
         let fetchedInventoryItems: any = {};
         const itemOwner = req.query.itemOwner as string
         const size = req.query.size as string
-        const name = req.query.name as string
+        const name = req.query.name as string 
 
+        let filter: FilterInterface = {}
+        let inventorySizeIds: any = []
+
+
+        if (itemOwner) {
+            filter.itemOwner = itemOwner  
+        }
+
+        const regex = new RegExp(name, 'i')
+
+        if (name) {
+            filter.name = {$regex: regex}
+        } 
+
+        if (size) {
+            let items = await InventoryItem.find({ size })
+            
+            if (!items) {
+                return res.status(404).json({message: "Item Not Found"})
+            } 
+
+            for (const item of items) {
+                inventorySizeIds.push(item.itemId)
+            }
+
+            filter._id = { $in: inventorySizeIds }
+        }  
+    
+        const findItems = await Item.find(filter)
+
+        if (!findItems) {
+            return res.status(404).json({message: "Item Not Found"})
+        }
+
+        
+        
+        
         // Sort
 
         const sortedBy = req.query.sortedBy as string
 
-        if (itemOwner && size && name) {
-            let tempData: ItemInterface[] = await Item.find({})
-            let tempDataObject: any;
-            if (!tempData) {
-                res.status(404).json({ message: "Not Found" })
-            }
-
-            tempData.forEach((data) => { 
-                
-                if (data.name.toLowerCase().includes(name.toLowerCase()) && data._id === itemOwner) {
-                    tempDataObject = data._id
-                }  
-            })
-            fetchedInventoryItems += {itemId: tempDataObject, amount: {$gt: 1}}
-        } else if (itemOwner && !size && !name) {
-            let tempData: ItemInterface[] = await Item.find({})
-            let tempDataObject: any;
-            if (!tempData) {
-                res.status(404).json({ message: "Not Found" })
-            }
-
-            tempData.forEach((data) => {  
-
-                if (data._id === itemOwner) {
-                    tempDataObject = data._id
-                }  
-            })
-            fetchedInventoryItems = {_id: tempDataObject, amount: {$gt: 1}}
-        } else if (!itemOwner && size && !name) {
-            fetchedInventoryItems = await InventoryItem.find({size: size})
-        } else if (!itemOwner && !size && name) {
-            let tempData: ItemInterface[] = await Item.find({})
-            let tempDataObject: any;
-            if (!tempData) {
-                res.status(404).json({ message: "Not Found" })
-            }
-
-            tempData.forEach((data) => {
-                const isIdValid = mongoose.Types.ObjectId.isValid(data._id) 
-    
-                if (!isIdValid) {
-                    return res.status(500).json({ message: "Invalid Data" }) 
-                }
-                
-                if (data.name.toLowerCase().includes(name.toLowerCase())) {
-                    tempDataObject = data._id
-                }  
-            })
-            fetchedInventoryItems += {itemId: tempDataObject, amount: {$gt: 1}}
-        } else if (itemOwner && name && !size) {
-            let tempData: ItemInterface[] = await Item.find({})
-            let tempDataObject: any;
-            if (!tempData) {
-                res.status(404).json({ message: "Not Found" })
-            }
-
-            tempData.forEach((data) => {
-                const isIdValid = mongoose.Types.ObjectId.isValid(data._id) 
-    
-                if (!isIdValid) {
-                    return res.status(500).json({ message: "Invalid Data" }) 
-                }
-                
-                if (data.name.toLowerCase().includes(name.toLowerCase()) && data._id === itemOwner) {
-                    tempDataObject = data._id
-                }  
-            })
-            fetchedInventoryItems = {itemId: tempDataObject, amount: {$gt: 1}}
-        } else if (itemOwner && !name && size) {
-            let tempData: ItemInterface[] = await Item.find({})
-            let tempDataObject: any;
-            if (!tempData) {
-                res.status(404).json({ message: "Not Found" })
-            }
-
-            tempData.forEach((data) => { 
-                if (data._id === itemOwner) {
-                    tempDataObject = data._id
-                }  
-            })
-            fetchedInventoryItems += {itemId: tempDataObject, amount: {$gt: 1}}
-        } else if (!itemOwner && name && size) {
-            let tempData: ItemInterface[] = await Item.find({})
-            let tempDataObject: any;
-            if (!tempData) {
-                res.status(404).json({ message: "Not Found" })
-            }
-
-            tempData.forEach((data) => { 
-                if (data.name.toLowerCase().includes(name.toLowerCase())) {
-                    tempDataObject = data._id
-                }  
-            })
-            fetchedInventoryItems += {itemId: tempDataObject, amount: {$gt: 1}}
-        }
+         
 
         if (!fetchedInventoryItems) {
-            res.status(404).json({ message: "Not Found" })
+            return res.status(404).json({ message: "Not Found" })
         }
 
         let finalInventoryItems = await InventoryItem.find(fetchedInventoryItems)
@@ -138,15 +87,15 @@ export const getFilteredInventoryItems = async (req: Request, res: Response) => 
         } else if (sortedBy == "name") {
             let tempData: ItemInterface[] = await Item.find({})
             if (!tempData) {
-                res.status(404).json({ message: "Not Found" })
+                return res.status(404).json({ message: "Not Found" })
             }
 
             finalItems = await Item.find({}).sort({name: 1})
-        }
+        } 
 
-        res.status(200).json({finalItems})
+        return res.status(200).json({findItems}) 
 
     } catch (error: any) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 } 
