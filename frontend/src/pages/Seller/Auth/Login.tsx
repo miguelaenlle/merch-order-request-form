@@ -39,7 +39,6 @@ const Login: React.FC<LoginProps> = () => {
 
                 <Button
                     colorScheme="blue"
-                    onClick={handleLogin}
                     leftIcon={<RiLogoutBoxRLine />}
                     w="100%"
                 >
