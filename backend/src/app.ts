@@ -6,13 +6,14 @@ import imageRoutes from "./routes/image-routes"
 import inventoryItem from "./routes/inventory-item-routes";
 import orderRoutes from "./routes/order-routes";
 import itemRoutes from "./routes/items-routes";
+import cors from "cors";
 
 const app: Application = express();
 const port = 5000;
 
 app.use(express.json());
-// app.use(cors());
-// app.options("*", cors());
+app.use(cors());
+app.options("*", cors());
 
 // === Add routes here: ===
 

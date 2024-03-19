@@ -1,7 +1,7 @@
 
 
+import { Box, Button, Flex, Input } from '@chakra-ui/react';
 import * as React from "react";
-import { Input, Button, Box, Flex } from '@chakra-ui/react';
 import { HiMiniQuestionMarkCircle } from "react-icons/hi2";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import './Login.module.css';
@@ -11,11 +11,6 @@ interface LoginProps { }
 const Login: React.FC<LoginProps> = () => {
     const [username, setUsername] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
-
-    const handleLogin = () => {
-
-        console.log('Logging in with:', { username, password });
-    };
 
     return (
         <Flex>
