@@ -1,6 +1,6 @@
-import * as React from "react"
-import { Item } from "../../components/shared/types/Item";
+import * as React from "react";
 import SearchResultItem from "../../components/shared/SearchResultItem";
+import { Item } from "../../components/shared/types/Item";
 import { PLACEHOLDER_ITEMS } from "../../constants/placeholder-data";
 
 const LatestReleases: React.FC<{}> = (props) => {
