@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised">
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/orangeGradient.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/SellerRegister.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/CreateAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/CreateAccount.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,10 +35,14 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2cNfLz9nkqeoNs0WtqXmIwmSuC1" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -55,14 +58,15 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-=======
+
     "npm.dev.executor": "Run",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "inlay.hints",
     "ts.external.directory.path": "/Users/wsschroed/WebstormProjects/merch-order-request-form/backend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
+
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src/assets" />
@@ -129,6 +133,9 @@
       <workItem from="1709954794919" duration="411000" />
       <workItem from="1710010435141" duration="2272000" />
       <workItem from="1710287396564" duration="1504000" />
+      <workItem from="1710641186039" duration="3544000" />
+      <workItem from="1710721096623" duration="1504000" />
+      <workItem from="1710802486885" duration="761000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -218,7 +225,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710468276591</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Created the auth for groups route">
+      <option name="closed" value="true" />
+      <created>1710648628942</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710648628943</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Revised">
+      <option name="closed" value="true" />
+      <created>1710721989851</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1710721989852</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,6 +253,7 @@
     <MESSAGE value="Created the items route" />
     <MESSAGE value="final changes" />
     <MESSAGE value="Created the auth for items" />
+    <MESSAGE value="Created the auth for groups route" />
     <MESSAGE value="Revised" />
     <option name="LAST_COMMIT_MESSAGE" value="Revised" />
   </component>
