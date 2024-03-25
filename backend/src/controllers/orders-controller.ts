@@ -4,6 +4,8 @@ import {validationResult} from "express-validator";
 import Order, {IOrder} from "../models/order";
 import { ObjectId } from 'mongodb';
 import { createTransport } from 'nodemailer'
+import {CustomRequest} from "../middleware/auth";
+import User from "../models/user";
 
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 const transporter = createTransport(sendgridTransport({
@@ -12,26 +14,32 @@ const transporter = createTransport(sendgridTransport({
     }
 }))
 
-export const createOrder = async (req: Request, res: Response): Promise<void> => {
+export const createOrder = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
         return;
     }
     try {
-        const { customerName, customerEmail, customerType, school, notes, itemOwnerId, orderedItems } = req.body;
+        if(!req.token?.userId){
+            return res.status(422).json({error: "UserId does not exist"});
+        }
+
+        const { itemOwnerId, customerName, customerEmail, customerType, school, notes, orderedItems } = req.body;
+        const userWhoPlacedOrderId = req.token.userId;
 
         const largestOrder = await Order.findOne({ itemOwnerId }).sort({ orderNumber: -1 }).limit(1);
         const newOrderNumber = largestOrder ? largestOrder.orderNumber + 1 : 1;
 
         const order: IOrder = new Order({
             orderNumber: newOrderNumber,
+            itemOwnerId,
+            userWhoPlacedOrderId,
             customerName,
             customerEmail,
             customerType,
             school,
-            notes,
-            itemOwnerId,
+            notes
         });
         const savedOrder = await order.save();
 
@@ -72,9 +80,13 @@ export const cancelOrder = async (req: Request, res: Response) => {
         if (!order) {
             res.status(404).json({ error: 'Order not found' });
         }
-        await Order.updateOne({ _id: new ObjectId(orderId) }, { $set: { status: 'denied' } });
+        const seller = await User.findById(order?.itemOwnerId);
+        if (!seller) {
+            return res.status(404).json({ error: 'Seller not found' });
+        }
+        await Order.updateOne({ _id: new ObjectId(orderId.trim()) }, { $set: { status: 'denied' } });
         await sendEmail(order?.customerEmail, "Customer: Order Canceled", "Your order ${orderId} has been canceled.", `<p>Your order ${orderId} has been canceled.</p>`)
-        await sendEmail(req.body.email, "Seller: Order Canceled", "Order ${orderId} has been canceled by ${order?.customerEmail}.", `<p>Order ${orderId} has been canceled.</p>`)
+        await sendEmail(seller.email, "Seller: Order Canceled", "Order ${orderId} has been canceled by ${order?.customerEmail}.", `<p>Order ${orderId} has been canceled.</p>`)
         res.status(200).json({ message: 'Order successfully canceled' });
     } catch (error) {
         console.error('Error canceling order:', error);
@@ -88,9 +100,13 @@ export const completeOrder = async (req: Request, res: Response) => {
         if (!order) {
             res.status(404).json({ error: 'Order not found' });
         }
-        await Order.updateOne({ _id: new ObjectId(orderId) }, { $set: { status: 'completed' } });
+        const seller = await User.findById(order?.itemOwnerId);
+        if (!seller) {
+            return res.status(404).json({ error: 'Seller not found' });
+        }
+        await Order.updateOne({ _id: new ObjectId(orderId.trim()) }, { $set: { status: 'completed' } });
         await sendEmail(order?.customerEmail, "Customer: Order Completed", "Your order ${orderId} has been completed.", `<p>Your order ${orderId} has been completed.</p>`)
-        await sendEmail(req.body.email, "Seller: Order Completed", "Order ${orderId} has been completed by ${order?.customerEmail}.", `<p>Order ${orderId} has been completed.</p>`)
+        await sendEmail(seller.email, "Seller: Order Completed", "Order ${orderId} has been completed by ${order?.customerEmail}.", `<p>Order ${orderId} has been completed.</p>`)
         res.status(200).json({ message: 'Order successfully completed' });
     } catch (error) {
         console.error('Error completing order:', error);
