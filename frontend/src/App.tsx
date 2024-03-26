@@ -13,6 +13,7 @@ import HomePage from './pages/Buyer/HomePage';
 import "./App.css";
 import SampleComponentsPage from './pages/SampleComponents/SampleComponentsPage';
 import SellerSpiritwearAndInventory from "./pages/Seller/Dashboard/SellerSpiritwearAndInventory.tsx";
+import ConfirmEmail from "./pages/Seller/Auth/ConfirmEmail.tsx";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/SellerSpiritAndInv",
     element: <SellerSpiritwearAndInventory />
+  },
+  {
+    path: "/ConfirmEmail" ,
+    element: <ConfirmEmail />
   }
 ]);
 
