@@ -7,6 +7,7 @@ export interface IItem extends Document {
     pickupTime: string;
     itemOwnerId: mongoose.Types.ObjectId;
     userId: mongoose.Types.ObjectId;
+    groupId?: mongoose.Types.ObjectId;
 }
 
 const itemSchema = new mongoose.Schema({
@@ -15,6 +16,8 @@ const itemSchema = new mongoose.Schema({
     pickupLocation: { type: String, required: true },
     pickupTime: { type: String, required: true },
     itemOwnerId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'users' },
+    groupId: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'groups' },
+
 });
 
 const Item = mongoose.model<IItem>('items', itemSchema);

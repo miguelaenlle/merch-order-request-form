@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised">
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised recent suggestions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/models/item.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/models/item.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/routes/items-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/items-routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="groups-auth" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,7 +71,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;groups-auth&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;groupID-to-items&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/maenlle/WebstormProjects&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -151,7 +153,13 @@
       <workItem from="1710287396564" duration="1504000" />
       <workItem from="1710641186039" duration="3544000" />
       <workItem from="1710721096623" duration="1504000" />
-      <workItem from="1710802486885" duration="761000" />
+      <workItem from="1710802486885" duration="1436000" />
+      <workItem from="1710895695741" duration="975000" />
+      <workItem from="1711413700345" duration="2320000" />
+      <workItem from="1711417577191" duration="2082000" />
+      <workItem from="1711419688926" duration="6000" />
+      <workItem from="1711482376191" duration="3540000" />
+      <workItem from="1711495333830" duration="1005000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -257,7 +265,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710721989852</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Revised recent suggestions">
+      <option name="closed" value="true" />
+      <created>1710803313578</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1710803313578</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,6 +287,7 @@
     <MESSAGE value="Created the auth for items" />
     <MESSAGE value="Created the auth for groups route" />
     <MESSAGE value="Revised" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revised" />
+    <MESSAGE value="Revised recent suggestions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revised recent suggestions" />
   </component>
 </project>
