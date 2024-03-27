@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised recent suggestions">
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Created the groupId field">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/models/item.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/models/item.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/routes/items-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/items-routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +158,8 @@
       <workItem from="1711417577191" duration="2082000" />
       <workItem from="1711419688926" duration="6000" />
       <workItem from="1711482376191" duration="3540000" />
-      <workItem from="1711495333830" duration="1005000" />
+      <workItem from="1711495333830" duration="1094000" />
+      <workItem from="1711552658422" duration="1124000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -273,7 +273,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710803313578</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Created the groupId field">
+      <option name="closed" value="true" />
+      <created>1711496358691</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1711496358691</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,6 +296,7 @@
     <MESSAGE value="Created the auth for groups route" />
     <MESSAGE value="Revised" />
     <MESSAGE value="Revised recent suggestions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revised recent suggestions" />
+    <MESSAGE value="Created the groupId field" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created the groupId field" />
   </component>
 </project>

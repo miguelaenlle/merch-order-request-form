@@ -5,7 +5,7 @@ import InventoryItem from "../models/inventory-item";
 import mongoose from 'mongoose';
 import {ObjectId} from "mongodb";
 import { CustomRequest } from "../middleware/auth";
-
+import Group from '../models/group';
 
 
 //Creates an item
@@ -20,6 +20,13 @@ export const createItem = async (req: CustomRequest, res: Response) => {
     const dupeItem = Item.findOne({name: req.body.name})
     if (!dupeItem) {
         return res.status(409).json({error: "An item with the same name already exists."});
+    }
+    //Group existence check
+    if (req.body.groupId){
+        const groupExistence = await Group.exists({ _id: req.body.groupId });
+        if (!groupExistence){
+            return res.status(404).json({ error: "No group with the provided ID exists"});
+        }
     }
     const name = req.body.name as string;
     const description = req.body.description as string;
@@ -75,6 +82,13 @@ export const retrieveItems = async (req: CustomRequest, res: Response) => {
         if (!req.token) {
             return res.status(400).json({ message: 'Token missing' })
         }
+        //Group existence check
+        if (req.body.groupId){
+            const groupExistence = await Group.exists({ _id: req.body.groupId });
+            if (!groupExistence){
+                return res.status(404).json({ error: "No group with the provided ID exists"});
+            }
+        }
         const filter: any = {};
         const groupId = req.query.groupId as string;
         if (groupId){
@@ -114,6 +128,13 @@ export const updateItem = async (req: CustomRequest, res: Response) => {
     //Checks if UserId exists
     if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
+    }
+    //Group existence check
+    if (req.body.groupId){
+        const groupExistence = await Group.exists({ _id: req.body.groupId });
+        if (!groupExistence){
+            return res.status(404).json({ error: "No group with the provided ID exists"});
+        }
     }
     const itemOwner = req.body.itemOwnerId;
     const findItemOwnerById = Item.find({ itemOwnerId: itemOwner });

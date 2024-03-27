@@ -29,7 +29,6 @@ export const createGroup = async (req: CustomRequest, res: Response) => {
         //Creates a new group with name and id
         try {
             const name = req.body.name as string;
-
             const group = new Group({
                 name: name,
                 userId: req.token.userId
