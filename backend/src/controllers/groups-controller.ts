@@ -18,7 +18,7 @@ export const createGroup = async (req: CustomRequest, res: Response) => {
     }
     //Checks if there's a similar group
     const dupeGroup = await Group.findOne({ name: req.body.name })
-    if (!dupeGroup) {
+    if (dupeGroup !== null) {
         return res.status(409).json({ error: "A group with the same name already exists."  });
     }
     //Checks if UserId exists
@@ -80,7 +80,7 @@ export const updateName = async (req: CustomRequest, res: Response) =>{
     }
     //Group existence error
     const existingGroup = await Group.findOne({name: newName})
-    if(existingGroup){
+    if(existingGroup!== null){
         return res.status(409).json({ error: "This group name is already taken"});
     }
     //Checks if UserId exists

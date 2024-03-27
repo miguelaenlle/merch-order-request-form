@@ -1,0 +1,57 @@
+
+
+.subcontent {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+
+.header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+.createNewItem {
+    margin-bottom: 20px;
+}
+
+
+.imageContainer {
+    background-color: #f5f5f5;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.itemImage {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+
+.itemDetails {
+    text-align: center;
+}
+
+
+.itemName {
+    font-weight: bold;
+    font-size: x-large
+}
+
+
+.cost {
+    font-size: 1.2rem;
+}
+
+
+.school {
+    font-size: 1.2rem;
+}
+
