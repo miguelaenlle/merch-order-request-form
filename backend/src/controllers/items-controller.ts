@@ -5,7 +5,7 @@ import InventoryItem from "../models/inventory-item";
 import mongoose from 'mongoose';
 import {ObjectId} from "mongodb";
 import { CustomRequest } from "../middleware/auth";
-
+import Group from '../models/group';
 
 
 //Creates an item
@@ -21,10 +21,18 @@ export const createItem = async (req: CustomRequest, res: Response) => {
     if (!dupeItem) {
         return res.status(409).json({error: "An item with the same name already exists."});
     }
+    //Group existence check
+    if (req.body.groupId){
+        const groupExistence = await Group.exists({ _id: req.body.groupId });
+        if (!groupExistence){
+            return res.status(404).json({ error: "No group with the provided ID exists"});
+        }
+    }
     const name = req.body.name as string;
     const description = req.body.description as string;
     const pickupLocation = req.body.pickupLocation as string;
     const pickupTime = req.body.pickupTime as string;
+
     //Checks if UserId exists
     if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
@@ -35,7 +43,8 @@ export const createItem = async (req: CustomRequest, res: Response) => {
         description: description,
         pickupLocation: pickupLocation,
         pickupTime: pickupTime,
-        itemOwnerId: req.token.userId
+        itemOwnerId: req.token.userId,
+        groupId: req.body.groupId
     });
     //Creates a transaction to create inventory-items
     //Checks if there's missing sizes
@@ -67,9 +76,25 @@ export const createItem = async (req: CustomRequest, res: Response) => {
 
 
 //Retrieves a list of all items
-export const retrieveItems = async (req: Request, res: Response) => {
+export const retrieveItems = async (req: CustomRequest, res: Response) => {
     try {
-        const items = await Item.find();
+        //Checks if token is missing
+        if (!req.token) {
+            return res.status(400).json({ message: 'Token missing' })
+        }
+        //Group existence check
+        if (req.body.groupId){
+            const groupExistence = await Group.exists({ _id: req.body.groupId });
+            if (!groupExistence){
+                return res.status(404).json({ error: "No group with the provided ID exists"});
+            }
+        }
+        const filter: any = {};
+        const groupId = req.query.groupId as string;
+        if (groupId){
+            filter.groupId = groupId;
+        }
+        const items = await Item.find(filter);
         return res.status(200).json({items});
     } catch (error: any) {
         return res.status(500).json({ message: 'Server error', error: error.message });
@@ -98,10 +123,18 @@ export const updateItem = async (req: CustomRequest, res: Response) => {
     const { newDescription }: { newDescription: string }= req.body;
     const { newPickupLocation }: { newPickupLocation: string }= req.body;
     const { newPickupTime }: { newPickupTime: string }= req.body;
+    const groupID = req.body.groupId;
     const itemID: string = req.params._id;
     //Checks if UserId exists
     if(!req.token?.userId){
         return res.status(422).json({error: "UserId does not exist"});
+    }
+    //Group existence check
+    if (req.body.groupId){
+        const groupExistence = await Group.exists({ _id: req.body.groupId });
+        if (!groupExistence){
+            return res.status(404).json({ error: "No group with the provided ID exists"});
+        }
     }
     const itemOwner = req.body.itemOwnerId;
     const findItemOwnerById = Item.find({ itemOwnerId: itemOwner });
@@ -122,7 +155,7 @@ export const updateItem = async (req: CustomRequest, res: Response) => {
     //Updates item
     try {
         const result = await Item.updateOne({_id: new ObjectId(itemID)},
-            { name: newName, description: newDescription, pickupLocation: newPickupLocation, pickupTime: newPickupTime });
+            { name: newName, description: newDescription, pickupLocation: newPickupLocation, pickupTime: newPickupTime, groupId: groupID });
         if(result.matchedCount === 0){
             return res.status(404).json({ error: 'The desired item was not found'});
         }
@@ -162,3 +195,22 @@ export const deleteItem = async (req: CustomRequest, res: Response) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
+
+// export const getItems = async (req: CustomRequest, res: Response) =>{
+//     //Checks if UserId exists
+//     if(!req.token?.userId){
+//         return res.status(422).json({error: "UserId does not exist"});
+//     }
+//     //Token check
+//     if (!req.token) {
+//         return res.status(400).json({ message: 'Token missing' })
+//     }
+//     try {
+//         const itemOwner = req.body.itemOwnerId;
+//         const items = await Item.find({ itemOwner: req.token.userId });
+//
+//
+//     } catch (error: any) {
+//         return res.status(500).json({ message: 'Server error', error: error.message });
+//     }
+// }

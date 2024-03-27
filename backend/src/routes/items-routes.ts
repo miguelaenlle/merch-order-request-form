@@ -1,6 +1,6 @@
 import express from 'express';
 import {body} from "express-validator";
-import { createItem, retrieveItems, getSpecificItem, updateItem, deleteItem } from "../controllers/items-controller";
+import { createItem, retrieveItems, getSpecificItem, updateItem, deleteItem} from "../controllers/items-controller";
 import { auth } from '../middleware/auth'
 
 
@@ -20,6 +20,8 @@ router.put('/:_id', [
     body('newPickupLocation').isString().withMessage('Pick up location must be a string').notEmpty().withMessage('Pick up location is required'),
     body('newPickupTime').isString().withMessage('Pick up time must be a string').notEmpty().withMessage('Pick up time is required')], auth, updateItem);
 router.delete('/:_id', auth, deleteItem);
+// router.get('/', auth, getItems);
+
 
 
 export default router;
