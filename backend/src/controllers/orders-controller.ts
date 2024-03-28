@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
-import OrderItem, { IOrderItem } from '../models/order-item';
+import {Request, Response} from 'express';
+import OrderItem, {IOrderItem} from '../models/order-item';
 import {validationResult} from "express-validator";
 import Order, {IOrder} from "../models/order";
-import { ObjectId } from 'mongodb';
-import { createTransport } from 'nodemailer'
+import {ObjectId} from 'mongodb';
+import {createTransport} from 'nodemailer'
 import {CustomRequest} from "../middleware/auth";
 import User from "../models/user";
 
@@ -17,18 +17,18 @@ const transporter = createTransport(sendgridTransport({
 export const createOrder = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() });
+        res.status(400).json({errors: errors.array()});
         return;
     }
     try {
-        if(!req.token?.userId){
+        if (!req.token?.userId) {
             return res.status(422).json({error: "UserId does not exist"});
         }
 
-        const { itemOwnerId, customerName, customerEmail, customerType, school, notes, orderedItems } = req.body;
+        const {itemOwnerId, customerName, customerEmail, customerType, school, notes, orderedItems} = req.body;
         const userWhoPlacedOrderId = req.token.userId;
 
-        const largestOrder = await Order.findOne({ itemOwnerId }).sort({ orderNumber: -1 }).limit(1);
+        const largestOrder = await Order.findOne({itemOwnerId}).sort({orderNumber: -1}).limit(1);
         const newOrderNumber = largestOrder ? largestOrder.orderNumber + 1 : 1;
 
         const order: IOrder = new Order({
@@ -52,65 +52,96 @@ export const createOrder = async (req: CustomRequest, res: Response) => {
             });
             await orderItem.save();
         }
-        res.status(201).json({ order: savedOrder });
+        res.status(201).json({order: savedOrder});
     } catch (error) {
         console.error('Error creating order:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
 
-export const getAllOrders = async (req: Request, res: Response) => {
+export const getAllOrders = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({errors: errors.array()});
     }
     try {
         const orders: IOrderItem[] = await OrderItem.find();
         res.status(200).json({orders});
     } catch (error) {
         console.error('Error retrieving orders:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
-export const cancelOrder = async (req: Request, res: Response) => {
+export const cancelOrder = async (req: CustomRequest, res: Response) => {
     try {
         const orderId: string = req.params.id;
         const order: IOrder | null = await Order.findById(orderId);
         if (!order) {
-            res.status(404).json({ error: 'Order not found' });
+            res.status(404).json({error: 'Order not found'});
         }
         const seller = await User.findById(order?.itemOwnerId);
         if (!seller) {
-            return res.status(404).json({ error: 'Seller not found' });
+            return res.status(404).json({error: 'Seller not found'});
         }
-        await Order.updateOne({ _id: new ObjectId(orderId.trim()) }, { $set: { status: 'denied' } });
+        await Order.updateOne({_id: new ObjectId(orderId.trim())}, {$set: {status: 'denied'}});
         await sendEmail(order?.customerEmail, "Customer: Order Canceled", "Your order ${orderId} has been canceled.", `<p>Your order ${orderId} has been canceled.</p>`)
         await sendEmail(seller.email, "Seller: Order Canceled", "Order ${orderId} has been canceled by ${order?.customerEmail}.", `<p>Order ${orderId} has been canceled.</p>`)
-        res.status(200).json({ message: 'Order successfully canceled' });
+        res.status(200).json({message: 'Order successfully canceled'});
     } catch (error) {
         console.error('Error canceling order:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
-export const completeOrder = async (req: Request, res: Response) => {
+export const completeOrder = async (req: CustomRequest, res: Response) => {
     try {
         const orderId: string = req.params.id;
         const order: IOrder | null = await Order.findById(orderId);
         if (!order) {
-            res.status(404).json({ error: 'Order not found' });
+            res.status(404).json({error: 'Order not found'});
         }
         const seller = await User.findById(order?.itemOwnerId);
         if (!seller) {
-            return res.status(404).json({ error: 'Seller not found' });
+            return res.status(404).json({error: 'Seller not found'});
         }
-        await Order.updateOne({ _id: new ObjectId(orderId.trim()) }, { $set: { status: 'completed' } });
+        await Order.updateOne({_id: new ObjectId(orderId.trim())}, {$set: {status: 'completed'}});
         await sendEmail(order?.customerEmail, "Customer: Order Completed", "Your order ${orderId} has been completed.", `<p>Your order ${orderId} has been completed.</p>`)
         await sendEmail(seller.email, "Seller: Order Completed", "Order ${orderId} has been completed by ${order?.customerEmail}.", `<p>Order ${orderId} has been completed.</p>`)
-        res.status(200).json({ message: 'Order successfully completed' });
+        res.status(200).json({message: 'Order successfully completed'});
     } catch (error) {
-        console.error('Error completing order:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error completing the order:', error);
+        res.status(500).json({error: 'Internal Server Error'});
+    }
+};
+export const updateOrder = async (req: CustomRequest, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array()});
+    }
+    if (!req.token?.type) {
+        return res.status(422).json({error: 'User type is required'});
+    }
+    const orderId: string = req.params.id;
+    const order: IOrder | null = await Order.findById(orderId);
+    if (!order) {
+        return res.status(404).json({error: 'Order not found'});
+    }
+    if (req.token.type === 'buyer') {
+        if (req.token.userId !== order.userWhoPlacedOrderId) {
+            return res.status(403).json({error: 'Unauthorized access'});
+        }
+    } else if (req.token.type === 'seller') {
+        if (req.token.userId !== order.itemOwnerId && req.token.userId !== order.userWhoPlacedOrderId) {
+            return res.status(403).json({error: 'Unauthorized access'});
+        }
+    } else {
+        return res.status(403).json({error: 'Invalid user type'});
+    }
+    try {
+        //Order update implementation
+    } catch (error) {
+        console.error('Error updating the order:', error);
+        res.status(500).json({error: 'Internal Server Error'});
     }
 };
 const sendEmail = async (email: string | undefined, subject: string, text: string, html: string) => {
