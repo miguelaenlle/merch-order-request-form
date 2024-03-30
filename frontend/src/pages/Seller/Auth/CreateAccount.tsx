@@ -7,23 +7,42 @@ import { Link } from '@chakra-ui/react'
 import orangeGradient from '../../../assets/orangeGradient.png';
 import { FaDoorOpen } from 'react-icons/fa';
 import { ChakraProvider } from "@chakra-ui/react";
+import { useAPIHook } from "../../../components/shared/hooks/use-api-hook.ts";
+import {useNavigate} from "react-router-dom";
 
 const CreateAccount: React.FC<{}> = (props) => {
     const [fullName, setFullName] = useState('');
-    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const apiHook = useAPIHook();
+    const navigate = useNavigate();
 
     const nameEntered: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFullName(event.target.value);
     };
 
-    const userEntered: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUserName(event.target.value);
+    const emailEntered: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
     };
 
     const passwordEntered: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
+
+    const handleSignupUser = async () => {
+        const response = await apiHook.post(
+            'http://localhost:3000/api/auth/signup',
+            {
+                name: fullName,
+                email: email,
+                password: password,
+                group: "seller"
+            }
+        )
+        console.log(response);
+        navigate("/seller-dashboard")
+    }
 
     return (
 
@@ -45,11 +64,11 @@ const CreateAccount: React.FC<{}> = (props) => {
 
                 <div>
                     <Input
-                        value={userName}
-                        placeholder='Username'
+                        value={email}
+                        placeholder='Email'
                         size='md'
                         width='large'
-                        onChange={userEntered}>
+                        onChange={emailEntered}>
                     </Input>
                 </div>
 
@@ -69,6 +88,9 @@ const CreateAccount: React.FC<{}> = (props) => {
                             leftIcon={<FaDoorOpen />}
                             colorScheme="blue"
                             variant="solid"
+                            onClick={() => {
+                                handleSignupUser()
+                            }}
                         >
                             Sign Up
                         </Button>
