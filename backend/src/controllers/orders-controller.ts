@@ -114,31 +114,54 @@ export const completeOrder = async (req: CustomRequest, res: Response) => {
     }
 };
 export const updateOrder = async (req: CustomRequest, res: Response) => {
+    const {
+        newOrderNumber,
+        newCustomerName,
+        newCustomerEmail,
+        newCustomerType,
+        newSchool,
+        newNotes
+    }: {
+        newOrderNumber: number,
+        newCustomerName: string,
+        newCustomerEmail: string,
+        newCustomerType: string,
+        newSchool: string,
+        newNotes: string
+    } = req.body;
+    const orderId: string = req.params.id;
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({errors: errors.array()});
+        return res.status(400).json({ errors: errors.array() });
     }
-    if (!req.token?.type) {
-        return res.status(422).json({error: 'User type is required'});
+    if (!req.token?.type || (req.token.type !== 'buyer' && req.token.type !== 'seller')) {
+        return res.status(403).json({ error: 'Invalid or missing user type' });
     }
-    const orderId: string = req.params.id;
     const order: IOrder | null = await Order.findById(orderId);
     if (!order) {
-        return res.status(404).json({error: 'Order not found'});
+        return res.status(404).json({ error: 'Order not found' });
     }
-    if (req.token.type === 'buyer') {
-        if (req.token.userId !== order.userWhoPlacedOrderId) {
-            return res.status(403).json({error: 'Unauthorized access'});
-        }
-    } else if (req.token.type === 'seller') {
-        if (req.token.userId !== order.itemOwnerId && req.token.userId !== order.userWhoPlacedOrderId) {
-            return res.status(403).json({error: 'Unauthorized access'});
-        }
-    } else {
-        return res.status(403).json({error: 'Invalid user type'});
+    if (req.token.type === 'buyer' && req.token.userId !== order.userWhoPlacedOrderId) {
+        return res.status(403).json({ error: 'Unauthorized access' });
+    }
+    if (req.token.type === 'seller' && req.token.userId !== order.itemOwnerId && req.token.userId !== order.userWhoPlacedOrderId) {
+        return res.status(403).json({ error: 'Unauthorized access' });
     }
     try {
-        //Order update implementation
+        const result = await Order.updateOne({ _id: new ObjectId(orderId) }, {
+            orderNumber: newOrderNumber,
+            customerName: newCustomerName,
+            customerEmail: newCustomerEmail,
+            customerType: newCustomerType,
+            school: newSchool,
+            notes: newNotes
+        });
+        if(result.matchedCount === 0){
+            return res.status(404).json({error: 'Order not found'});
+        }
+        const updatedOrder = await Order.findOne({_id: new ObjectId(orderId)});
+        return res.status(200).json({updatedOrder});
     } catch (error) {
         console.error('Error updating the order:', error);
         res.status(500).json({error: 'Internal Server Error'});
