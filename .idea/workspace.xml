@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised">
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/huskyIcon.png" afterDir="false" />
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Added husky logo, added bold text, added the box and shop icons, changed text color, added the order count, removed outline">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/shared/BuyerNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/shared/BuyerNavbar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/shared/Navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/shared/Navbar.css" afterDir="false" />
@@ -45,7 +44,7 @@
     </option>
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="009f2f8d-716f-4be2-9a77-70e155755b99" />
+        <option name="accountId" value="bab96ec6-8e15-418f-9594-7915504ecd0d" />
         <option name="url" value="https://github.com/miguelaenlle/merch-order-request-form.git" />
       </UrlAndAccount>
     </option>
@@ -148,7 +147,9 @@
       <workItem from="1709954794919" duration="411000" />
       <workItem from="1710010435141" duration="2272000" />
       <workItem from="1710633000430" duration="2172000" />
-      <workItem from="1710710108047" duration="7981000" />
+      <workItem from="1710710108047" duration="8525000" />
+      <workItem from="1710876022278" duration="509000" />
+      <workItem from="1711842051030" duration="1509000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -214,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709955143535</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added husky logo, added bold text, added the box and shop icons, changed text color, added the order count, removed outline">
+      <option name="closed" value="true" />
+      <created>1710719472208</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1710719472208</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,6 +234,7 @@
     <MESSAGE value="Fixed bugs" />
     <MESSAGE value="Created the items route" />
     <MESSAGE value="Revised" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revised" />
+    <MESSAGE value="Added husky logo, added bold text, added the box and shop icons, changed text color, added the order count, removed outline" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added husky logo, added bold text, added the box and shop icons, changed text color, added the order count, removed outline" />
   </component>
 </project>

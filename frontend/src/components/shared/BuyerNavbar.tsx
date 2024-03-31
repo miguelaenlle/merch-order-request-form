@@ -2,8 +2,9 @@ import * as React from "react"
 import { Button } from "@chakra-ui/react";
 import "./Navbar.css"
 import { useNavigate } from "react-router-dom";
-import huskyIcon from '../../assets/huskyIcon.png';
 import { FaBox, FaStore } from "react-icons/fa";
+import { JHHS_LOGO} from "../../constants/placeholder-data.ts";
+
 const BuyerNavbar: React.FC<{}> = (props) => {
     const navigate = useNavigate();
 
@@ -12,7 +13,7 @@ const BuyerNavbar: React.FC<{}> = (props) => {
             <h3 className="clickableText" onClick={() => {
                 navigate("/")
             }}>
-                <img src={huskyIcon} alt="Husky Icon" className="image"/>
+                <img src={JHHS_LOGO} alt="Husky Icon" className="image"/>
                 <strong>Hersey Spiritwear</strong>
             </h3>
             <div className="spacer"></div>
