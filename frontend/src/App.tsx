@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/Seller/Auth/ForgotPassword.tsx";
 import HomePage from './pages/Buyer/HomePage';
 import "./App.css";
 import SampleComponentsPage from './pages/SampleComponents/SampleComponentsPage';
+import SellerSpiritwearAndInventory from "./pages/Seller/Dashboard/SellerSpiritwearAndInventory.tsx";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/sample-components",
     element: <SampleComponentsPage />
+  },
+  {
+    path: "/SellerSpiritAndInv",
+    element: <SellerSpiritwearAndInventory />
   }
 ]);
 
