@@ -1,9 +1,10 @@
-import './App.css'
-import { HomePageSearch } from './Pages/Buyer/HomePageSearch'
+import './App.css' 
+import IOrder from './interfaces/IOrder'
+import { HomePageSearch } from './pages/Buyer/HomePageSearch' 
 
 function App() {
   return ( 
-      <HomePageSearch /> 
+      <IOrder /> 
   )
 }
 
