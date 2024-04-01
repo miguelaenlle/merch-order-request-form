@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from 'react'
-
-interface HomePageSearch {
-    name: { name: string }[]
-}
+import { useEffect, useState } from 'react' 
 
 const data: HomePageSearch = {
     name: [
