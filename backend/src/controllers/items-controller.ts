@@ -196,21 +196,30 @@ export const deleteItem = async (req: CustomRequest, res: Response) => {
     }
 }
 
-// export const getItems = async (req: CustomRequest, res: Response) =>{
-//     //Checks if UserId exists
-//     if(!req.token?.userId){
-//         return res.status(422).json({error: "UserId does not exist"});
-//     }
-//     //Token check
-//     if (!req.token) {
-//         return res.status(400).json({ message: 'Token missing' })
-//     }
-//     try {
-//         const itemOwner = req.body.itemOwnerId;
-//         const items = await Item.find({ itemOwner: req.token.userId });
-//
-//
-//     } catch (error: any) {
-//         return res.status(500).json({ message: 'Server error', error: error.message });
-//     }
-// }
+export const getMyItems = async (req: CustomRequest, res: Response) =>{
+    //Checks if UserId exists
+    if(!req.token?.userId){
+        return res.status(422).json({error: "UserId does not exist"});
+    }
+    //Token check
+    if (!req.token) {
+        return res.status(400).json({ message: 'Token missing' })
+    }
+    try {
+        const items = await Item.find({ itemOwnerId: req.token.userId });
+        const itemList = await Promise.all(items.map(async item => {
+            const invItem = await InventoryItem.findOne({itemId: item._id, price : {$gt: 0}})
+            const price = invItem ? invItem.price : 0;
+            return {
+                name: item.name,
+                price,
+                groupIdName: item.groupId?.toString()
+            }
+        }))
+        return res.status(200).json(itemList);
+
+    } catch (error: any) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+

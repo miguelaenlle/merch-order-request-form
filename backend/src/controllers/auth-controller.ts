@@ -129,7 +129,7 @@ export const loginUser = async (req: Request, res: Response) => {
                 res.status(400).json({ message: "User is not verified." });
                 return
             }
-            const userToken = await generateAccessToken("login", user._id, email, "1 day")
+            const userToken = await generateAccessToken("login", user._id, email, "1 week")
             res.status(200).json({ token: userToken, user: { email: email, name: user.name } });
         } else {
             res.status(401).json({ message: "Invalid credentials" });
