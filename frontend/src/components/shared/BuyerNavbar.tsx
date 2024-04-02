@@ -2,6 +2,9 @@ import * as React from "react"
 import { Button } from "@chakra-ui/react";
 import "./Navbar.css"
 import { useNavigate } from "react-router-dom";
+import { FaBox, FaStore } from "react-icons/fa";
+import { JHHS_LOGO} from "../../constants/placeholder-data.ts";
+
 const BuyerNavbar: React.FC<{}> = (props) => {
     const navigate = useNavigate();
 
@@ -9,10 +12,13 @@ const BuyerNavbar: React.FC<{}> = (props) => {
         <div className="navbar">
             <h3 className="clickableText" onClick={() => {
                 navigate("/")
-            }}>Hersey Spiritwear (Buyer)</h3>
+            }}>
+                <img src={JHHS_LOGO} alt="Husky Icon" className="image"/>
+                <strong>Hersey Spiritwear</strong>
+            </h3>
             <div className="spacer"></div>
             <Button
-                colorScheme="blue"
+                colorScheme="gray"
                 variant="ghost"
                 onClick={() => {
                     // TODO: This should go to seller lgoin instead
@@ -21,10 +27,11 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                 }}
                 fontSize={"sm"}
             >
-                Orders
+                <FaBox style={{ marginRight: "5px" }} /> Orders
+                <div className="orderCount">1</div>
             </Button>
             <Button
-                colorScheme="blue"
+                colorScheme="gray"
                 variant="ghost"
                 onClick={() => {
                     // TODO: This should go to seller lgoin instead
@@ -36,8 +43,8 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                 Sample Components
             </Button>
             <Button
-                colorScheme="blue"
-                variant="outline"
+                colorScheme="gray"
+                 variant="ghost"
                 onClick={() => {
                     // TODO: This should go to seller lgoin instead
                     navigate("/seller-dashboard")
@@ -45,7 +52,7 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                 }}
                 fontSize={"sm"}
             >
-                For Sellers
+                <FaStore style={{ marginRight: "5px" }} /> For Sellers
             </Button>
         </div>
     );
