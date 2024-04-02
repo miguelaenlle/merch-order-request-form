@@ -10,7 +10,9 @@ const DisplayedCustomerOrderItem: React.FC<{
     const [itemsOrdered, setItemsOrdered] = React.useState<OrderItem[]>(PLACEHOLDER_ITEMS_ORDERED);
 
     return (
-        <div>
+        <div style={{
+            marginBottom: "10px"
+        }}>
             <h3>{props.order.customerName}</h3>
             {itemsOrdered.map((itemOrdered) => (
                 <OrderedItem
@@ -18,6 +20,7 @@ const DisplayedCustomerOrderItem: React.FC<{
                     orderedItem={itemOrdered}
                 />
             ))}
+            <br />
         </div>
     );
 }
