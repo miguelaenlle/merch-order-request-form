@@ -1,6 +1,6 @@
 import express from 'express';
 import {body} from "express-validator";
-import { createItem, retrieveItems, getSpecificItem, updateItem, deleteItem} from "../controllers/items-controller";
+import { createItem, retrieveItems, getSpecificItem, updateItem, deleteItem, getMyItems} from "../controllers/items-controller";
 import { auth } from '../middleware/auth'
 
 
@@ -13,6 +13,7 @@ router.post('/', [
     body('pickupTime').isString().withMessage('Pick up time must be a string').notEmpty().withMessage('Pick up time is required'),
     body('price').isNumeric().withMessage('Must list a numerical value').notEmpty().withMessage('Price is required')], auth, createItem);
 router.get('/', auth, retrieveItems);
+router.get('/my-items', auth, getMyItems);
 router.get('/:_id', auth, getSpecificItem);
 router.put('/:_id', [
     body('newName').isString().withMessage('Name must be a string').notEmpty().withMessage('Name is required').isLength({ min: 3, max: 25 }),
@@ -20,7 +21,7 @@ router.put('/:_id', [
     body('newPickupLocation').isString().withMessage('Pick up location must be a string').notEmpty().withMessage('Pick up location is required'),
     body('newPickupTime').isString().withMessage('Pick up time must be a string').notEmpty().withMessage('Pick up time is required')], auth, updateItem);
 router.delete('/:_id', auth, deleteItem);
-// router.get('/', auth, getItems);
+
 
 
 

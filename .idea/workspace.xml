@@ -14,14 +14,8 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="TypeScript File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
+
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
@@ -56,7 +50,8 @@
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2cNfLz9nkqeoNs0WtqXmIwmSuC1" />
   <component name="ProjectViewState">
@@ -107,8 +102,8 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="" />
-      <created>1707956904649</created>
+      <changelist id="b16457bb-7d9e-4e62-88b1-04223be3cfda" name="Changes" comment="" />
+      <created>1711853486963</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1707956904649</updated>
