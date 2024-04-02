@@ -1,26 +1,52 @@
 
+import { useEffect, useState } from "react";
+import { Item } from "../../../types/Item";
 import NewSpiritwearItem from "./NewSpiritwearItem";
-import { JHHS_SWEATER } from "./imagePaths";
-import { Tag } from "@chakra-ui/react";
 import "./styles.css";
+import SpiritwearItem from "./SpiritwearItem";
 const SellerSpiritwearAndInventory = () => {
-    const schoolName = "JHHS Merch";
+    const [spiritwearItems, setSpiritwearItems] = useState<Item[]>([
+        {
+            _id: "1",
+            name: "(DUMMY) Husky Sweater",
+            price: 25,
+            groupIdName: "JHHS"
+        },
+        {
+            _id: "2",
+            name: "(DUMMY) Husky T-Shirt",
+            price: 15,
+            groupIdName: "JHHS"
+        },
+        {
+            _id: "3",
+            name: " (DUMMY) Husky Hoodie",
+            price: 35,
+            groupIdName: "JHHS"
+        } // Remove the placeholder data when you confirm this works
+    ]);
+
+    const handleLoad = async () => {
+        // Your code here
+    }
+
+    useEffect(() => {
+        handleLoad();
+    }, [])
 
     return (
         <div className="subcontent">
             <h3 className="header">My Spiritwear & Inventory</h3>
             <div className="createNewItem">
-                <NewSpiritwearItem/>
+                <NewSpiritwearItem />
             </div>
-            <div>
-                <img className="itemImage" src={JHHS_SWEATER} alt="Husky Sweater" />
-            </div>
-            <div className="itemDetails" style={{ textAlign: "left" }}>
-                <h4 className="itemName">Husky Sweater</h4>
-                <p className="cost"> $20 </p>
-                <Tag size="md" variant="solid" colorScheme="gray">
-                    {schoolName}
-                </Tag>
+            <div className="grid">
+                {spiritwearItems.map((item) => (
+                    <SpiritwearItem
+                        key={`spiritwear-${item._id}`}
+                        item={item}
+                    />
+                ))}
             </div>
         </div>
     );
