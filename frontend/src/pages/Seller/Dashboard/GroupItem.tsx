@@ -1,4 +1,4 @@
-
+import "./GroupItem.css"
 import * as React from "react"
 import { Group } from "../../../components/shared/types/Group";
 const GroupItem: React.FC<{
@@ -8,9 +8,10 @@ const GroupItem: React.FC<{
     // TODO: Improve the UI of this component
 
     return (
-        <div>
+        <div className={"groupItem"}>
             <p>{props.group.name}</p>
             <p>4 products</p>
+            <p> 42 Sales</p>
         </div>
     );
 }

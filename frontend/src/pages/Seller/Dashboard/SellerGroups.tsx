@@ -8,7 +8,7 @@ const SellerGroups: React.FC<{}> = (props) => {
     // TODO: Fetch groups from our API
 
     return (
-        <div className="subcontent" style={ {display: 'flex', flexDirection: 'row',flexFlow: 'wrap'}}>
+        <div className="subcontent" >
             <h3 className="header">My Groups</h3>
             {/* TODO: Let the user CREATE new groups */}
             {/* TODO: Make it look like the Figma  */}

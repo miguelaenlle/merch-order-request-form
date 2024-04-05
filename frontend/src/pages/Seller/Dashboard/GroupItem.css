@@ -1,0 +1,7 @@
+.groupItem{
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    border: 1px solid lightgrey
+}
+
