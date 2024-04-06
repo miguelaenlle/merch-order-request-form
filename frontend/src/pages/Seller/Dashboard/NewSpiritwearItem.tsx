@@ -1,16 +1,18 @@
-import * as React from "react";
+import React from "react";
 import CustomModal from "../../../components/shared/CustomModal";
+
+
 
 const NewSpiritwearItem: React.FC<{}> = (props) => {
     const handleCreateSpiritwearItem = () => {
-        console.log("Created a new spiritwear item.")
-    }
+        console.log("Created a new spiritwear item.");
+    };
 
     return (
         <div>
             <CustomModal
                 title="New Spiritwear Item"
-                buttonText="Create Spiritwear Item "
+                buttonText= "Create new item"
                 content={
                     <div>
                         <p>Content</p>
@@ -23,5 +25,7 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
             />
         </div>
     );
-}
-export default NewSpiritwearItem
+};
+
+export default NewSpiritwearItem;
+

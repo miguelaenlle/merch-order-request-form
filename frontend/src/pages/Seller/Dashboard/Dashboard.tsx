@@ -4,7 +4,7 @@ import "./Dashboard.css"
 import SellerOrders from "./SellerOrders";
 import SellerGroups from "./SellerGroups";
 import SellerSpiritwearAndInventory from "./SellerSpiritwearAndInventory";
-const Dashboard: React.FC<{}> = (props) => {
+const Dashboard: React.FC = () => {
     return (
         <div className="dashboard">
             <Navbar />
