@@ -66,7 +66,7 @@ export const getAllOrders = async (req: CustomRequest, res: Response) => {
         return res.status(400).json({errors: errors.array()});
     }
     try {
-        const orders: IOrderItem[] = await OrderItem.find();
+        const orders: IOrder[] = await Order.find();
         res.status(200).json({orders});
     } catch (error) {
         console.error('Error retrieving orders:', error);
@@ -130,22 +130,23 @@ export const updateOrder = async (req: CustomRequest, res: Response) => {
         newNotes: string
     } = req.body;
     const orderId: string = req.params.id;
+    const user = await User.findOne(req.token?.userId);
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    if (!req.token?.type || (req.token.type !== 'buyer' && req.token.type !== 'seller')) {
+    if (!req.token?.userId || (user?.group !== 'buyer' && user?.group !== 'seller')) {
         return res.status(403).json({ error: 'Invalid or missing user type' });
     }
     const order: IOrder | null = await Order.findById(orderId);
     if (!order) {
         return res.status(404).json({ error: 'Order not found' });
     }
-    if (req.token.type === 'buyer' && req.token.userId !== order.userWhoPlacedOrderId) {
+    if (user?.group === 'buyer' && user?.group !== order.userWhoPlacedOrderId.toString()) {
         return res.status(403).json({ error: 'Unauthorized access' });
     }
-    if (req.token.type === 'seller' && req.token.userId !== order.itemOwnerId && req.token.userId !== order.userWhoPlacedOrderId) {
+    if (user?.group === 'seller' && req.token.userId !== order.itemOwnerId.toString() && req.token.userId !== order.userWhoPlacedOrderId.toString()) {
         return res.status(403).json({ error: 'Unauthorized access' });
     }
     try {
