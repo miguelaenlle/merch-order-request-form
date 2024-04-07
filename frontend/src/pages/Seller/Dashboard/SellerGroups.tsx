@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Group } from "../../../components/shared/types/Group";
 import GroupItem from "./GroupItem";
-import { PLACEHOLDER_GROUPS } from "../../../constants/placeholder-data";
 import { useAPIHook } from "../../../components/shared/hooks/use-api-hook";
 
 const SellerGroups: React.FC<{}> = (props) => {
@@ -19,7 +18,10 @@ const SellerGroups: React.FC<{}> = (props) => {
         console.log(response)
         setGroups(response)
     }
-    retrieveGroups()
+
+    React.useEffect(() => {
+        retrieveGroups()
+    },[])
 
     return (
         <div className="subcontent">

@@ -56,7 +56,7 @@ export const retrieveGroups = async (req: CustomRequest, res: Response) => {
     } catch (error: any) {
        return res.status(500).json({ message: 'Server error', error: error.message });
     }
-    console.log("this isnt meant to print if it errored")
+
     try {
         const groups = await Group.find({userId: req.token.userId});
         return res.status(200).json(groups);
