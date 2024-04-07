@@ -90,7 +90,7 @@ export const useAPIHook = () => {
             password: password
         })
 
-        return response.data.token
+        return response.token
     }
 
     const generateSellerToken = async () => {
@@ -102,7 +102,7 @@ export const useAPIHook = () => {
             password: password
         })
 
-        return response.data.token
+        return response.token
     }
 
     return {

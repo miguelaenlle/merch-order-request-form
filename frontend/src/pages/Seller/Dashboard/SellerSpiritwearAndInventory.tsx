@@ -4,7 +4,10 @@ import { Item } from "../../../types/Item";
 import NewSpiritwearItem from "./NewSpiritwearItem";
 import "./styles.css";
 import SpiritwearItem from "./SpiritwearItem";
+import { useAPIHook } from "../../../components/shared/hooks/use-api-hook.ts";
+
 const SellerSpiritwearAndInventory = () => {
+    const apiHook = useAPIHook();
     const [spiritwearItems, setSpiritwearItems] = useState<Item[]>([
         {
             _id: "1",
@@ -27,7 +30,15 @@ const SellerSpiritwearAndInventory = () => {
     ]);
 
     const handleLoad = async () => {
-        // Your code here
+        const sellerToken = await apiHook.generateSellerToken();
+        try {
+            const response = await apiHook.get(
+                'https://localhost:3000/api/my-items/',
+                sellerToken);
+            setSpiritwearItems(response.data);
+        } catch (error) {
+            console.log('Server error', error);
+        }
     }
 
     useEffect(() => {
