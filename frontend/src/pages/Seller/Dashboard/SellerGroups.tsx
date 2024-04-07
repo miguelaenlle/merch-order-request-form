@@ -3,7 +3,7 @@ import { Group } from "../../../components/shared/types/Group";
 import GroupItem from "./GroupItem";
 import { useAPIHook } from "../../../components/shared/hooks/use-api-hook";
 
-const SellerGroups: React.FC<{}> = (props) => {
+const SellerGroups: React.FC<{}> = (props) => { //have fun with this frontend team cause i have zero idea on these random errors that seem to cause nothing
     const [groups, setGroups] = React.useState<Group[]>([]);
     // TODO: Fetch groups from our API
 
