@@ -85,7 +85,7 @@ export const useAPIHook = () => {
         const sampleBuyerEmail = "bot.developer3@gmail.com" // User to be deleted after testing
         const password = "123456$"
 
-        const response = await post("http://localhost:5000/api/v1/auth/login", {
+        const response = await post("http://localhost:3000/api/auth/login", {
             email: sampleBuyerEmail,
             password: password
         })
@@ -97,7 +97,7 @@ export const useAPIHook = () => {
         const sampleSellerEmail = "bot.developer4@gmail.com" // User to be deleted after testing
         const password = "123456$"
 
-        const response = await post("http://localhost:5000/api/v1/auth/login", {
+        const response = await post("http://localhost:3000/api/auth/login", {
             email: sampleSellerEmail,
             password: password
         })
