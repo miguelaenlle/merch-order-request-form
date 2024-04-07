@@ -1,11 +1,27 @@
 import * as React from "react"
 import { Group } from "../../../components/shared/types/Group";
 import GroupItem from "./GroupItem";
-import { PLACEHOLDER_GROUPS } from "../../../constants/placeholder-data";
+import { useAPIHook } from "../../../components/shared/hooks/use-api-hook";
 
-const SellerGroups: React.FC<{}> = (props) => {
-    const [groups, setGroups] = React.useState<Group[]>(PLACEHOLDER_GROUPS);
+const SellerGroups: React.FC<{}> = (props) => { //have fun with this frontend team cause i have zero idea on these random errors that seem to cause nothing
+    const [groups, setGroups] = React.useState<Group[]>([]);
     // TODO: Fetch groups from our API
+
+    const apiHook = useAPIHook();
+    const retrieveGroups = async () => {
+        const sellerToken = await apiHook.generateSellerToken();
+
+        const response = await apiHook.get(
+            `http://localhost:3000/api/groups/`,
+            sellerToken
+        );
+        console.log(response)
+        setGroups(response)
+    }
+
+    React.useEffect(() => {
+        retrieveGroups()
+    },[])
 
     return (
         <div className="subcontent">
