@@ -5,12 +5,35 @@ import * as React from "react";
 import { HiMiniQuestionMarkCircle } from "react-icons/hi2";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import './Login.module.css';
+import {useAPIHook} from "../../../components/shared/hooks/use-api-hook.ts";
+import {useNavigate} from "react-router-dom";
 
 interface LoginProps { }
 
 const Login: React.FC<LoginProps> = () => {
-    const [username, setUsername] = React.useState<string>('');
+    const [email, setEmail] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
+
+    const apiHook = useAPIHook();
+    const navigate = useNavigate();
+
+    const handleLoginUser = async () => {
+        const response = await apiHook.post(
+            'http://localhost:3000/api/auth/login',
+            {
+                email: email,
+                password: password
+            }
+        )
+        console.log(response);
+        if (response.token) {
+            localStorage.setItem("token", response.token)
+            navigate("/seller-dashboard")
+        } else {
+            navigate("/seller-login")
+        }
+
+    }
 
     return (
         <Flex>
@@ -21,9 +44,9 @@ const Login: React.FC<LoginProps> = () => {
 
 
                 <Input
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     mb={4}
                 />
 
@@ -41,6 +64,9 @@ const Login: React.FC<LoginProps> = () => {
                     colorScheme="blue"
                     leftIcon={<RiLogoutBoxRLine />}
                     w="100%"
+                    onClick={() => {
+                        handleLoginUser()
+                    }}
                 >
                     Log In
                 </Button>
