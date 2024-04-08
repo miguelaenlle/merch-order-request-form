@@ -143,7 +143,7 @@ export const updateOrder = async (req: CustomRequest, res: Response) => {
     if (!order) {
         return res.status(404).json({ error: 'Order not found' });
     }
-    if (user?.group === 'buyer' && user?.group !== order.userWhoPlacedOrderId.toString()) {
+    if (user?.group === 'buyer' && req.token.userId !== order.itemOwnerId.toString()) {
         return res.status(403).json({ error: 'Unauthorized access' });
     }
     if (user?.group === 'seller' && req.token.userId !== order.itemOwnerId.toString() && req.token.userId !== order.userWhoPlacedOrderId.toString()) {
