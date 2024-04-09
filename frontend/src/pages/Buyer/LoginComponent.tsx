@@ -3,7 +3,7 @@ import CustomModal from "../../components/shared/CustomModal";
 import { Input, Button, Link } from '@chakra-ui/react'
 import {useState} from "react";
 import {useAPIHook} from "../../components/shared/hooks/use-api-hook.ts";
-import {useNavigate} from "react-router-dom";
+//import {useNavigate} from "react-router-dom";
 
 const LoginComponent: React.FC<{}> = (props) => {
 
@@ -18,7 +18,7 @@ const LoginComponent: React.FC<{}> = (props) => {
     };
 
     const apiHook = useAPIHook();
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     const handleLoginUser = async () => {
         const response = await apiHook.post(
