@@ -9,7 +9,7 @@ import itemRoutes from "./routes/items-routes";
 import cors from "cors";
 
 const app: Application = express();
-const port = 5000;
+const port = 3000;
 
 app.use(express.json());
 app.use(cors());
