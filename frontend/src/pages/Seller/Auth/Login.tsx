@@ -40,7 +40,7 @@ const Login: React.FC<LoginProps> = () => {
 
             <Box p={10} className="login-container">
                 <h1 className="login-header">Seller Login</h1>
-                <p className="login-text">Continue to Hersey Spirit wear Dashboard</p>
+                <p className="login-text"  style={{ paddingBottom: '20px' }}>Continue to Hersey Spiritwear Dashboard</p>
 
 
                 <Input
