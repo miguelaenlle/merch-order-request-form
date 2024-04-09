@@ -30,7 +30,7 @@ const Login: React.FC<LoginProps> = () => {
             localStorage.setItem("token", response.token)
             navigate("/seller-dashboard")
         } else {
-            navigate("/seller-login")
+            window.location.reload()
         }
 
     }
