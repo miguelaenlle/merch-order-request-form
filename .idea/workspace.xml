@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="63cd98cf-ae5c-47c9-b83e-6d6c12a1208f" name="Changes" comment="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend&#10;&#10;Getting some errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/shared/hooks/use-api-hook.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/shared/hooks/use-api-hook.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/SellerSpiritwearAndInventory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/SellerSpiritwearAndInventory.tsx" afterDir="false" />
     </list>
@@ -22,6 +22,26 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dhruvtp05&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="miguelaenlle" />
+        <option name="repository" value="merch-order-request-form" />
+      </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="009f2f8d-716f-4be2-9a77-70e155755b99" />
+        <option name="url" value="https://github.com/miguelaenlle/merch-order-request-form.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -62,8 +82,18 @@
       <workItem from="1712197353440" duration="595000" />
       <workItem from="1712428196429" duration="3727000" />
       <workItem from="1712450810380" duration="4573000" />
-      <workItem from="1712506662277" duration="1851000" />
+      <workItem from="1712506662277" duration="1934000" />
+      <workItem from="1712616662877" duration="2135000" />
     </task>
+    <task id="LOCAL-00001" summary="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend&#10;&#10;Getting some errors">
+      <option name="closed" value="true" />
+      <created>1712509061451</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712509061451</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
