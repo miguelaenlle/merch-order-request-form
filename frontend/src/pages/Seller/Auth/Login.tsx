@@ -13,7 +13,7 @@ const Login: React.FC<LoginProps> = () => {
     const [password, setPassword] = React.useState<string>('');
 
     return (
-        <Flex>
+        <Flex className={"flexBox"}>
 
             <Box p={10} className="login-container">
                 <h1 className="login-header">Seller Login</h1>
