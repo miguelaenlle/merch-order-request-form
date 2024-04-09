@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="63cd98cf-ae5c-47c9-b83e-6d6c12a1208f" name="Changes" comment="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend&#10;&#10;Getting some errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/shared/hooks/use-api-hook.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/shared/hooks/use-api-hook.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/SellerSpiritwearAndInventory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/SellerSpiritwearAndInventory.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Buyer/HomePageSearch.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Buyer/HomePageSearch.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Buyer/ItemModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Buyer/ItemModal.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,29 +60,89 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;connect-items-to-spiritwear&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;item-modal&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/maenlle/WebstormProjects&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Dhruv\\WebstormProjects\\merch-order-request-form\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/wsschroed/WebstormProjects/merch-order-request-form/backend/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/assets" />
+      <recent name="C:\Users\Dhruv\WebstormProjects\merch-order-request-form\backend" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="63cd98cf-ae5c-47c9-b83e-6d6c12a1208f" name="Changes" comment="" />
-      <created>1712197351864</created>
+      <changelist id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised" />
+      <created>1711853486963</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1712197351864</updated>
-      <workItem from="1712197353440" duration="595000" />
-      <workItem from="1712428196429" duration="3727000" />
-      <workItem from="1712450810380" duration="4573000" />
-      <workItem from="1712506662277" duration="1934000" />
-      <workItem from="1712616662877" duration="2135000" />
+      <updated>1707956904649</updated>
+      <workItem from="1707956905767" duration="20000" />
+      <workItem from="1708284914711" duration="1020000" />
+      <workItem from="1708373447780" duration="693000" />
+      <workItem from="1708386864024" duration="917000" />
+      <workItem from="1708394675500" duration="1003000" />
+      <workItem from="1708478395989" duration="4930000" />
+      <workItem from="1708483358257" duration="7000" />
+      <workItem from="1708565824782" duration="3945000" />
+      <workItem from="1708652433126" duration="2462000" />
+      <workItem from="1708654921703" duration="752000" />
+      <workItem from="1708910455056" duration="111000" />
+      <workItem from="1708915472309" duration="2156000" />
+      <workItem from="1709000715703" duration="1249000" />
+      <workItem from="1709085592192" duration="1548000" />
+      <workItem from="1709091722416" duration="1123000" />
+      <workItem from="1709168831407" duration="4335000" />
+      <workItem from="1709252702891" duration="5384000" />
+      <workItem from="1709261537281" duration="1784000" />
+      <workItem from="1709341387436" duration="1217000" />
+      <workItem from="1709345815102" duration="721000" />
+      <workItem from="1709435941191" duration="769000" />
+      <workItem from="1709437101936" duration="3508000" />
+      <workItem from="1709487019750" duration="7995000" />
+      <workItem from="1709512881778" duration="6171000" />
+      <workItem from="1709523295858" duration="997000" />
+      <workItem from="1709596139391" duration="1750000" />
+      <workItem from="1709608521155" duration="1949000" />
+      <workItem from="1709775435217" duration="2393000" />
+      <workItem from="1709779016965" duration="1522000" />
+      <workItem from="1709865308516" duration="2030000" />
+      <workItem from="1709938865794" duration="1211000" />
+      <workItem from="1709940370974" duration="1235000" />
+      <workItem from="1709954794919" duration="411000" />
+      <workItem from="1710010435141" duration="2272000" />
+      <workItem from="1710287396564" duration="1504000" />
+      <workItem from="1711918018399" duration="2008000" />
+      <workItem from="1712524953748" duration="2628000" />
+      <workItem from="1712594424064" duration="6960000" />
     </task>
     <task id="LOCAL-00001" summary="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend&#10;&#10;Getting some errors">
       <option name="closed" value="true" />

@@ -35,7 +35,7 @@ export const dummyTokenTest = async (req: CustomRequest, res: Response) => {
         return
     }
     try {
-        if (req.token.type == "login") { //if user token is for login
+        if (req.token.type == "login") { //if user token is for login | THIS CHECK IS IMPORTANT TO IMPLEMENT BTW
             console.log("req.token", req.token)
             res.status(200).json({message: req.token});
         } else {
