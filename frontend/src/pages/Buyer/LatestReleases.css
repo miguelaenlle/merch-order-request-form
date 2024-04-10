@@ -1,0 +1,21 @@
+
+
+.latest-releases-container {
+    padding: 20px;
+}
+
+.header {
+    font-weight: bold;
+    text-align: center;
+    font-size: 24px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    grid-gap: 20px;
+}
+
+.grid-container > * {
+}
