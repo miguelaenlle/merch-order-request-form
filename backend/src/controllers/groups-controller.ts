@@ -22,9 +22,10 @@ export const createGroup = async (req: CustomRequest, res: Response) => {
         return res.status(409).json({ error: "A group with the same name already exists."  });
     }
     //Checks if UserId exists
-    if(!req.token?.userId){
+    if(!req.token?.userId){ // this is an incomplete implementation of the token feature. it doesn't even check if the token is of the correct type. dhruv please fix.
         return res.status(422).json({error: "UserId does not exist"});
     }
+
     else{
         //Creates a new group with name and id
         try {
@@ -42,9 +43,22 @@ export const createGroup = async (req: CustomRequest, res: Response) => {
 }
 
 //Returns the existing groups
-export const retrieveGroups = async (req: Request, res: Response) => {
+export const retrieveGroups = async (req: CustomRequest, res: Response) => {
+    if (!req.token) {
+        res.status(400).json({ message: 'Token missing'});
+        return
+    }
     try {
-        const groups = await Group.find();
+        if (req.token.type != "login") {
+            res.status(401).json({ message: 'Please authenticate'});
+            return
+        }
+    } catch (error: any) {
+       return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+
+    try {
+        const groups = await Group.find({userId: req.token.userId});
         return res.status(200).json(groups);
     } catch (error: any) {
         return res.status(500).json({ message: 'Server error', error: error.message });
