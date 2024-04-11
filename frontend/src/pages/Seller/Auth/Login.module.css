@@ -51,9 +51,12 @@
 }
 
 .gradient-bg {
-    flex-grow: 1;
-    min-width: 50%;
+    width: 50vw;
+    height: 50vw;
+    flex-flow: 1;
     background-image: linear-gradient(to bottom, #FFB482, #F97C2A);
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .loginContainer {
