@@ -36,9 +36,9 @@ const Login: React.FC<LoginProps> = () => {
     }
 
     return (
-        <Flex>
+        <Flex className={"flexBox"}>
 
-            <Box p={10} className="login-container">
+            <Box p={10} className="loginContainer">
                 <h1 className="login-header">Seller Login</h1>
                 <p className="login-text"  style={{ paddingBottom: '20px' }}>Continue to Hersey Spiritwear Dashboard</p>
 
