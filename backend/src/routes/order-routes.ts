@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllOrders, cancelOrder, completeOrder, createOrder} from '../controllers/orders-controller';
+import {getAllOrders, cancelOrder, completeOrder, createOrder, getMyOrders} from '../controllers/orders-controller';
 import {body} from "express-validator";
 import {auth} from "../middleware/auth";
 import {createItem} from "../controllers/items-controller";
@@ -7,6 +7,7 @@ import {createItem} from "../controllers/items-controller";
 const router = express.Router();
 
 router.get('/', getAllOrders);
+router.get('/my-orders', auth, getMyOrders);
 
 router.post('/', [
     body('customerName').notEmpty().withMessage('Customer name is required'),
