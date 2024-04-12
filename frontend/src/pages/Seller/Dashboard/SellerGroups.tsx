@@ -4,9 +4,10 @@ import GroupItem from "./GroupItem";
 import { useAPIHook } from "../../../components/shared/hooks/use-api-hook";
 import NewGroup from "./NewGroup";
 import EditGroup from "./EditGroup";
+import { PLACEHOLDER_GROUPS } from "../../../constants/placeholder-data";
 
 const SellerGroups: React.FC<{}> = (props) => { //have fun with this frontend team cause i have zero idea on these random errors that seem to cause nothing
-    const [groups, setGroups] = React.useState<Group[]>([]);
+    const [groups, setGroups] = React.useState<Group[]>(PLACEHOLDER_GROUPS);
     // TODO: Fetch groups from our API
 
     const apiHook = useAPIHook();
@@ -22,7 +23,7 @@ const SellerGroups: React.FC<{}> = (props) => { //have fun with this frontend te
     }
 
     React.useEffect(() => {
-        retrieveGroups()
+        // retrieveGroups()
     }, [])
 
     return (

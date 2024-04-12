@@ -3,7 +3,8 @@ import BuyerNavbar from "../../components/shared/BuyerNavbar";
 import { Order } from "../../components/shared/types/Order";
 //import { PLACEHOLDER_ORDERS } from "../../constants/placeholder-data";
 import DisplayedCustomerOrderItem from "./DisplayedCustomerOrderItem";
-import {useAPIHook} from "../../components/shared/hooks/use-api-hook.ts";
+import { useAPIHook } from "../../components/shared/hooks/use-api-hook.ts";
+import OrderComponent from "./OrderComponent.tsx";
 const OrderManagement: React.FC<{}> = (props) => {
     const [orders, setOrders] = React.useState<Order[]>([]);
 
@@ -45,6 +46,7 @@ const OrderManagement: React.FC<{}> = (props) => {
                             order={order}
                         />
                     ))}
+                    <OrderComponent />
                 </div>
             </div>
         </div>
