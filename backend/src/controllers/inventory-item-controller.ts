@@ -1,5 +1,4 @@
-import { Request, Response } from 'express';
-import Dummy from '../models/dummy';
+import { Request, Response } from 'express'; 
 import { validationResult } from 'express-validator';
 import mongoose from 'mongoose';
 import Item from '../models/item';
@@ -17,10 +16,10 @@ export const createInventoryItem = async (req: Request, res: Response) => {
         const itemId = req.body.itemId as string;
         const size = req.body.size as string;
         const amount = req.body.amount as number;
-        const price = req.body.price as number;  
-        
-        const isIdValid = mongoose.Types.ObjectId.isValid(itemId)
+        const price = req.body.price as number;   
 
+        const isIdValid = mongoose.Types.ObjectId.isValid(itemId) 
+ 
         if (!isIdValid) {
             return res.status(500).json({ message: "Invalid Credentials" }) 
         }
@@ -68,10 +67,9 @@ export const getIndividualInventoryItem = async (req: Request, res: Response) =>
     }
 
     try {
-        const inventoryItemId = req.params.inventoryItemId as string
+        const inventoryItemId = req.params.inventoryItemId as string 
 
-        const isIdValid = mongoose.Types.ObjectId.isValid(inventoryItemId)
-
+        const isIdValid = mongoose.Types.ObjectId.isValid(inventoryItemId) 
         if (!isIdValid) {
             return res.status(500).json({ message: "Invalid Credentials" }) 
         }
@@ -143,6 +141,32 @@ export const patchInventoryItem = async (req: Request, res: Response) => {
         }
 
         res.status(200).json({ message: updatedDetails });
+    } catch (error: any) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+export const deleteInventoryItem = async (req: Request, res: Response) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log("errors", errors);
+            return res.status(422).json({ errors: errors.array() });
+        }
+    
+    try { 
+        const inventoryItemId = req.body.inventoryItemId as string;
+        const isIdValid = mongoose.Types.ObjectId.isValid(inventoryItemId) 
+        if (!isIdValid) {
+            return res.status(500).json({ message: "Invalid Credentials" }) 
+        }
+
+        const deleteItem = await InventoryItem.findByIdAndDelete(inventoryItemId)
+
+        if (!deleteItem) {
+            return res.status(500).json({ message: "Server Error" }) 
+        }
+
+        res.status(200).json({deleteItem})
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
