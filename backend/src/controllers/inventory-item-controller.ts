@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
-import Dummy from '../models/dummy';
+import { Request, Response } from 'express'; 
 import { validationResult } from 'express-validator';
 import mongoose from 'mongoose';
 import Item from '../models/item';
 import InventoryItem from '../models/inventory-item';
+import { CustomRequest } from '../middleware/auth';
 
-export const createInventoryItem = async (req: Request, res: Response) => {
+export const createInventoryItem = async (req: CustomRequest, res: Response) => {
     // Check for validation errors 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -18,12 +18,19 @@ export const createInventoryItem = async (req: Request, res: Response) => {
         const size = req.body.size as string;
         const amount = req.body.amount as number;
         const price = req.body.price as number;  
-        
-        const isIdValid = mongoose.Types.ObjectId.isValid(itemId)
+        const userToken = req.token?.userId as string;
 
+        const isIdValid = mongoose.Types.ObjectId.isValid(itemId)  
         if (!isIdValid) {
             return res.status(500).json({ message: "Invalid Credentials" }) 
         }
+
+        Item.findById(itemId).then(data => {
+            if (JSON.stringify(data?.itemOwnerId) != userToken) {
+                return res.status(500).json({ message: "Invalid Credentials" }) 
+            }
+        }).catch(err => { return res.status(500).json({message: "An error happened"})})
+        
 
         const findItem = await Item.findOne({ _id: itemId }) 
 
@@ -45,7 +52,7 @@ export const createInventoryItem = async (req: Request, res: Response) => {
     }
 };
 
-export const getInventoryItems = async (req: Request, res: Response) => {
+export const getInventoryItems = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
@@ -60,7 +67,7 @@ export const getInventoryItems = async (req: Request, res: Response) => {
     }
 }
 
-export const getIndividualInventoryItem = async (req: Request, res: Response) => {
+export const getIndividualInventoryItem = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
@@ -68,10 +75,8 @@ export const getIndividualInventoryItem = async (req: Request, res: Response) =>
     }
 
     try {
-        const inventoryItemId = req.params.inventoryItemId as string
-
-        const isIdValid = mongoose.Types.ObjectId.isValid(inventoryItemId)
-
+        const inventoryItemId = req.params.inventoryItemId as string  
+        const isIdValid = mongoose.Types.ObjectId.isValid(inventoryItemId) 
         if (!isIdValid) {
             return res.status(500).json({ message: "Invalid Credentials" }) 
         }
@@ -94,7 +99,7 @@ interface ListItem {
     newPrice: number;
 }
 
-export const patchInventoryItem = async (req: Request, res: Response) => {
+export const patchInventoryItem = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
@@ -103,8 +108,7 @@ export const patchInventoryItem = async (req: Request, res: Response) => {
 
     try {
         const itemId = req.query.itemId as string;
-        const updatedInventoryItems = req.body.updatedInventoryItems as ListItem[];
-
+        const updatedInventoryItems = req.body.updatedInventoryItems as ListItem[]; 
         const isIdValid = mongoose.Types.ObjectId.isValid(itemId)   
 
         if (!isIdValid || updatedInventoryItems == null) {
@@ -143,6 +147,37 @@ export const patchInventoryItem = async (req: Request, res: Response) => {
         }
 
         res.status(200).json({ message: updatedDetails });
+    } catch (error: any) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+export const deleteInventoryItem = async (req: CustomRequest, res: Response) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log("errors", errors);
+            return res.status(422).json({ errors: errors.array() });
+        } 
+    try {
+        const userToken = req.token?.userId as string;
+        const inventoryItemId = req.body.inventoryItemId as string;
+        const isIdValid = mongoose.Types.ObjectId.isValid(inventoryItemId) 
+        if (!isIdValid) {
+            return res.status(500).json({ message: "Invalid Credentials" }) 
+        }
+        Item.findById(inventoryItemId).then(data => {
+            if (JSON.stringify(data?.itemOwnerId) != userToken) {
+                return res.status(500).json({ message: "Invalid Credentials" }) 
+            }
+        }).catch(err => { return res.status(500).json({message: "An error happened"})})
+        
+        const deleteItem = await InventoryItem.findByIdAndDelete(inventoryItemId)
+
+        if (!deleteItem) {
+            return res.status(500).json({ message: "Server Error" }) 
+        }
+
+        res.status(200).json({deleteItem})
     } catch (error: any) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }

@@ -1,5 +1,5 @@
-import {NextFunction, Request, Response} from 'express';
 import * as jwt from "jsonwebtoken"
+import { Request, Response } from 'express';
 
 import dotenv from "dotenv";
 import {JwtPayload} from "jsonwebtoken";
@@ -11,7 +11,7 @@ export interface CustomRequest extends Request {
     token?: JwtPayload;
 }
 
-export const auth = async (req: Request, res: Response, next: NextFunction) => {
+export const auth = async (req: Request, res: Response, next: Function) => {
     let decoded: JwtPayload
 
     try {
