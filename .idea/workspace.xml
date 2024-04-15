@@ -4,36 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Created the groupId field">
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/groups-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/items-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/EditGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/EditGroup.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="TypeScript File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="groups-auth" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dhruvtp05&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="miguelaenlle" />
+        <option name="repository" value="merch-order-request-form" />
+      </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="009f2f8d-716f-4be2-9a77-70e155755b99" />
+        <option name="url" value="https://github.com/miguelaenlle/merch-order-request-form.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2cNfLz9nkqeoNs0WtqXmIwmSuC1" />
   <component name="ProjectLevelVcsManager">
@@ -47,26 +64,20 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "seller-create-account",
+    "git-widget-placeholder": "edit-group",
     "last_opened_file_path": "C:/Users/maenlle/WebstormProjects",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Users/arslankamchybekov/WebstormProjects/merch-order-request-form/backend/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
-  }
-}]]></component>
-
     "npm.dev.executor": "Run",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "inlay.hints",
     "ts.external.directory.path": "/Users/wsschroed/WebstormProjects/merch-order-request-form/backend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
-
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/frontend/src/assets" />
@@ -93,8 +104,8 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="" />
-      <created>1707956904649</created>
+      <changelist id="b16457bb-7d9e-4e62-88b1-04223be3cfda" name="Changes" comment="" />
+      <created>1711853486963</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1707956904649</updated>
@@ -133,16 +144,7 @@
       <workItem from="1709954794919" duration="411000" />
       <workItem from="1710010435141" duration="2272000" />
       <workItem from="1710287396564" duration="1504000" />
-      <workItem from="1710641186039" duration="3544000" />
-      <workItem from="1710721096623" duration="1504000" />
-      <workItem from="1710802486885" duration="1436000" />
-      <workItem from="1710895695741" duration="975000" />
-      <workItem from="1711413700345" duration="2320000" />
-      <workItem from="1711417577191" duration="2082000" />
-      <workItem from="1711419688926" duration="6000" />
-      <workItem from="1711482376191" duration="3540000" />
-      <workItem from="1711495333830" duration="1094000" />
-      <workItem from="1711552658422" duration="1124000" />
+      <workItem from="1711918018399" duration="2008000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -208,63 +210,7 @@
       <option name="project" value="LOCAL" />
       <updated>1709955143535</updated>
     </task>
-    <task id="LOCAL-00009" summary="final changes">
-      <option name="closed" value="true" />
-      <created>1710012762160</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1710012762160</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Created the auth for items">
-      <option name="closed" value="true" />
-      <created>1710384368930</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1710384368930</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Revised">
-      <option name="closed" value="true" />
-      <created>1710468276591</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1710468276591</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Created the auth for groups route">
-      <option name="closed" value="true" />
-      <created>1710648628942</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1710648628943</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Revised">
-      <option name="closed" value="true" />
-      <created>1710721989851</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1710721989852</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Revised recent suggestions">
-      <option name="closed" value="true" />
-      <created>1710803313578</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1710803313578</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Created the groupId field">
-      <option name="closed" value="true" />
-      <created>1711496358691</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1711496358691</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,12 +220,8 @@
     <MESSAGE value="Created all of the group routes and the logic behind it" />
     <MESSAGE value="Fixed bugs" />
     <MESSAGE value="Created the items route" />
-    <MESSAGE value="final changes" />
-    <MESSAGE value="Created the auth for items" />
-    <MESSAGE value="Created the auth for groups route" />
     <MESSAGE value="Revised" />
-    <MESSAGE value="Revised recent suggestions" />
-    <MESSAGE value="Created the groupId field" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created the groupId field" />
+    <MESSAGE value="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend" />
   </component>
 </project>

@@ -9,8 +9,18 @@ const DisplayedCustomerOrderItem: React.FC<{
 }> = (props) => {
     const [itemsOrdered, setItemsOrdered] = React.useState<OrderItem[]>(PLACEHOLDER_ITEMS_ORDERED);
 
+    /*const retrieveOrders = async () => {
+        console.log(props)
+    }
+
+    React.useEffect(() => {
+        retrieveOrders()
+    }, [])*/
+
     return (
-        <div>
+        <div style={{
+            marginBottom: "10px"
+        }}>
             <h3>{props.order.customerName}</h3>
             {itemsOrdered.map((itemOrdered) => (
                 <OrderedItem
@@ -18,6 +28,7 @@ const DisplayedCustomerOrderItem: React.FC<{
                     orderedItem={itemOrdered}
                 />
             ))}
+            <br />
         </div>
     );
 }

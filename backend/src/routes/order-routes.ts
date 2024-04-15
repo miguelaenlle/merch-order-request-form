@@ -1,11 +1,13 @@
 import express from 'express';
-import {getAllOrders, cancelOrder, completeOrder, createOrder, updateOrder} from '../controllers/orders-controller';
+import {getAllOrders, cancelOrder, completeOrder, createOrder, updateOrder, getMyOrders} from '../controllers/orders-controller';
+
 import {body} from "express-validator";
 import {auth} from "../middleware/auth";
 
 const router = express.Router();
 
 router.get('/', auth, getAllOrders);
+router.get('/my-orders', auth, getMyOrders);
 
 router.post('/', [
     body('customerName').notEmpty().withMessage('Customer name is required'),

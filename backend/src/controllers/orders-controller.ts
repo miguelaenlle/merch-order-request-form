@@ -73,7 +73,54 @@ export const getAllOrders = async (req: CustomRequest, res: Response) => {
         res.status(500).json({error: 'Internal Server Error'});
     }
 };
-export const cancelOrder = async (req: CustomRequest, res: Response) => {
+
+export const getMyOrders = async (req: CustomRequest, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log("errors", errors);
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    console.log("Token", req.token);
+    try {
+        if (req.token?.type != "login") {
+            res.status(401).json({ message: 'Please authenticate'});
+            return
+        }
+    } catch (error: any) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+
+    try {
+        const user = await User.findById(req.token?.userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        if (!user.group || user.group !== 'buyer') {
+            return res.status(403).json({ error: 'Unauthorized: this route is only for buyer users. ' });
+        }
+    } catch {
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+
+
+
+    try {
+        const userId = req.token?.userId;
+        if (!userId) {
+            return res.status(422).json({ error: 'User ID not found' });
+        }
+        const orders: IOrder[] = await Order.find({ userWhoPlacedOrderId: userId });
+        res.status(200).json({ orders });
+    } catch (error) {
+        console.error('Error retrieving orders:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+}
+
+export const cancelOrder = async (req: Request, res: Response) => {
     try {
         const orderId: string = req.params.id;
         const order: IOrder | null = await Order.findById(orderId);

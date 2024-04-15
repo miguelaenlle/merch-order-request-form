@@ -19,6 +19,7 @@ const CustomModal: React.FC<{
     actionText?: string;
     onAction?: () => void;
     disableDefaultButtons?: boolean;
+    extraLong?: boolean;
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -34,7 +35,7 @@ const CustomModal: React.FC<{
             <Button colorScheme="blue" onClick={onOpen}>{props.buttonText}</Button>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent maxW={props.extraLong ? "1000px" : undefined}>
                     {props.title && (
                         <>
                             <ModalHeader>{props.title}</ModalHeader>
