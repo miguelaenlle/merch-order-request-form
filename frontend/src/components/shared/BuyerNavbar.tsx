@@ -28,21 +28,20 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                 <strong>Hersey Spiritwear</strong>
             </h3>
             <div className="spacer"></div>
-            {numOrders > 0 && (
-                <Button
-                    colorScheme="gray"
-                    variant="ghost"
-                    onClick={() => {
-                        // TODO: This should go to seller lgoin instead
-                        navigate("/my-orders")
+            <Button
+                colorScheme="gray"
+                variant="ghost"
+                onClick={() => {
+                    // TODO: This should go to seller lgoin instead
+                    navigate("/my-orders")
 
-                    }}
-                    fontSize={"sm"}
-                >
-                    <FaBox style={{ marginRight: "5px" }} /> Orders
-                    <div className="orderCount">{numOrders}</div>
-                </Button>
-            )}
+                }}
+                fontSize={"sm"}
+            >
+                <FaBox style={{ marginRight: "5px" }} /> Orders
+                <div className="orderCount">{numOrders}</div>
+            </Button>
+
             <Button
                 colorScheme="gray"
                 variant="ghost"

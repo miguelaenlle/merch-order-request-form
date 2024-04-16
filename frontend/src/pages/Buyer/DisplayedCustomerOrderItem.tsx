@@ -11,12 +11,20 @@ const DisplayedCustomerOrderItem: React.FC<{
 }> = (props) => {
     const [itemsOrdered, setItemsOrdered] = React.useState<OrderItem[]>(PLACEHOLDER_ITEMS_ORDERED);
 
-    const handleCompleteOrder = async () => {
+    const handleLoadOrderedItems = async () => {
+        // Loads the ordered items
+    }
 
+    React.useEffect(() => {
+        handleLoadOrderedItems()
+    }, [props.order._id])
+
+    const handleCompleteOrder = async () => {
+        // Completes the order
     }
 
     const handleCancelOrder = async () => {
-
+        // Cancels the order
     }
 
     return (
