@@ -5,45 +5,45 @@ import { useNavigate } from "react-router-dom";
 
 
 interface IHomePageSearch {
-    name: { name: string }[]
+    name: string;
 }
 
-const data: IHomePageSearch = {
-    name: [
-        {
-            name: "Hersey Hack Club"
-        },
-        {
-            name: "Math Team"
-        },
-        {
-            name: "Robotics"
-        },
-        {
-            name: "etc"
-        },
-        {
-            name: "etc"
-        },
-        {
-            name: "etc"
-        },
-        {
-            name: "etc"
-        },
-        {
-            name: "etc"
-        },
-        {
-            name: "etc"
-        }
-    ]
-}
+const data: IHomePageSearch[] = [
+    {
+        name: "Hersey Hack Club"
+    },
+    {
+        name: "Math Team"
+    },
+    {
+        name: "Robotics"
+    },
+    {
+        name: "etc"
+    },
+    {
+        name: "etc"
+    },
+    {
+        name: "etc"
+    },
+    {
+        name: "etc"
+    },
+    {
+        name: "etc"
+    },
+    {
+        name: "etc"
+    }
+]
+
 
 const HomePageSearch: React.FC<{}> = (props) => {
 
     const [showMore, setShowMore] = React.useState(false);
     const [itemsToShow, setItemsToShow] = React.useState(3);
+    const [displayedItems, setDisplayedItems] = React.useState<IHomePageSearch[]>(data);
 
     const [searchQuery, setSearchQuery] = React.useState("");
 
@@ -56,12 +56,19 @@ const HomePageSearch: React.FC<{}> = (props) => {
         setShowMore(!showMore);
     };
 
+    const updateItemsToShow = () => {
+        const width = window.innerWidth;
+        const calculatedItemsToShow = Math.floor(width / 405);
+        setItemsToShow(calculatedItemsToShow);
+    };
+
+    const handleLoadItems = async () => {
+
+    }
+
+
     React.useEffect(() => {
-        const updateItemsToShow = () => {
-            const width = window.innerWidth;
-            const calculatedItemsToShow = Math.floor(width / 405);
-            setItemsToShow(calculatedItemsToShow);
-        };
+        handleLoadItems(); 
 
         updateItemsToShow();
         window.addEventListener('resize', updateItemsToShow);
@@ -77,16 +84,16 @@ const HomePageSearch: React.FC<{}> = (props) => {
                 <h3>Order JHHS Spiritwear for Sports and Clubs here!</h3>
                 <div style={{ display: "flex", width: "80%", gap: "5px", flexWrap: "wrap" }}>
                     <input value={searchQuery} className='searchInput' placeholder='Search for spiritwear...' onChange={(e) => {
-                        
+
 
                         handleSetSearchQuery(e.target.value);
                     }} />
-                    {data.name.slice(0, showMore ? data.name.length : itemsToShow).map((item, index) => (
+                    {displayedItems.slice(0, showMore ? displayedItems.length : itemsToShow).map((item, index) => (
                         <h1 key={index} className='searchOptions'>{item.name}</h1>
                     ))}
-                    {data.name.length > itemsToShow && !showMore &&
+                    {displayedItems.length > itemsToShow && !showMore &&
                         <button className="searchButton" onClick={toggleShowMore}>
-                            {data.name.length - itemsToShow} more
+                            {data.length - itemsToShow} more
                         </button>
                     }
                     {showMore &&

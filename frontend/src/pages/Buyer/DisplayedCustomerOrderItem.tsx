@@ -7,16 +7,25 @@ import { Box, Heading, Text, Image, Divider, Button } from "@chakra-ui/react";
 
 const DisplayedCustomerOrderItem: React.FC<{
     order: Order;
+    refreshOrderItems: () => void;
 }> = (props) => {
     const [itemsOrdered, setItemsOrdered] = React.useState<OrderItem[]>(PLACEHOLDER_ITEMS_ORDERED);
 
-    /*const retrieveOrders = async () => {
-        console.log(props)
+    const handleLoadOrderedItems = async () => {
+        // Loads the ordered items
     }
 
     React.useEffect(() => {
-        retrieveOrders()
-    }, [])*/
+        handleLoadOrderedItems()
+    }, [props.order._id])
+
+    const handleCompleteOrder = async () => {
+        // Completes the order
+    }
+
+    const handleCancelOrder = async () => {
+        // Cancels the order
+    }
 
     return (
         <div style={{
@@ -76,13 +85,13 @@ const DisplayedCustomerOrderItem: React.FC<{
                             </Box>
                         </Box>
                         <Box display={"flex"} flexWrap={"wrap"} width={"100%"} gap={20}>
-                            <Button backgroundColor={"#3ca46c"} color={"white"} fontWeight={"bold"} display={"flex"}>
+                            <Button onClick={handleCompleteOrder} backgroundColor={"#3ca46c"} color={"white"} fontWeight={"bold"} display={"flex"}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" style={{ width: "30px", height: "25px" }} stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                 </svg>
                                 Complete
                             </Button>
-                            <Button backgroundColor={"#459ce4"} color={"white"} fontWeight={"bold"} display={"flex"}>
+                            <Button onClick={handleCancelOrder} backgroundColor={"#459ce4"} color={"white"} fontWeight={"bold"} display={"flex"}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" style={{ width: "30px", height: "25px" }} stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>

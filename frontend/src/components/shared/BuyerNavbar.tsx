@@ -3,17 +3,28 @@ import { Button } from "@chakra-ui/react";
 import "./Navbar.css"
 import { useNavigate } from "react-router-dom";
 import { FaBox, FaStore } from "react-icons/fa";
-import { JHHS_LOGO} from "../../constants/placeholder-data.ts";
+import { JHHS_LOGO } from "../../constants/placeholder-data.ts";
 
 const BuyerNavbar: React.FC<{}> = (props) => {
     const navigate = useNavigate();
+
+
+    const [numOrders, setNumOrders] = React.useState<number>(0);
+
+    const handleLoad = async () => {
+
+    }
+
+    React.useEffect(() => {
+        handleLoad()
+    }, [])
 
     return (
         <div className="navbar">
             <h3 className="clickableText" onClick={() => {
                 navigate("/")
             }}>
-                <img src={JHHS_LOGO} alt="Husky Icon" className="image"/>
+                <img src={JHHS_LOGO} alt="Husky Icon" className="image" />
                 <strong>Hersey Spiritwear</strong>
             </h3>
             <div className="spacer"></div>
@@ -28,8 +39,9 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                 fontSize={"sm"}
             >
                 <FaBox style={{ marginRight: "5px" }} /> Orders
-                <div className="orderCount">1</div>
+                <div className="orderCount">{numOrders}</div>
             </Button>
+
             <Button
                 colorScheme="gray"
                 variant="ghost"
@@ -44,7 +56,7 @@ const BuyerNavbar: React.FC<{}> = (props) => {
             </Button>
             <Button
                 colorScheme="gray"
-                 variant="ghost"
+                variant="ghost"
                 onClick={() => {
                     // TODO: This should go to seller lgoin instead
                     navigate("/seller-dashboard")
