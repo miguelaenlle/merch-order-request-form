@@ -12,7 +12,9 @@ const HomePage: React.FC<{}> = (props) => {
             <HomePageSearch />
             <LoginComponent />
             <SignupComponent />
-            <ItemModal />
+            <ItemModal 
+                itemId="660b6ef90991898511133d5d"
+            />
             <LatestReleases />
         </div>
     );

@@ -2,6 +2,8 @@ import * as React from "react"
 import CustomModal from "../../components/shared/CustomModal";
 import { Input, Button, Link } from '@chakra-ui/react'
 import {useState} from "react";
+import {useAPIHook} from "../../components/shared/hooks/use-api-hook.ts";
+//import {useNavigate} from "react-router-dom";
 
 const LoginComponent: React.FC<{}> = (props) => {
 
@@ -14,6 +16,24 @@ const LoginComponent: React.FC<{}> = (props) => {
     const passwordEntered: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
+
+    const apiHook = useAPIHook();
+    //const navigate = useNavigate();
+
+    const handleLoginUser = async () => {
+        const response = await apiHook.post(
+            'http://localhost:3000/api/auth/login',
+            {
+                email: email,
+                password: password
+            }
+        )
+        console.log(response);
+        if (response.token) {
+            localStorage.setItem("token", response.token)
+            window.location.reload()
+        }
+    }
 
     return (
         <CustomModal
@@ -55,7 +75,7 @@ const LoginComponent: React.FC<{}> = (props) => {
                         />
                     </div>
 
-                    <Button colorScheme="blue" size="md" marginTop="15px">Log in</Button>
+                    <Button colorScheme="blue" size="md" marginTop="15px" onClick={() => { handleLoginUser() }} >Log in</Button>
 
                     <Link fontWeight = "bold" color="blue.500" mt="2" display="block" href="/">Create new account</Link>
 

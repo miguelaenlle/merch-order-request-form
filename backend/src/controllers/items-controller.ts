@@ -210,12 +210,13 @@ export const getMyItems = async (req: CustomRequest, res: Response) =>{
         const itemList = await Promise.all(items.map(async item => {
             const invItem = await InventoryItem.findOne({itemId: item._id, price : {$gt: 0}})
             const price = invItem ? invItem.price : 0;
+            const group = await Group.findById(item.groupId);
             return {
                 name: item.name,
                 price,
-                groupIdName: item.groupId?.toString()
+                groupIdName: group ? group.name : 'Unknown Group'
             }
-        }))
+        }));
         return res.status(200).json(itemList);
 
     } catch (error: any) {

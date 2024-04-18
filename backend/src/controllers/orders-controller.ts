@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import OrderItem, { IOrderItem } from '../models/order-item';
-import {validationResult} from "express-validator";
-import Order, {IOrder} from "../models/order";
+import { validationResult } from "express-validator";
+import Order, { IOrder } from "../models/order";
 import { ObjectId } from 'mongodb';
 import { createTransport } from 'nodemailer'
-import {CustomRequest} from "../middleware/auth";
+import { CustomRequest } from "../middleware/auth";
 import User from "../models/user";
 
 const sendgridTransport = require('nodemailer-sendgrid-transport')
@@ -21,8 +21,8 @@ export const createOrder = async (req: CustomRequest, res: Response) => {
         return;
     }
     try {
-        if(!req.token?.userId){
-            return res.status(422).json({error: "UserId does not exist"});
+        if (!req.token?.userId) {
+            return res.status(422).json({ error: "UserId does not exist" });
         }
 
         const { itemOwnerId, customerName, customerEmail, customerType, school, notes, orderedItems } = req.body;
@@ -59,20 +59,84 @@ export const createOrder = async (req: CustomRequest, res: Response) => {
     }
 };
 
-export const getAllOrders = async (req: Request, res: Response) => {
+export const getAllOrders = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        const orders: IOrderItem[] = await OrderItem.find();
-        res.status(200).json({orders});
+        const orders: IOrder[] = await Order.find();
+        res.status(200).json({ orders });
     } catch (error) {
         console.error('Error retrieving orders:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+export const getOrderItemsOfOrder = async (req: CustomRequest, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log("errors", errors);
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        const orderId: string = req.params.id;
+        const orderItems: IOrderItem[] = await OrderItem.find({ orderId: new ObjectId(orderId) });
+        res.status(200).json({ orderItems });
+    } catch (error) {
+        console.error('Error retrieving order items:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+
+export const getMyOrders = async (req: CustomRequest, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log("errors", errors);
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    console.log("Token", req.token);
+    try {
+        if (req.token?.type != "login") {
+            res.status(401).json({ message: 'Please authenticate' });
+            return
+        }
+    } catch (error: any) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+
+    try {
+        const user = await User.findById(req.token?.userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        if (!user.group || user.group !== 'buyer') {
+            return res.status(403).json({ error: 'Unauthorized: this route is only for buyer users. ' });
+        }
+    } catch {
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+
+
+
+    try {
+        const userId = req.token?.userId;
+        if (!userId) {
+            return res.status(422).json({ error: 'User ID not found' });
+        }
+        const orders: IOrder[] = await Order.find({ userWhoPlacedOrderId: userId });
+        res.status(200).json({ orders });
+    } catch (error) {
+        console.error('Error retrieving orders:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+}
+
 export const cancelOrder = async (req: Request, res: Response) => {
     try {
         const orderId: string = req.params.id;
@@ -93,7 +157,7 @@ export const cancelOrder = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-export const completeOrder = async (req: Request, res: Response) => {
+export const completeOrder = async (req: CustomRequest, res: Response) => {
     try {
         const orderId: string = req.params.id;
         const order: IOrder | null = await Order.findById(orderId);
@@ -109,7 +173,62 @@ export const completeOrder = async (req: Request, res: Response) => {
         await sendEmail(seller.email, "Seller: Order Completed", "Order ${orderId} has been completed by ${order?.customerEmail}.", `<p>Order ${orderId} has been completed.</p>`)
         res.status(200).json({ message: 'Order successfully completed' });
     } catch (error) {
-        console.error('Error completing order:', error);
+        console.error('Error completing the order:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+export const updateOrder = async (req: CustomRequest, res: Response) => {
+    const {
+        newOrderNumber,
+        newCustomerName,
+        newCustomerEmail,
+        newCustomerType,
+        newSchool,
+        newNotes
+    }: {
+        newOrderNumber: number,
+        newCustomerName: string,
+        newCustomerEmail: string,
+        newCustomerType: string,
+        newSchool: string,
+        newNotes: string
+    } = req.body;
+    const orderId: string = req.params.id;
+    const user = await User.findOne(req.token?.userId);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    if (!req.token?.userId || (user?.group !== 'buyer' && user?.group !== 'seller')) {
+        return res.status(403).json({ error: 'Invalid or missing user type' });
+    }
+    const order: IOrder | null = await Order.findById(orderId);
+    if (!order) {
+        return res.status(404).json({ error: 'Order not found' });
+    }
+    if (user?.group === 'buyer' && req.token.userId !== order.userWhoPlacedOrderId.toString()) {
+        return res.status(403).json({ error: 'Unauthorized access' });
+    }
+    if (user?.group === 'seller' && req.token.userId !== order.itemOwnerId.toString() && req.token.userId !== order.userWhoPlacedOrderId.toString()) {
+        return res.status(403).json({ error: 'Unauthorized access' });
+    }
+    try {
+        const result = await Order.updateOne({ _id: new ObjectId(orderId) }, {
+            orderNumber: newOrderNumber,
+            customerName: newCustomerName,
+            customerEmail: newCustomerEmail,
+            customerType: newCustomerType,
+            school: newSchool,
+            notes: newNotes
+        });
+        if (result.matchedCount === 0) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+        const updatedOrder = await Order.findOne({ _id: new ObjectId(orderId) });
+        return res.status(200).json({ updatedOrder });
+    } catch (error) {
+        console.error('Error updating the order:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };

@@ -1,10 +1,28 @@
 import * as React from "react"
 import BuyerNavbar from "../../components/shared/BuyerNavbar";
 import { Order } from "../../components/shared/types/Order";
-import { PLACEHOLDER_ORDERS } from "../../constants/placeholder-data";
+//import { PLACEHOLDER_ORDERS } from "../../constants/placeholder-data";
 import DisplayedCustomerOrderItem from "./DisplayedCustomerOrderItem";
+import { useAPIHook } from "../../components/shared/hooks/use-api-hook.ts";
 const OrderManagement: React.FC<{}> = (props) => {
-    const [orders, setOrders] = React.useState<Order[]>(PLACEHOLDER_ORDERS);
+    const [orders, setOrders] = React.useState<Order[]>([]);
+
+    const apiHook = useAPIHook();
+
+    const retrieveOrders = async () => {
+        const buyerToken = await apiHook.generateBuyerToken();
+
+        const response = await apiHook.get(
+            `http://localhost:3000/api/orders/my-orders`,
+            buyerToken
+        );
+        
+        setOrders(response.orders)
+    }
+
+    React.useEffect(() => {
+        retrieveOrders()
+    }, [])
 
     return (
         <div className="dashboard">
@@ -16,6 +34,7 @@ const OrderManagement: React.FC<{}> = (props) => {
                         <DisplayedCustomerOrderItem
                             key={`order-${order._id}`}
                             order={order}
+                            refreshOrderItems={retrieveOrders}
                         />
                     ))}
                 </div>
