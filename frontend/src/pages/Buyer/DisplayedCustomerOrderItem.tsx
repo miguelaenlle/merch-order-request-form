@@ -4,15 +4,27 @@ import OrderedItem from "../Seller/Dashboard/OrderedItem";
 import { PLACEHOLDER_ITEMS_ORDERED } from "../../constants/placeholder-data";
 import { OrderItem } from "../../components/shared/types/OrderItem";
 import { Box, Heading, Text, Image, Divider, Button } from "@chakra-ui/react";
+import {useAPIHook} from "../../components/shared/hooks/use-api-hook.ts";
 
 const DisplayedCustomerOrderItem: React.FC<{
     order: Order;
     refreshOrderItems: () => void;
 }> = (props) => {
-    const [itemsOrdered, setItemsOrdered] = React.useState<OrderItem[]>(PLACEHOLDER_ITEMS_ORDERED);
+    const [itemsOrdered, setItemsOrdered] = React.useState<OrderItem[]>([]);
+
+    const apiHook = useAPIHook();
 
     const handleLoadOrderedItems = async () => {
         // Loads the ordered items
+        const buyerToken = await apiHook.generateBuyerToken();
+        const response = await apiHook.get(
+            `http://localhost:3000/api/orders/${props.order._id}/order-items`,
+            buyerToken
+        );
+
+        console.log(response)
+
+        setItemsOrdered(response.orderItems)
     }
 
     React.useEffect(() => {
