@@ -49,26 +49,28 @@ const DisplayedCustomerOrderItem: React.FC<{
                         Order {props.order.orderNumber}
                     </Heading>
                 </Box>
-                <Box display={"flex"} flexWrap={"wrap"} width={"100%"} flexDirection={"row"} justifyContent={"space-around"} alignItems={"flex-start"}>
-                    <Box>
-                        <Heading fontWeight="bold" as="h4" size="md" color={"gray"}>
+                <Box display={"flex"} width={"100%"}>
+                <Box display={"flex"} flexWrap={"wrap"} width={"90%"} flexDirection={"row"} justifyContent={"space-between"} alignItems={"flex-start"}>
+                    <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
+                        <Heading fontWeight="bold" as="h3" size="sm" color={"gray"}>
                             Customer
                         </Heading>
                         <Text fontWeight={"bold"}>{props.order.customerName}</Text>
                     </Box>
-                    <Box>
-                        <Heading fontWeight="bold" as="h4" size="md" color={"gray"}>
+                    <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
+                        <Heading fontWeight="bold" as="h3" size="sm" color={"gray"}>
                             Customer Type
                         </Heading>
                         <Text fontWeight={"bold"}>{props.order.customerType}</Text>
 
                     </Box>
-                    <Box>
-                        <Heading fontWeight="bold" as="h4" size="md" color={"gray"}>
+                    <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
+                        <Heading fontWeight="bold" as="h3" size="sm" color={"gray"}>
                             School
                         </Heading>
                         <Text fontWeight={"bold"}>{props.order.school}</Text>
                     </Box>
+                </Box>
                 </Box>
                 <Box display={"flex"} flexDirection={"column"} alignItems={"flex-start"}>
                     <Heading fontWeight="bold" as="h4" size="md" color={"gray"}>
@@ -81,12 +83,13 @@ const DisplayedCustomerOrderItem: React.FC<{
                         Items
                     </Heading>
                     <Box display={"flex"} width={"100%"} flexDirection={"column"} gap={10}>
-                        {itemsOrdered.map((itemOrdered) => (
+                        {itemsOrdered.map((itemOrdered) => ( 
                             <OrderedItem
                                 key={`ordered-item-${itemOrdered._id}`}
                                 orderedItem={itemOrdered}
-                            />
-                        ))}
+                            /> 
+                        ))} 
+                        <Divider borderColor={'black'} />
                         <Box display={"flex"} width={"100%"} justifyContent={"space-between"}>
                             <Text fontWeight={"bold"}>Total</Text>
                             <Box display={"flex"} gap={20}>
@@ -96,14 +99,22 @@ const DisplayedCustomerOrderItem: React.FC<{
                                 {/* TODO: Calculate */}
                             </Box>
                         </Box>
-                        <Box display={"flex"} flexWrap={"wrap"} width={"100%"} gap={20}>
-                            <Button onClick={handleCompleteOrder} backgroundColor={"#3ca46c"} color={"white"} fontWeight={"bold"} display={"flex"}>
+                        <Box display={"flex"} flexWrap={"wrap"} width={"100%"} gap={"8px"}>
+                            <Button onClick={handleCompleteOrder} height={"35px"} backgroundColor={"#459ce4"} color={"white"} fontWeight={"bold"} display={"flex"} gap={"10px"} alignItems={"center"}>
+                                <div>
+                                ✉️
+                                </div>
+                            <div>
+                            Send Message
+                            </div>
+                            </Button>
+                            <Button onClick={handleCompleteOrder} height={"35px"} backgroundColor={"#3ca46c"} color={"white"} fontWeight={"bold"} display={"flex"} alignItems={"center"}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" style={{ width: "30px", height: "25px" }} stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                 </svg>
                                 Complete
                             </Button>
-                            <Button onClick={handleCancelOrder} backgroundColor={"#459ce4"} color={"white"} fontWeight={"bold"} display={"flex"}>
+                            <Button onClick={handleCancelOrder} height={"35px"} backgroundColor={"#e83c3c"} color={"white"} fontWeight={"bold"} display={"flex"} alignItems={"center"}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" style={{ width: "30px", height: "25px" }} stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
