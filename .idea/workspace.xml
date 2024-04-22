@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Revised">
+    <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/Dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/Dashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/NewSpiritwearItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/NewSpiritwearItem.tsx" afterDir="false" />
@@ -13,6 +13,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -23,9 +30,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
+    {
+      &quot;state&quot;: &quot;OPEN&quot;
+    }
+  ],
   &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;dhruvtp05&quot;
+    &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">
@@ -37,7 +48,7 @@
     </option>
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="009f2f8d-716f-4be2-9a77-70e155755b99" />
+        <option name="accountId" value="389bfc8b-d356-4588-aeca-32b3063467dc" />
         <option name="url" value="https://github.com/miguelaenlle/merch-order-request-form.git" />
       </UrlAndAccount>
     </option>
@@ -46,7 +57,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -145,9 +156,7 @@
       <workItem from="1710010435141" duration="2272000" />
       <workItem from="1710287396564" duration="1504000" />
       <workItem from="1711918018399" duration="2008000" />
-      <workItem from="1713480317954" duration="555000" />
-      <workItem from="1713726753894" duration="10349000" />
-      <workItem from="1713811975042" duration="4532000" />
+      <workItem from="1712513003447" duration="5254000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -213,7 +222,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709955143535</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Revised">
+      <option name="closed" value="true" />
+      <created>1712513878523</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1712513878523</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,5 +242,17 @@
     <MESSAGE value="Created the items route" />
     <MESSAGE value="Revised" />
     <option name="LAST_COMMIT_MESSAGE" value="Revised" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/imagePaths.ts</url>
+          <line>1</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
