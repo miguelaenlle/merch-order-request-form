@@ -2,3 +2,12 @@
     margin-top: 30px;
 }
 
+.my-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.my-table th, .my-table td {
+    padding: 4px;
+    width: 33.33%;
+}
