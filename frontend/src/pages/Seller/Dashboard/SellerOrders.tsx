@@ -11,7 +11,7 @@ const SellerOrders: React.FC = () => {
         const fetchOrders = async () => {
             try {
                 const response = await apiHook.get(`http://localhost:3000/api/orders?itemOwnerId=65f8eb04ccc06864028d51f6`);
-                setOrders(response.data.orders);
+                setOrders(response.orders);
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
