@@ -13,7 +13,6 @@ const transporter = createTransport(sendgridTransport({
         api_key: process.env.SENDGRID_TOKEN_PERSONAL
     }
 }))
-
 export const createOrder = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -89,15 +88,12 @@ export const getOrderItemsOfOrder = async (req: CustomRequest, res: Response) =>
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
-
-
 export const getMyOrders = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
         return res.status(400).json({ errors: errors.array() });
     }
-
     console.log("Token", req.token);
     try {
         if (req.token?.type != "login") {
@@ -119,22 +115,22 @@ export const getMyOrders = async (req: CustomRequest, res: Response) => {
     } catch {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
-
-
-
-
     try {
         const userId = req.token?.userId;
         if (!userId) {
             return res.status(422).json({ error: 'User ID not found' });
         }
-        const orders: IOrder[] = await Order.find({ userWhoPlacedOrderId: userId });
+        const { itemOwnerId, userWhoPlacedOrderId } = req.query;
+        const queryConditions: any = { userWhoPlacedOrderId: userId };
+        if (itemOwnerId) {
+            queryConditions.itemOwnerId = itemOwnerId;
+        }
+        const orders: IOrder[] = await Order.find(queryConditions);
         res.status(200).json({ orders });
     } catch (error) {
         console.error('Error retrieving orders:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-
 }
 
 export const cancelOrder = async (req: Request, res: Response) => {
