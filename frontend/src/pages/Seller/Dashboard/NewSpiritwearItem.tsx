@@ -45,8 +45,35 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
         setRows(updatedRows);
     };
 
-    const handleCreateSpiritwearItem = () => {
-        console.log("Created a new spiritwear item.")
+    const handleCreateSpiritwearItem = async (itemId, size, amount, price) => {
+        try{
+            const response = await fetch('http://localhost:3000/api/inventory-items', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    itemId: itemId,
+                    size: size,
+                    amount: amount,
+                    price: 100.00
+                })
+            })
+
+            if (response.ok) {
+                const responseData = await response.json()
+                console.log('New inventory item was created successfully:', responseData)
+            } else if (response.status === 400) {
+                const errorData = await response.json()
+                console.error('Validation error:', errorData)
+            } else if (response.status === 404) {
+                console.error('Item not found')
+            } else {
+                console.error('Failed to create inventory item:', response.statusText)
+            }
+        }catch (error){
+            console.error('Error creating spiritwear item:', error)
+        }
     }
 
     return (
