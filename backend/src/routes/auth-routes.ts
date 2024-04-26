@@ -43,8 +43,6 @@ router.post('/new-password', [
     body('passwordToken').isString().withMessage('Password token must be valid').notEmpty().withMessage('Password token is required')
 ], postNewPassword);
 
-router.post('/upgrade-to-seller', [
-    body('email').isEmail().withMessage('Email must be valid').notEmpty().withMessage('Email is required')
-], auth, authExtended, upgradeToSeller);
+router.get('/upgrade-to-seller', auth, authExtended, upgradeToSeller);
 
 export default router;
