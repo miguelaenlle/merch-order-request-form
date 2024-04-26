@@ -1,7 +1,8 @@
+
 import * as React from "react";
 import CustomModal from "../../../components/shared/CustomModal";
-import { Input, Select } from "@chakra-ui/react";
-import { useState } from "react";
+import {Input, Select, Textarea} from "@chakra-ui/react";
+import {useState} from "react";
 
 const NewSpiritwearItem: React.FC<{}> = (props) => {
     const [name, setName] = useState('');
@@ -63,6 +64,7 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
                         </div>
 
                         <Input
+                            padding='8px'
                             marginTop='10px'
                             height='23px'
                             placeholder='Name'
@@ -70,9 +72,8 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
                             onChange={nameEntered}
                         />
 
-                        <Input
-                            marginTop='5px'
-                            height='80px'
+                        <Textarea
+                            style={{marginTop: "5px", height: "80px", width: "100%", border: "1px solid #ccc"}}
                             placeholder='Description'
                             value={description}
                             onChange={descriptionEntered}
@@ -80,6 +81,7 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
 
                         <div>
                             <Input
+                                padding='8px'
                                 marginTop="5px"
                                 width="50%"
                                 height="23px"
@@ -89,6 +91,7 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
                             />
 
                             <Input
+                                padding='8px'
                                 marginTop="5px"
                                 width="50%"
                                 height="23px"
@@ -111,39 +114,39 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
                         <div>
                             <table className="my-table">
                                 <thead>
-                                    <tr style={{ border: '1px solid #ccc', fontWeight: 'bold' }}>
-                                        <th style={{ padding: '2px' }}>Size</th>
-                                        <th style={{ padding: '2px' }}>Amount</th>
-                                        <th style={{ padding: '2px' }}>Price</th>
-                                    </tr>
+                                <tr style={{border: '1px solid #ccc', fontWeight: 'bold', textAlign: 'left'}}>
+                                    <th style={{}}>Size</th>
+                                    <th style={{}}>Amount</th>
+                                    <th style={{}}>Price</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    {rows.map((row, index) => (
-                                        <tr
-                                            style={{ border: '1px solid #ccc' }}
-                                            key={index}
-                                        >
-                                            <td>{row.size}</td>
-                                            <td>
-                                                <input
-                                                    style={{ width: "120px", border: '1px solid #ccc' }}
-                                                    type="number"
-                                                    value={row.amount}
-                                                    onChange={(e) => handleInputChange(index, 'amount', e.target.value)}
-                                                    placeholder="# of items"
-                                                />
-                                            </td>
-                                            <td>
-                                                <input
-                                                    style={{ width: "120px", border: '1px solid #ccc' }}
-                                                    type="number"
-                                                    value={row.price}
-                                                    onChange={(e) => handleInputChange(index, 'price', e.target.value)}
-                                                    placeholder="Price"
-                                                />
-                                            </td>
-                                        </tr>
-                                    ))}
+                                {rows.map((row, index) => (
+                                    <tr
+                                        style={{border: '1px solid #ccc'}}
+                                        key={index}
+                                    >
+                                        <td>{row.size}</td>
+                                        <td>
+                                            <input
+                                                style={{width: "120px"}}
+                                                type="number"
+                                                value={row.amount}
+                                                onChange={(e) => handleInputChange(index, 'amount', e.target.value)}
+                                                placeholder="# of items"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style={{width: "120px"}}
+                                                type="number"
+                                                value={row.price}
+                                                onChange={(e) => handleInputChange(index, 'price', e.target.value)}
+                                                placeholder="Price"
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
                                 </tbody>
                             </table>
 

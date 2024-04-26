@@ -254,7 +254,8 @@
     <MESSAGE value="Fixed bugs" />
     <MESSAGE value="Created the items route" />
     <MESSAGE value="Revised" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revised" />
+    <MESSAGE value="Added text, input fields, and a table" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added text, input fields, and a table" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
