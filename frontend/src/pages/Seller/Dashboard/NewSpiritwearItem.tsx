@@ -5,10 +5,6 @@ import {Input, Select, Textarea} from "@chakra-ui/react";
 import {useState} from "react";
 
 const NewSpiritwearItem: React.FC<{}> = (props) => {
-    const handleCreateSpiritwearItem = () => {
-        console.log("Created a new spiritwear item.")
-    }
-
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
@@ -50,6 +46,10 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
         setRows(updatedRows);
     };
 
+    const handleCreateSpiritwearItem = () => {
+        console.log("Created a new spiritwear item.")
+    }
+
     return (
         <div>
             <CustomModal
@@ -59,7 +59,7 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
 
                     <div>
 
-                        <div style={{fontSize: "25px", marginTop: "20px"}}>
+                        <div style={{ fontSize: "25px", marginTop: "20px" }}>
                             <strong>New Spiritwear Item</strong>
                         </div>
 
@@ -101,15 +101,15 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
                             />
                         </div>
 
-                        <div style={{marginTop: "20px"}}><strong>Group</strong></div>
+                        <div style={{ marginTop: "20px" }}><strong>Group</strong></div>
 
-                        <div style={{marginTop: "5px", width: "60%"}}>
+                        <div style={{ marginTop: "5px", width: "60%" }}>
                             <Select>
                                 <option value='option1'>Hersey Hack Club</option>
                             </Select>
                         </div>
 
-                        <div style={{marginTop: "20px"}}><strong>Inventory</strong></div>
+                        <div style={{ marginTop: "20px" }}><strong>Inventory</strong></div>
 
                         <div>
                             <table className="my-table">
@@ -152,13 +152,13 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
 
                         </div>
 
-                        <p style={{fontSize: "small", marginTop: "10px", fontStyle: "italic"}}>Inventory will auto-update as you sell items.</p>
+                        <p style={{ fontSize: "small", marginTop: "10px", fontStyle: "italic" }}>Inventory will auto-update as you sell items.</p>
 
                     </div>
                 }
 
-                  closeText="Cancel"
-                  actionText="Create Item"
+                closeText="Cancel"
+                actionText="Create Item"
                 onAction={handleCreateSpiritwearItem}
             />
         </div>

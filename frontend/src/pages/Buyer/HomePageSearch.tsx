@@ -2,7 +2,7 @@ import * as React from "react";
 import "./HomePageSearch.css";
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-
+import { useAPIHook} from "../../components/shared/hooks/use-api-hook.ts";
 
 interface IHomePageSearch {
     name: string;
@@ -62,8 +62,18 @@ const HomePageSearch: React.FC<{}> = (props) => {
         setItemsToShow(calculatedItemsToShow);
     };
 
+    const apiHook = useAPIHook();
     const handleLoadItems = async () => {
-
+        const buyerToken = await apiHook.generateBuyerToken();
+        try {
+            const response = await apiHook.get(
+                'http://localhost:3000/api/groups/',
+                buyerToken);
+            console.log(response);
+            setDisplayedItems(response as IHomePageSearch[]);
+        } catch (error) {
+            console.log('Server error', error);
+        }
     }
 
 
