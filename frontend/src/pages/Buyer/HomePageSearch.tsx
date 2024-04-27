@@ -1,110 +1,67 @@
-import * as React from "react";
+import React, { useState } from "react";
 import "./HomePageSearch.css";
-import { Button } from "@chakra-ui/react";
+import { InputGroup, Input, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-
-interface IHomePageSearch {
-    name: string;
-}
-
-const data: IHomePageSearch[] = [
-    {
-        name: "Hersey Hack Club"
-    },
-    {
-        name: "Math Team"
-    },
-    {
-        name: "Robotics"
-    },
-    {
-        name: "etc"
-    },
-    {
-        name: "etc"
-    },
-    {
-        name: "etc"
-    },
-    {
-        name: "etc"
-    },
-    {
-        name: "etc"
-    },
-    {
-        name: "etc"
-    }
-]
+const HomePageSearch: React.FC = () => {
+    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
+    const [showMore, setShowMore] = useState(false);
 
 
-const HomePageSearch: React.FC<{}> = (props) => {
-
-    const [showMore, setShowMore] = React.useState(false);
-    const [itemsToShow, setItemsToShow] = React.useState(3);
-    const [displayedItems, setDisplayedItems] = React.useState<IHomePageSearch[]>(data);
-
-    const [searchQuery, setSearchQuery] = React.useState("");
-
-    const handleSetSearchQuery = (query: string) => {
-        setSearchQuery(query);
-    }
-
-
-    const toggleShowMore = () => {
-        setShowMore(!showMore);
+    const handleSearch = () => {
+        if (searchQuery.trim() !== "") {
+            navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+        }
     };
 
-    const updateItemsToShow = () => {
-        const width = window.innerWidth;
-        const calculatedItemsToShow = Math.floor(width / 405);
-        setItemsToShow(calculatedItemsToShow);
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
     };
 
-    const handleLoadItems = async () => {
 
-    }
+    const sportsAndClubs = ["Football", "Basketball", "Soccer", "Volleyball", "Chess Club", "Math Team"];
 
-
-    React.useEffect(() => {
-        handleLoadItems(); 
-
-        updateItemsToShow();
-        window.addEventListener('resize', updateItemsToShow);
-
-        return () => {
-            window.removeEventListener('resize', updateItemsToShow);
-        };
-    }, []);
     return (
-        <div className='searchMain'>
-            <div>
-                <h2 style={{ fontSize: "35px" }}>Hersey Spiritwear</h2>
-                <h3>Order JHHS Spiritwear for Sports and Clubs here!</h3>
-                <div style={{ display: "flex", width: "80%", gap: "5px", flexWrap: "wrap" }}>
-                    <input value={searchQuery} className='searchInput' placeholder='Search for spiritwear...' onChange={(e) => {
-
-
-                        handleSetSearchQuery(e.target.value);
-                    }} />
-                    {displayedItems.slice(0, showMore ? displayedItems.length : itemsToShow).map((item, index) => (
-                        <h1 key={index} className='searchOptions'>{item.name}</h1>
-                    ))}
-                    {displayedItems.length > itemsToShow && !showMore &&
-                        <button className="searchButton" onClick={toggleShowMore}>
-                            {data.length - itemsToShow} more
-                        </button>
-                    }
-                    {showMore &&
-                        <button className="searchButton" onClick={toggleShowMore}>
-                            Show less
-                        </button>
-                    }
-                </div>
+        <div className="orangeGradient mainContent">
+            <div className="content">
+                <h3 className="header textCenter">Hersey Spiritwear</h3>
+                <p className="header textCenter">Order JHHS Spiritwear for Sports and Clubs here!</p>
+                <InputGroup>
+                    <Input
+                        placeholder="Search for spiritwear..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                    />
+                </InputGroup>
+                {showMore && (
+                    <div>
+                        <p className="header textCenter">Direct Links:</p>
+                        {sportsAndClubs.map((item, index) => (
+                            <Button
+                                key={index}
+                                colorScheme="blue"
+                                size="sm"
+                                onClick={() => {
+                                    navigate(`/search?query=${encodeURIComponent(item)}`);
+                                }}
+                                marginRight="0.5rem"
+                                marginBottom="0.5rem"
+                            >
+                                {item}
+                            </Button>
+                        ))}
+                    </div>
+                )}
+                <Button onClick={() => setShowMore(!showMore)} size="sm" marginTop="0.5rem">
+                    {showMore ? "Show Less" : "Show More"}
+                </Button>
             </div>
         </div>
-    )
-}
-
-export default HomePageSearch
+    );
+};
+export default HomePageSearch;

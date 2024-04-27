@@ -1,5 +1,6 @@
 .mainContent {
     padding: 30px 0;
+    color: white;
 }
 
 .modalContent {
@@ -10,6 +11,16 @@
 
 .strong {
     font-size: xx-large;
+}
+
+.header {
+    font-size: xxx-large;
+    font-weight: bold;
+    color: white;
+}
+
+.textCenter {
+    text-align: center;
 }
 
 
