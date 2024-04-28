@@ -1,14 +1,18 @@
 
 import * as React from "react";
 import CustomModal from "../../../components/shared/CustomModal";
-import {Input, Select, Textarea} from "@chakra-ui/react";
-import {useState} from "react";
+import { Input, Select } from "@chakra-ui/react";
+import { useState } from "react";
+import {useAPIHook} from "../../../components/shared/hooks/use-api-hook.ts";
+
 
 const NewSpiritwearItem: React.FC<{}> = (props) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
     const [time, setTime] = useState('');
+
+    const apiHook = useAPIHook();
 
     const [rows, setRows] = useState([
         { size: 'XXS', amount: '', price: '' },
@@ -46,8 +50,23 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
         setRows(updatedRows);
     };
 
-    const handleCreateSpiritwearItem = () => {
-        console.log("Created a new spiritwear item.")
+    const handleCreateSpiritwearItem = async () => {
+        try{
+            const sellerToken = await apiHook.generateSellerToken();
+            const response = await apiHook.post(
+                `http://localhost:3000/api/items`,
+                {
+                    name: name,
+                    description: description,
+                    pickupLocation: location,
+                    pickupTime: time,
+                    price: 100
+                },
+                sellerToken
+            );
+        }catch (error){
+            console.error('Error creating spiritwear item:', error)
+        }
     }
 
     return (
