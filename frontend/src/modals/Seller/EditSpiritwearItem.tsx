@@ -10,13 +10,13 @@ const EditSpiritwearItem: React.FC<{}> = (props) => {
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
     const [rows, setRows] = useState([
-        { size: 'XXS', amount: '', price: '' },
-        { size: 'XS', amount: '', price: '' },
-        { size: 'S', amount: '', price: '' },
-        { size: 'M', amount: '', price: '' },
-        { size: 'L', amount: '', price: '' },
-        { size: 'XL', amount: '', price: '' },
-        { size: 'XXL', amount: '', price: '' }
+        { size: 'XXS', amount: '', price: '', change: '' },
+        { size: 'XS', amount: '', price: '', change: '' },
+        { size: 'S', amount: '', price: '', change: '' },
+        { size: 'M', amount: '', price: '', change: '' },
+        { size: 'L', amount: '', price: '', change: '' },
+        { size: 'XL', amount: '', price: '', change: '' },
+        { size: 'XXL', amount: '', price: '', change: '' }
     ]);
 
     const nameEntered: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +105,15 @@ const EditSpiritwearItem: React.FC<{}> = (props) => {
                                     key={index}
                                 >
                                     <td>{row.size}</td>
-                                    <td>2</td>
+                                    <td>
+                                        <input
+                                            style={{width: "120px"}}
+                                            type="number"
+                                            value={row.change}
+                                            onChange={(e) => handleInputChange(index, 'change', e.target.value)}
+                                            placeholder="2"
+                                        />
+                                    </td>
                                     <td>10</td>
                                     <td>12</td>
                                     <td>
