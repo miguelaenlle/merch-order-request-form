@@ -213,10 +213,7 @@ export const upgradeToSeller = async (req: CustomRequest, res: Response) => {
         res.status(400).json({ message: 'Token missing' });
         return
     }
-    if (req.token.type != "login") {
-        res.status(401).json({ message: 'Invalid token type' });
-        return
-    }
+
     try {
         const email = req.token.email as string;
         const user = await User.findOne({ email: email })

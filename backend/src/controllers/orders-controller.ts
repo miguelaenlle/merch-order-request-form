@@ -94,15 +94,6 @@ export const getMyOrders = async (req: CustomRequest, res: Response) => {
         console.log("errors", errors);
         return res.status(400).json({ errors: errors.array() });
     }
-    console.log("Token", req.token);
-    try {
-        if (req.token?.type != "login") {
-            res.status(401).json({ message: 'Please authenticate' });
-            return
-        }
-    } catch (error: any) {
-        return res.status(500).json({ message: 'Server error', error: error.message });
-    }
 
     try {
         const user = await User.findById(req.token?.userId);

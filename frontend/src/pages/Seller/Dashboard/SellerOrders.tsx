@@ -2,7 +2,7 @@ import * as React from "react";
 import { Order } from "../../../components/shared/types/Order";
 import { PLACEHOLDER_ORDERS } from "../../../constants/placeholder-data";
 import DisplayedCustomerOrderItem from "../../Buyer/DisplayedCustomerOrderItem";
-import {useAPIHook} from "../../../components/shared/hooks/use-api-hook.ts";
+import { useAPIHook } from "../../../components/shared/hooks/use-api-hook.ts";
 
 const SellerOrders: React.FC = () => {
     const [orders, setOrders] = React.useState<Order[]>(PLACEHOLDER_ORDERS);
