@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import CustomModal from "../../../components/shared/CustomModal";
-import { Input, Select } from "@chakra-ui/react";
+import { Input, Select, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import {useAPIHook} from "../../../components/shared/hooks/use-api-hook.ts";
 
