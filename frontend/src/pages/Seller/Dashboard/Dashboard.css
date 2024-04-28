@@ -4,10 +4,18 @@
 
 .my-table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
 }
 
 .my-table th, .my-table td {
     padding: 4px;
-    width: 33.33%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.my-table th.inventory {
+    width: 30%;
 }
