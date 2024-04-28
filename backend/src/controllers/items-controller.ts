@@ -70,10 +70,10 @@ export const createItem = async (req: CustomRequest, res: Response) => {
     } catch (error: any) {
         await transaction.abortTransaction();
         await transaction.endSession();
+        console.log(error)
         return res.status(500).json({message: 'Server error', error: error.message});
     }
 }
-
 
 //Retrieves a list of all items
 export const retrieveItems = async (req: CustomRequest, res: Response) => {

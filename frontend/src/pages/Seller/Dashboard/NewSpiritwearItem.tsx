@@ -2,12 +2,15 @@ import * as React from "react";
 import CustomModal from "../../../components/shared/CustomModal";
 import { Input, Select } from "@chakra-ui/react";
 import { useState } from "react";
+import {useAPIHook} from "../../../components/shared/hooks/use-api-hook.ts";
 
 const NewSpiritwearItem: React.FC<{}> = (props) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
     const [time, setTime] = useState('');
+
+    const apiHook = useAPIHook();
 
     const [rows, setRows] = useState([
         { size: 'XXS', amount: '', price: '' },
@@ -45,32 +48,20 @@ const NewSpiritwearItem: React.FC<{}> = (props) => {
         setRows(updatedRows);
     };
 
-    const handleCreateSpiritwearItem = async (itemId, size, amount, price) => {
+    const handleCreateSpiritwearItem = async () => {
         try{
-            const response = await fetch('http://localhost:3000/api/inventory-items', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
+            const sellerToken = await apiHook.generateSellerToken();
+            const response = await apiHook.post(
+                `http://localhost:3000/api/items`,
+                {
+                    name: name,
+                    description: description,
+                    pickupLocation: location,
+                    pickupTime: time,
+                    price: 100
                 },
-                body: JSON.stringify({
-                    itemId: itemId,
-                    size: size,
-                    amount: amount,
-                    price: 100.00
-                })
-            })
-
-            if (response.ok) {
-                const responseData = await response.json()
-                console.log('New inventory item was created successfully:', responseData)
-            } else if (response.status === 400) {
-                const errorData = await response.json()
-                console.error('Validation error:', errorData)
-            } else if (response.status === 404) {
-                console.error('Item not found')
-            } else {
-                console.error('Failed to create inventory item:', response.statusText)
-            }
+                sellerToken
+            );
         }catch (error){
             console.error('Error creating spiritwear item:', error)
         }
