@@ -74,8 +74,9 @@ const Login: React.FC<LoginProps> = () => {
 
                 <Button
                     variant="link"
-                    onClick={() => {
+                    onClick={() =>  {
                         console.log('Navigate to Forgot Password');
+                        navigate('/forgot-password')
                     }}
                     w="100%"
                     leftIcon={<HiMiniQuestionMarkCircle />}
