@@ -3,8 +3,9 @@ import { validationResult } from 'express-validator';
 import mongoose from 'mongoose';
 import Item from '../models/item';
 import InventoryItem from '../models/inventory-item';
+import { CustomRequest } from '../middleware/auth';
 
-export const createInventoryItem = async (req: Request, res: Response) => {
+export const createInventoryItem = async (req: CustomRequest, res: Response) => {
     // Check for validation errors 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -44,7 +45,7 @@ export const createInventoryItem = async (req: Request, res: Response) => {
     }
 };
 
-export const getInventoryItems = async (req: Request, res: Response) => {
+export const getInventoryItems = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
@@ -59,7 +60,7 @@ export const getInventoryItems = async (req: Request, res: Response) => {
     }
 }
 
-export const getIndividualInventoryItem = async (req: Request, res: Response) => {
+export const getIndividualInventoryItem = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
@@ -93,7 +94,7 @@ interface ListItem {
     newPrice: number;
 }
 
-export const patchInventoryItem = async (req: Request, res: Response) => {
+export const patchInventoryItem = async (req: CustomRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log("errors", errors);
