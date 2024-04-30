@@ -50,7 +50,6 @@ const OrderManagement: React.FC<{}> = (props) => {
                 </div>
             </div>
             {/* Display OrderComponent */}
-            <OrderComponent />
         </div>
     );
 }
