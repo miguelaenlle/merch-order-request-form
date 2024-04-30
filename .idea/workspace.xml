@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63cd98cf-ae5c-47c9-b83e-6d6c12a1208f" name="Changes" comment="Revised changed loginContainer and gradient-bg and added flexbox">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Buyer/OrderManagement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Buyer/OrderManagement.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="63cd98cf-ae5c-47c9-b83e-6d6c12a1208f" name="Changes" comment="Completed task" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712509061451</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Completed task">
+      <option name="closed" value="true" />
+      <created>1714436257726</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714436257726</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +168,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend&#10;&#10;Getting some errors" />
     <MESSAGE value="Revised changed loginContainer and gradient-bg and added flexbox" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revised changed loginContainer and gradient-bg and added flexbox" />
+    <MESSAGE value="Completed task" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed task" />
   </component>
 </project>
