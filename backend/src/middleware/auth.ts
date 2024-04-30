@@ -3,6 +3,7 @@ import * as jwt from "jsonwebtoken"
 
 import dotenv from "dotenv";
 import {JwtPayload} from "jsonwebtoken";
+import {tokenCheck} from "../helpers/token-check";
 
 dotenv.config();
 
@@ -29,3 +30,19 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     (req as CustomRequest).token = decoded
     next();
 };
+
+export const authExtended = async (req: CustomRequest, res: Response, next: NextFunction) => {
+    if (!req.token) {
+        res.status(400).json({ message: 'Token missing'});
+        return
+    }
+    try {
+        if (!await tokenCheck(req.token)) {
+            res.status(401).json({message: 'Please authenticate'});
+            return
+        }
+    } catch (error: any) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+    next();
+}

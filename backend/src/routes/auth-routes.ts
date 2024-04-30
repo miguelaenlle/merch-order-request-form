@@ -1,6 +1,15 @@
 import { Router } from 'express';
-import { loginUser, createUser, confirmEmail, resendConfirmationEmail, postReset, postNewPassword } from '../controllers/auth-controller';
+import {
+    loginUser,
+    createUser,
+    confirmEmail,
+    resendConfirmationEmail,
+    postReset,
+    postNewPassword,
+    upgradeToSeller
+} from '../controllers/auth-controller';
 import { body } from 'express-validator';
+import {auth, authExtended} from "../middleware/auth";
 
 const router = Router()
 
@@ -33,5 +42,7 @@ router.post('/new-password', [
     body('password').isString().withMessage('Password must be valid').notEmpty().withMessage('Password is required'),
     body('passwordToken').isString().withMessage('Password token must be valid').notEmpty().withMessage('Password token is required')
 ], postNewPassword);
+
+router.get('/upgrade-to-seller', auth, authExtended, upgradeToSeller);
 
 export default router;

@@ -5,6 +5,8 @@ import { Input, Button, Box, Flex } from '@chakra-ui/react';
 import { SlActionUndo } from 'react-icons/sl';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import './ForgotPassword.css';
+import { useNavigate } from "react-router-dom";
+
 
 interface ForgotPasswordProps { }
 
@@ -12,6 +14,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     const [newPassword, setNewPassword] = React.useState<string>('');
     const [confirmNewPassword, setConfirmNewPassword] = React.useState<string>('');
 
+    const navigate = useNavigate();
     const handleResetPassword = () => {
         console.log('Resetting password with:', { newPassword, confirmNewPassword });
     };
@@ -58,6 +61,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                     variant="link"
                     onClick={() => {
                         console.log('Navigate back to login');
+                        navigate('/seller-login')
                     }}
                     w="100%"
                     leftIcon={<SlActionUndo />}

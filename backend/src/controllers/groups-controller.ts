@@ -48,14 +48,6 @@ export const retrieveGroups = async (req: CustomRequest, res: Response) => {
         res.status(400).json({ message: 'Token missing'});
         return
     }
-    try {
-        if (req.token.type != "login") {
-            res.status(401).json({ message: 'Please authenticate'});
-            return
-        }
-    } catch (error: any) {
-       return res.status(500).json({ message: 'Server error', error: error.message });
-    }
 
     try {
         const groups = await Group.find({userId: req.token.userId});

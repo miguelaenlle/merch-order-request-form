@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-
     <list default="true" id="566bfc0a-b160-45ea-bd92-0bd7533499ca" name="Changes" comment="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/EditGroup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/EditGroup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/ForgotPassword.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/ForgotPassword.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Seller/Auth/Login.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +28,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;history&quot;: [
@@ -40,20 +39,12 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="recentNewPullRequestHead">
-      <RepoCoordinatesHolder>
-        <option name="owner" value="miguelaenlle" />
-        <option name="repository" value="merch-order-request-form" />
-      </RepoCoordinatesHolder>
-    </option>
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="389bfc8b-d356-4588-aeca-32b3063467dc" />
-        <option name="url" value="https://github.com/miguelaenlle/merch-order-request-form.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/miguelaenlle/merch-order-request-form.git&quot;,
+    &quot;accountId&quot;: &quot;6b158324-6f8a-4f5d-b5d5-ae6c3d50d40d&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -67,6 +58,7 @@
   <component name="ProjectId" id="2cNfLz9nkqeoNs0WtqXmIwmSuC1" />
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -76,7 +68,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "edit-group",
+    "git-widget-placeholder": "connect-screens",
     "last_opened_file_path": "C:/Users/maenlle/WebstormProjects",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -89,9 +81,10 @@
     "ts.external.directory.path": "/Users/wsschroed/WebstormProjects/merch-order-request-form/backend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dhruv\WebstormProjects\merch-order-request-form\backend" />
       <recent name="$PROJECT_DIR$/frontend/src/assets" />
       <recent name="C:\Users\Dhruv\WebstormProjects\merch-order-request-form\backend" />
     </key>
@@ -112,6 +105,13 @@
         <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-2e7d6887c066-JavaScript-WS-241.15989.47" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -158,6 +158,9 @@
       <workItem from="1710287396564" duration="1504000" />
       <workItem from="1711918018399" duration="2008000" />
       <workItem from="1712513003447" duration="5254000" />
+      <workItem from="1714010098869" duration="111000" />
+      <workItem from="1714010223692" duration="365000" />
+      <workItem from="1714090162006" duration="1726000" />
     </task>
     <task id="LOCAL-00001" summary="Created all of the group routes and the logic behind it">
       <option name="closed" value="true" />
@@ -242,8 +245,8 @@
     <MESSAGE value="Fixed bugs" />
     <MESSAGE value="Created the items route" />
     <MESSAGE value="Revised" />
-    <MESSAGE value="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Connected items-controller.ts backend to SellerSpiritwearAndInventory.tsx frontend" />
+    <MESSAGE value="Added text, input fields, and a table" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added text, input fields, and a table" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -251,7 +254,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/frontend/src/pages/Seller/Dashboard/imagePaths.ts</url>
           <line>1</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
