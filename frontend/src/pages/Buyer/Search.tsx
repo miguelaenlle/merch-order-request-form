@@ -1,20 +1,18 @@
-import * as React from "react"
-import BuyerNavbar from "../../components/shared/BuyerNavbar"
+import * as React from "react";
+import BuyerNavbar from "../../components/shared/BuyerNavbar";
 import SearchFilters from "./SearchFilters";
 import { PLACEHOLDER_ITEMS } from "../../constants/placeholder-data";
-import { Item } from "../../components/shared/types/Item";
 import SearchResultItem from "../../components/shared/SearchResultItem";
-const Search: React.FC<{}> = (props) => {
-    const [items, setItems] = React.useState<Item[]>(PLACEHOLDER_ITEMS);
 
+const Search: React.FC = () => {
     return (
         <div>
             <BuyerNavbar />
             <div className="content">
-                <h3 className="header">Search: [ITEM]</h3>
+                <h3 className="header">Search: T-Shirt</h3>
                 <SearchFilters />
                 <div className="searchResults">
-                    {items.map((item) => (
+                    {PLACEHOLDER_ITEMS.map((item) => (
                         <SearchResultItem
                             key={`search-result-item-${item._id}`}
                             item={item}
@@ -25,4 +23,5 @@ const Search: React.FC<{}> = (props) => {
         </div>
     );
 }
-export default Search
+
+export default Search;
