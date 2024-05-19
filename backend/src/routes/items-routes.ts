@@ -22,8 +22,5 @@ router.put('/:_id', [
     body('newPickupTime').isString().withMessage('Pick up time must be a string').notEmpty().withMessage('Pick up time is required')], auth, authExtended, updateItem);
 router.delete('/:_id', auth, authExtended, deleteItem);
 
-
-
-
 export default router;
 
