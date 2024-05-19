@@ -1,7 +1,7 @@
 import {Request, Router} from 'express';
 import {createDummy, dummyTokenTest, getDummies} from '../controllers/dummy-controller';
 import { body } from 'express-validator';
-import { auth } from '../middleware/auth'
+import {auth, authExtended} from '../middleware/auth'
 import {CustomRequest} from "../middleware/auth";
 
 const router = Router();
@@ -11,7 +11,7 @@ router.post('/', [
     body('email').isEmail().withMessage('Email must be valid').notEmpty().withMessage('Email is required'),
 ], createDummy);
 
-router.post('/token', auth, dummyTokenTest);
+router.post('/token', auth, authExtended, dummyTokenTest);
 
 router.get('/', getDummies);
 

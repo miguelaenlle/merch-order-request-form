@@ -2,7 +2,7 @@ import * as React from "react"
 import BuyerNavbar from "../../components/shared/BuyerNavbar";
 import "./SampleComponentsPage.css"
 import { Button, HStack, Input, Tag } from "@chakra-ui/react";
-import { AddIcon, CalendarIcon, ChevronRightIcon, CloseIcon, DownloadIcon, InfoOutlineIcon } from '@chakra-ui/icons'
+import { AddIcon, CalendarIcon, ChevronRightIcon, CloseIcon, DownloadIcon, EditIcon, InfoOutlineIcon } from '@chakra-ui/icons'
 import { JHHS_HACK_CLUB, JHHS_LOGO, JHHS_SWEATER } from "../../constants/placeholder-data";
 
 const SampleComponentsPage: React.FC<{}> = (props) => {
@@ -170,6 +170,7 @@ const SampleComponentsPage: React.FC<{}> = (props) => {
                 <CalendarIcon pr={"5px"} color={"gray"} />
                 <DownloadIcon pr={"5px"} color={"gray"} />
                 <InfoOutlineIcon pr={"5px"} color={"gray"} />
+                <EditIcon color="gray" />
                 <br />
 
                 <h3 className="header borderBottom">Images</h3>

@@ -1,12 +1,14 @@
-import * as React from "react"
+
+
+import React from "react";
 import { Item } from "./types/Item";
+import SpiritwearItem from "../../pages/Seller/Dashboard/SpiritwearItem";
+
 const SearchResultItem: React.FC<{
     item: Item;
 }> = (props) => {
     return (
-        <div>
-            <p>{props.item.name}</p>
-        </div>
+        <SpiritwearItem item={props.item} />
     );
 }
-export default SearchResultItem
+export default SearchResultItem;

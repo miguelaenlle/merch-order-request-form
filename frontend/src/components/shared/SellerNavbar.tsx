@@ -2,25 +2,38 @@ import * as React from "react"
 import "./Navbar.css"
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { JHHS_LOGO } from "../../constants/placeholder-data.ts";
+import { FaStore, FaUserCircle } from "react-icons/fa";
+
 
 const SellerNavbar: React.FC<{}> = (props) => {
     const navigate = useNavigate();
 
     return (
         <div className="navbar">
-            <h3>Hersey Spiritwear (Seller)</h3>
+
+            <h3 className="clickableText" onClick={() => {
+                navigate("/")
+            }}>
+                <img src={JHHS_LOGO} alt="Husky Icon" className="image" />
+                <strong>Hersey Spiritwear</strong>
+            </h3>
             <div className="spacer"></div>
             <Button
-                colorScheme="blue"
-                variant="outline"
+                colorScheme="gray"
+                variant="ghost"
+                marginRight={10}
                 onClick={() => {
                     navigate("/")
 
                 }}
                 fontSize={"sm"}
             >
-                For Buyers
+                <FaStore style={{ marginRight: "5px" }} /> For Buyers
             </Button>
+
+            <FaUserCircle style={{ marginRight: "5px" }} /> John Doe
+
         </div >
     );
 }

@@ -1,3 +1,40 @@
 .mainContent {
     padding: 30px 0;
+    /* color: white; */
+}
+
+.modalContent {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.strong {
+    font-size: xx-large;
+}
+
+.header {
+    font-size: xxx-large;
+    font-weight: bold;
+    color: white;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+
+.img {
+    flex: 1;
+    width: 50%;
+    background-color: #d3e0e8;
+    padding-top: 20px;
+    margin-right: 20px;
+    border-radius: 3%;
+}
+
+.container {
+    padding-top: 40px;
+    flex: 1;
+    margin-left: 12px;
 }
