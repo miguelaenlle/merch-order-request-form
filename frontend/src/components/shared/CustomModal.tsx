@@ -12,14 +12,17 @@ import {
 } from '@chakra-ui/react'
 
 const CustomModal: React.FC<{
+    isOpen?: boolean;
     buttonText: string;
     title?: string;
     content: React.ReactNode;
     closeText?: string;
     actionText?: string;
+    onClose?: () => void;
     onAction?: () => void;
     disableDefaultButtons?: boolean;
     extraLong?: boolean;
+    transparentButton?: boolean;
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -32,8 +35,10 @@ const CustomModal: React.FC<{
 
     return (
         <div>
-            <Button colorScheme="blue" onClick={onOpen}>{props.buttonText}</Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            {!props.transparentButton && (
+                <Button colorScheme="blue" onClick={onOpen}>{props.buttonText}</Button>
+            )}
+            <Modal isOpen={props.isOpen ?? isOpen} onClose={props.onClose ?? onClose}>
                 <ModalOverlay />
                 <ModalContent maxW={props.extraLong ? "1000px" : undefined}>
                     {props.title && (

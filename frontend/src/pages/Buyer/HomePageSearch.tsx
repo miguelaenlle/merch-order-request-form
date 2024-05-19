@@ -68,8 +68,8 @@ const HomePageSearch: React.FC = () => {
     return (
         <div className="orangeGradient mainContent">
             <div className="content">
-                <h2 style={{ fontSize: "35px" }}>Hersey Spiritwear</h2>
-                <h3>Order JHHS Spiritwear for Sports and Clubs here!</h3>
+                <h2 style={{ fontSize: "35px", color: "white" }}>Hersey Spiritwear</h2>
+                <h3 style={{ color: "white" }}>Order JHHS Spiritwear for Sports and Clubs here!</h3>
                 <div style={{ display: "flex", width: "80%", gap: "5px", flexWrap: "wrap" }}>
                     <InputGroup>
                         <Input

@@ -2,8 +2,8 @@ import * as React from "react"
 import "./Navbar.css"
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { JHHS_LOGO} from "../../constants/placeholder-data.ts";
-import {FaStore, FaUserCircle} from "react-icons/fa";
+import { JHHS_LOGO } from "../../constants/placeholder-data.ts";
+import { FaStore, FaUserCircle } from "react-icons/fa";
 
 
 const SellerNavbar: React.FC<{}> = (props) => {
@@ -12,13 +12,16 @@ const SellerNavbar: React.FC<{}> = (props) => {
     return (
         <div className="navbar">
 
-            <img src={JHHS_LOGO} alt="Husky Icon" className="sellerImage"/>
-            <strong>Hersey Spiritwear</strong>
-
+            <h3 className="clickableText" onClick={() => {
+                navigate("/")
+            }}>
+                <img src={JHHS_LOGO} alt="Husky Icon" className="image" />
+                <strong>Hersey Spiritwear</strong>
+            </h3>
             <div className="spacer"></div>
             <Button
                 colorScheme="gray"
-                 variant="ghost"
+                variant="ghost"
                 marginRight={10}
                 onClick={() => {
                     navigate("/")
@@ -31,7 +34,7 @@ const SellerNavbar: React.FC<{}> = (props) => {
 
             <FaUserCircle style={{ marginRight: "5px" }} /> John Doe
 
-        </div>
+        </div >
     );
 }
 export default SellerNavbar

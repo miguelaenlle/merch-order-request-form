@@ -32,6 +32,7 @@ export const useAPIHook = () => {
             console.log("Response", response.data);
             return response.data;
         } catch (e: any) {
+            console.log("e", e);
             try {
                 console.error("Simplified Error: ", e.response.data.message);
             } catch {

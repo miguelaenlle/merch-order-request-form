@@ -10,8 +10,6 @@ const HomePage: React.FC<{}> = (props) => {
         <div>
             <BuyerNavbar />
             <HomePageSearch />
-            <LoginComponent />
-            <SignupComponent />
             <ItemModal 
                 itemId="660b6ef90991898511133d5d"
             />
