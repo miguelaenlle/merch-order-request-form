@@ -27,7 +27,7 @@ const SellerGroups: React.FC<{}> = (props) => { //have fun with this frontend te
     }, [])
 
     return (
-        <div className="subcontent">
+        <div className="subcontent" >
             <h3 className="header">My Groups</h3>
             {/* TODO: Let the user CREATE new groups */}
             {/* TODO: Make it look like the Figma  */}
@@ -37,6 +37,7 @@ const SellerGroups: React.FC<{}> = (props) => { //have fun with this frontend te
                 <GroupItem
                     key={`group-${group._id}`}
                     group={group}
+                    style={{margin: '25px'}}
                 />
             ))}
         </div>
