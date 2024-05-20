@@ -1,4 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, LightMode } from '@chakra-ui/react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,6 +13,7 @@ import HomePage from './pages/Buyer/HomePage';
 import "./App.css";
 import SampleComponentsPage from './pages/SampleComponents/SampleComponentsPage';
 import SellerSpiritwearAndInventory from "./pages/Seller/Dashboard/SellerSpiritwearAndInventory.tsx";
+import AuthContextProvider from './components/shared/context/AuthContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPassword />
-  }, 
+  },
   {
     path: "/sample-components",
     element: <SampleComponentsPage />
@@ -60,7 +61,11 @@ const router = createBrowserRouter([
 function App() {
   return (
     <ChakraProvider>
-      <RouterProvider router={router} />
+      <LightMode>
+        <AuthContextProvider>
+          <RouterProvider router={router} />
+        </AuthContextProvider>
+      </LightMode>
     </ChakraProvider>
   )
 }

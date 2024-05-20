@@ -7,6 +7,8 @@ import { createTransport } from 'nodemailer'
 import crypto from 'crypto'
 import dotenv from "dotenv";
 import { CustomRequest } from '../middleware/auth';
+import getFirstError from '../helpers/get-first-error';
+import moment from "moment";
 dotenv.config();
 
 const sendgridTransport = require('nodemailer-sendgrid-transport')
@@ -45,11 +47,9 @@ const checkEmailConfirmationDateValidity = async (dateString: string) => {
 
 export const createUser = async (req: Request, res: Response) => {
     // Check for validation errors
-    console.log("Req.body", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log("errors", errors);
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ message: getFirstError(errors.array()) });
     }
 
     // Proceed with creating the User object
@@ -110,9 +110,9 @@ export const loginUser = async (req: Request, res: Response) => {
 
     console.log("Req.body", req.body);
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
-        console.log("errors", errors);
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ message: getFirstError(errors.array()) });
     }
 
     try {
@@ -130,7 +130,10 @@ export const loginUser = async (req: Request, res: Response) => {
                 return
             }
             const userToken = await generateAccessToken("login", user._id, email, "1 week")
-            res.status(200).json({ token: userToken, user: { email: email, name: user.name } });
+
+            const tokenExpirationDate = moment().add(7, 'days').toDate();
+
+            res.status(200).json({ token: userToken, tokenExpirationDate, user: { email: email, name: user.name, userId: user._id } });
         } else {
             res.status(401).json({ message: "Invalid credentials" });
         }
@@ -159,6 +162,9 @@ export const confirmEmail = async (req: Request, res: Response) => {
             res.status(401).json({ message: "Confirmation expired." });
             return
         }
+
+        console.log("Confirmation code", confirmationCode, user.emailConfirmationCode)
+
 
         if (confirmationCode == user.emailConfirmationCode) {
             user.emailConfirmed = true
