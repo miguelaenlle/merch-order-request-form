@@ -8,15 +8,46 @@ import { GrLogin, GrLogout } from "react-icons/gr";
 import SignupComponent from "../../pages/Buyer/SignupComponent.tsx";
 import LoginComponent from "../../pages/Buyer/LoginComponent.tsx";
 import { AuthContext } from "./context/AuthContext.tsx";
+import { useAPIHook } from "./hooks/use-api-hook.ts";
 
 const BuyerNavbar: React.FC<{}> = (props) => {
     const navigate = useNavigate();
     const toast = useToast();
-
-    const [openAuthModal, setOpenAuthModal] = React.useState<"login" | "signup" | null>(null);
-
     const [numOrders, setNumOrders] = React.useState<number>(0);
     const authContext = React.useContext(AuthContext);
+    const apiHook = useAPIHook();
+
+    const handleLoadNumOrders = async () => {
+        if (!authContext?.token) {
+            return;
+        }
+
+        try {
+            const response = await apiHook.get(
+                'http://localhost:3000/api/orders/my-orders?status=pending',
+                authContext?.token
+            );
+
+            console.log('response', response);
+
+            setNumOrders(response.orders.length);
+        } catch {
+            toast({
+                title: "Error",
+                description: "Failed to load orders",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    }
+
+    React.useEffect(() => {
+        if (authContext?.userType === "buyer") {
+            handleLoadNumOrders();
+        }
+    }, [authContext?.token, authContext?.userType])
+
 
     return (
         <div className="navbar">
@@ -27,19 +58,21 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                 <strong>Hersey Spiritwear</strong>
             </h3>
             <div className="spacer"></div>
-            <Button
-                colorScheme="gray"
-                variant="ghost"
-                onClick={() => {
-                    // TODO: This should go to seller lgoin instead
-                    navigate("/my-orders")
+            {authContext?.userType === "buyer" && (
+                <Button
+                    colorScheme="gray"
+                    variant="ghost"
+                    onClick={() => {
+                        // TODO: This should go to seller lgoin instead
+                        navigate("/my-orders")
 
-                }}
-                fontSize={"sm"}
-            >
-                <FaBox style={{ marginRight: "5px" }} /> Orders
-                <div className="orderCount">{numOrders}</div>
-            </Button>
+                    }}
+                    fontSize={"sm"}
+                >
+                    <FaBox style={{ marginRight: "5px" }} /> Orders
+                    <div className="orderCount">{numOrders}</div>
+                </Button>
+            )}
             {/* <Button
                 colorScheme="gray"
                 variant="ghost"
@@ -60,7 +93,6 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                         navigate("/seller-dashboard")
                         // Navigate to seller login
 
-
                     }}
                     fontSize={"sm"}
                 >
@@ -73,7 +105,7 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                     colorScheme="gray"
                     variant="ghost"
                     onClick={() => {
-                        setOpenAuthModal("login")
+                        authContext?.handleOpenAuthModal("login")
                     }}
                     fontSize={"sm"}
                 >
@@ -84,6 +116,7 @@ const BuyerNavbar: React.FC<{}> = (props) => {
                     colorScheme="gray"
                     variant="ghost"
                     onClick={() => {
+                        navigate("/")
                         authContext?.logout()
                         toast({
                             title: "Logged out",
@@ -100,22 +133,22 @@ const BuyerNavbar: React.FC<{}> = (props) => {
             )}
             <SignupComponent
                 transparentButton
-                isOpen={openAuthModal === "signup"}
+                isOpen={authContext?.openAuthModal === "signup"}
                 toBuyerLogin={() => {
-                    setOpenAuthModal("login")
+                    authContext?.handleOpenAuthModal("login")
                 }}
                 onClose={() => {
-                    setOpenAuthModal(null)
+                    authContext?.handleOpenAuthModal(null)
                 }}
             />
             <LoginComponent
                 transparentButton
-                isOpen={openAuthModal === "login"}
+                isOpen={authContext?.openAuthModal === "login"}
                 toBuyerSignup={() => {
-                    setOpenAuthModal("signup")
+                    authContext?.handleOpenAuthModal("signup")
                 }}
                 onClose={() => {
-                    setOpenAuthModal(null)
+                    authContext?.handleOpenAuthModal(null)
                 }}
             />
         </div>

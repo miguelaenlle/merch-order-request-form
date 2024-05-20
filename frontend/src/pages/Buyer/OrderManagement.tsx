@@ -6,25 +6,53 @@ import OrderComponent from "./OrderComponent"; // Import OrderComponent
 import { Order } from "../../components/shared/types/Order";
 import DisplayedCustomerOrderItem from "./DisplayedCustomerOrderItem";
 import { useAPIHook } from "../../components/shared/hooks/use-api-hook.ts";
+import { AuthContext } from "../../components/shared/context/AuthContext.tsx";
+import { Spinner, useToast } from "@chakra-ui/react";
+import { useLoadErrorHook } from "../../components/shared/hooks/use-load-error-hook.ts";
 
 const OrderManagement: React.FC<{}> = (props) => {
     const [orders, setOrders] = React.useState<Order[]>([]);
-    const [selectedStatus, setSelectedStatus] = React.useState<string>("All"); // State for status dropdown
+    const [selectedStatus, setSelectedStatus] = React.useState<string>("pending"); // State for status dropdown
 
+    const authContext = React.useContext(AuthContext);
     const apiHook = useAPIHook();
+    const toast = useToast();
+    const loadErrorHook = useLoadErrorHook();
 
     const retrieveOrders = async () => {
-        const buyerToken = await apiHook.generateBuyerToken();
-        const response = await apiHook.get(
-            `http://localhost:3000/api/orders/my-orders`,
-            buyerToken
-        );
-        setOrders(response.orders);
+        loadErrorHook.handleStartLoading();
+        if (!authContext?.token) {
+            loadErrorHook.handleStopLoading();
+            return;
+        }
+        try {
+
+            let url = `http://localhost:3000/api/orders/my-orders`;
+
+            if (selectedStatus !== "all") {
+                url += `?status=${selectedStatus}`;
+            }
+
+            const response = await apiHook.get(
+                url,
+                authContext?.token
+            );
+            setOrders(response.orders);
+        } catch {
+            toast({
+                title: "Error",
+                description: "Failed to load orders",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+        loadErrorHook.handleStopLoading();
     }
 
     React.useEffect(() => {
         retrieveOrders();
-    }, []);
+    }, [authContext?.token, selectedStatus]);
 
     return (
         <div className="dashboard">
@@ -34,17 +62,25 @@ const OrderManagement: React.FC<{}> = (props) => {
                     <h3 className="header">My Orders</h3> {/* My Orders header */}
                     {/* Status Dropdown */}
                     <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
-                        <option value="All">All</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Cancelled">Cancelled</option>
+                        <option value="all">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                        <option value="denied">Cancelled</option>
                     </select>
                     {/* Orders List */}
+                    <br />
+                    <br />
+                    {loadErrorHook.loading && (
+                        <>
+                            <Spinner />
+                        </>
+                    )}
                     {orders?.map((order) => (
                         <DisplayedCustomerOrderItem
                             key={`order-${order._id}`}
                             order={order}
                             refreshOrderItems={retrieveOrders}
+                            view="buyer"
                         />
                     ))}
                 </div>

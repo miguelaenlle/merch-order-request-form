@@ -18,6 +18,7 @@ const CustomModal: React.FC<{
     content: React.ReactNode;
     closeText?: string;
     actionText?: string;
+    onOpen?: () => void;
     onClose?: () => void;
     onAction?: () => void;
     disableDefaultButtons?: boolean;
@@ -36,7 +37,7 @@ const CustomModal: React.FC<{
     return (
         <div>
             {!props.transparentButton && (
-                <Button colorScheme="blue" onClick={onOpen}>{props.buttonText}</Button>
+                <Button colorScheme="blue" onClick={props.onOpen ?? onOpen}>{props.buttonText}</Button>
             )}
             <Modal isOpen={props.isOpen ?? isOpen} onClose={props.onClose ?? onClose}>
                 <ModalOverlay />
@@ -53,7 +54,7 @@ const CustomModal: React.FC<{
                     {!props.disableDefaultButtons && (
                         <ModalFooter>
                             <div></div>
-                            <Button colorScheme="blue" variant='ghost' mr={3} onClick={onClose}>
+                            <Button colorScheme="blue" variant='ghost' mr={3} onClick={props.onClose ?? onClose}>
                                 {props.closeText}
                             </Button>
                             <Button colorScheme="blue" onClick={handleAction}>

@@ -8,6 +8,7 @@ interface AuthContextInterface {
     userId: string | null;
     token: string | null;
     userType: "buyer" | "seller";
+    openAuthModal: "login" | "signup" | null;
     login: (
         email: string,
         userId: string,
@@ -16,6 +17,7 @@ interface AuthContextInterface {
         tokenExpirationDate: Date | null
     ) => void;
     logout: () => void;
+    handleOpenAuthModal: (modal: "login" | "signup" | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);
@@ -30,6 +32,11 @@ const AuthContextProvider: React.FC<{
     const [userType, setUserType] = useState<"buyer" | "seller">("buyer");
     const [tokenExpirationDate, setTokenExpirationDate] = useState<Date | null | undefined>();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [openAuthModal, setOpenAuthModal] = useState<"login" | "signup" | null>(null);
+
+    const handleOpenAuthModal = (modal: "login" | "signup" | null) => {
+        setOpenAuthModal(modal);
+    }
 
     const login = (
         email: string,
@@ -70,6 +77,7 @@ const AuthContextProvider: React.FC<{
         setTokenExpirationDate(null);
         setIsLoggedIn(false);
         localStorage.removeItem("userData");
+        
     }
 
     const autoLogin = () => {
@@ -122,8 +130,10 @@ const AuthContextProvider: React.FC<{
             userId: userId,
             token: token,
             userType: userType,
+            openAuthModal,
             login: login,
-            logout: logout
+            logout: logout,
+            handleOpenAuthModal
         }}>
             {props.children}
         </AuthContext.Provider>

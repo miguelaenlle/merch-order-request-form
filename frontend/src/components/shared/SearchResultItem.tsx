@@ -8,7 +8,7 @@ const SearchResultItem: React.FC<{
     item: Item;
 }> = (props) => {
     return (
-        <SpiritwearItem item={props.item} />
+        <SpiritwearItem item={props.item} modalToOpen="view" />
     );
 }
 export default SearchResultItem;

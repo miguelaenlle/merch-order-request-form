@@ -20,6 +20,7 @@ export const useAPIHook = () => {
             throw e;
         }
     }
+    
 
     const get = async (url: string, token?: string) => {
         try {
@@ -45,6 +46,26 @@ export const useAPIHook = () => {
     const put = async (url: string, data: any, token?: string) => {
         try {
             const response = await axios.put(url, data, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token ? `Bearer ${token}` : undefined,
+                }
+            });
+            console.log("Response", response.data);
+            return response.data;
+        } catch (e: any) {
+            try {
+                console.error("Simplified Error: ", e.response.data.message);
+            } catch {
+                console.error("Simplified Error: ", e);
+            }
+            throw e;
+        }
+    }
+
+    const patch = async (url: string, data: any, token?: string) => {
+        try {
+            const response = await axios.patch(url, data, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": token ? `Bearer ${token}` : undefined,
@@ -110,6 +131,7 @@ export const useAPIHook = () => {
         post,
         get,
         put,
+        patch,
         del,
         generateBuyerToken,
         generateSellerToken
