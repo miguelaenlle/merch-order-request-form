@@ -5,13 +5,14 @@ import auth from './auth-routes';
 
 const router = Router({ mergeParams: true });
 
+router.get('/', getInventoryItems);
+
 router.post('/', [
     body('itemId').isString().withMessage('Item ID must be a string').notEmpty().withMessage('Item ID is required'),
     body('size').isString().withMessage('Size must be a string').notEmpty().withMessage('Size primary is required'),
     body('price').isNumeric().withMessage('Price must be a number').notEmpty().withMessage('Price is required'),
     body('amount').isNumeric().withMessage('Amount must be a number').notEmpty().withMessage('Amount is required')
 ], auth, createInventoryItem);
-router.get('/', auth, getInventoryItems);
 router.get('/:inventoryItemId', [
     param('inventoryItemId').isString().withMessage('Inventory item id must be a string').notEmpty().withMessage('Inventory item id is required')
 ], auth, getIndividualInventoryItem);

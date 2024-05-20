@@ -11,21 +11,21 @@ export const createInventoryItem = async (req: CustomRequest, res: Response) => 
     if (!errors.isEmpty()) {
         console.log("errors", errors);
         return res.status(422).json({ errors: errors.array() });
-    } 
+    }
 
     try {
         const itemId = req.body.itemId as string;
         const size = req.body.size as string;
         const amount = req.body.amount as number;
-        const price = req.body.price as number;  
-        
+        const price = req.body.price as number;
+
         const isIdValid = mongoose.Types.ObjectId.isValid(itemId)
 
         if (!isIdValid) {
-            return res.status(500).json({ message: "Invalid Credentials" }) 
+            return res.status(500).json({ message: "Invalid Credentials" })
         }
 
-        const findItem = await Item.findOne({ _id: itemId }) 
+        const findItem = await Item.findOne({ _id: itemId })
 
         if (!findItem) {
             return res.status(404).json({ message: "Item Not Found" })
@@ -46,17 +46,33 @@ export const createInventoryItem = async (req: CustomRequest, res: Response) => 
 };
 
 export const getInventoryItems = async (req: CustomRequest, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        console.log("errors", errors);
-        return res.status(422).json({ errors: errors.array() });
-    }
 
+    const itemId = req.query.itemId as string;
+    const minimumAmount = req.query.minimumAmount as string | undefined;
+    const size = req.query.size as string | undefined;
+
+    let minimumAmountNumber: number | undefined = undefined;
+
+    if (minimumAmount) {
+        minimumAmountNumber = parseInt(minimumAmount);
+    }
     try {
-        const inventoryItems = await InventoryItem.find() 
-        res.status(200).json(inventoryItems);
+        let filters: { [key: string]: any } = {
+            itemId
+        }
+
+        if (minimumAmountNumber) {
+            filters = {
+                ...filters,
+                amount: { $gte: minimumAmountNumber || 0 }
+            }
+        }
+
+
+        const inventoryItems = await InventoryItem.find(filters)
+        return res.status(200).json({ inventoryItems });
     } catch (error: any) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
 
@@ -73,13 +89,13 @@ export const getIndividualInventoryItem = async (req: CustomRequest, res: Respon
         const isIdValid = mongoose.Types.ObjectId.isValid(inventoryItemId)
 
         if (!isIdValid) {
-            return res.status(500).json({ message: "Invalid Credentials" }) 
+            return res.status(500).json({ message: "Invalid Credentials" })
         }
 
         const inventoryItems = await InventoryItem.findOne({ _id: inventoryItemId });
 
         if (!inventoryItems) {
-            return res.status(404).json({ message: "Item Not Found" }) 
+            return res.status(404).json({ message: "Item Not Found" })
         }
 
         res.status(200).json(inventoryItems);
@@ -99,17 +115,17 @@ export const patchInventoryItem = async (req: CustomRequest, res: Response) => {
     if (!errors.isEmpty()) {
         console.log("errors", errors);
         return res.status(422).json({ errors: errors.array() });
-    } 
+    }
 
     try {
         const itemId = req.query.itemId as string;
         const updatedInventoryItems = req.body.updatedInventoryItems as ListItem[];
 
-        const isIdValid = mongoose.Types.ObjectId.isValid(itemId)   
+        const isIdValid = mongoose.Types.ObjectId.isValid(itemId)
 
         if (!isIdValid || updatedInventoryItems == null) {
-            return res.status(500).json({ message: "Invalid Credentials" }) 
-        } 
+            return res.status(500).json({ message: "Invalid item ID" })
+        }
 
         const items = await Item.findById({ _id: itemId })
         const inventoryItems = await InventoryItem.find({ itemId: itemId })
@@ -119,10 +135,10 @@ export const patchInventoryItem = async (req: CustomRequest, res: Response) => {
         }
 
         for (const item of updatedInventoryItems) {
-            const isInventoryItemIdValid = mongoose.Types.ObjectId.isValid(item.inventoryItemId)  
+            const isInventoryItemIdValid = mongoose.Types.ObjectId.isValid(item.inventoryItemId)
             if (!isInventoryItemIdValid) {
-                return res.status(500).json({ message: "Invalid Credentials" }) 
-            } 
+                return res.status(500).json({ message: "Invalid Credentials" })
+            }
             const newItem = {
                 amount: item.changeInInventory,
                 price: item.newPrice
@@ -132,9 +148,9 @@ export const patchInventoryItem = async (req: CustomRequest, res: Response) => {
                 upsert: true
             })
             if (!findAndUpdateInventoryItems) {
-                return res.status(404).json({ message: "Inventory Item Not Found" }) 
-            } 
-            
+                return res.status(404).json({ message: "Inventory Item Not Found" })
+            }
+
         }
 
         const updatedDetails = {
